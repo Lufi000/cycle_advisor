@@ -1,0 +1,543 @@
+/* Tabs */
+"tab.home" = "小花园";
+"tab.settings" = "设置";
+"tab.workout" = "运动";
+"tab.assistant" = "AI 助手";
+"subscription.title" = "AI Pro";
+
+/* Common */
+"common.done" = "完成";
+
+/* Workout */
+"workout.empty.title" = "这周的身体节奏还在展开";
+"workout.empty.body" = "授权并积累专项运动记录后，这里会显示本周运动小结和常见运动。";
+"workout.activity_only.section" = "今天的活动节奏";
+"workout.activity_only.title.active" = "活力上扬中";
+"workout.activity_only.title.walker" = "散步续航家";
+"workout.activity_only.title.light" = "轻活动进行中";
+"workout.activity_only.summary.menstrual" = "今天已经有一点活动痕迹，轻一点也很好。";
+"workout.activity_only.summary.follicular" = "今天的活动节奏正在慢慢打开。";
+"workout.activity_only.summary.ovulation" = "今天的身体有一些向外活动的能量。";
+"workout.activity_only.summary.luteal" = "今天先保持舒服的活动节奏就好。";
+"workout.metric.exercise_minutes" = "运动分钟";
+"workout.metric.steps" = "步数";
+"workout.metric.active_calories" = "活动热量";
+"workout.metric.weekly_total_duration" = "本周运动总时长";
+"workout.metric.workout_count" = "次运动";
+"workout.title.recovery" = "恢复模式进行中";
+"workout.title.activity_ace_format" = "%@小能手";
+"workout.title.light_activity" = "轻量活动中";
+"workout.title.rhythm_building" = "节奏正在建立";
+"workout.title.steady_rhythm" = "运动节奏稳定";
+"workout.summary.no_workouts" = "这周到目前为止还没有运动记录。身体节奏刚开始展开，可以从散步或拉伸这样轻松的活动开始。";
+"workout.summary.no_activity_type" = "这周的你已经开始用身体写下节奏。每一次运动，都是一次把注意力、能量和自己重新对齐的小型练习。";
+"workout.summary.activity_insight_format" = "这周的你很会向上思考。你不是只在运动，而是在用身体解谜：每一次%@，都是手指、核心和大脑一起完成的小型决策。";
+"workout.category.count_format" = "%d 次";
+"workout.category.total" = "总计";
+"workout.category.accessibility_format" = "%@，%d次，%@";
+"workout.duration.hour_min_format" = "%d小时%d分";
+"workout.duration.hour_format" = "%d小时";
+"workout.duration.minute_format" = "%d分";
+
+/* Sidebar */
+"sidebar.title" = "菜单";
+"sidebar.open_a11y" = "打开菜单";
+"sidebar.close_a11y" = "关闭菜单";
+
+/* Settings */
+"settings.section.ai" = "AI";
+"settings.section.profile" = "个人资料";
+"settings.section.disclaimer" = "免责声明";
+"settings.section.language" = "语言";
+"settings.section.medical_sources" = "医学信息来源";
+"settings.profile.display_name" = "昵称";
+"settings.profile.display_name.hint" = "会显示在首页问候语中。";
+"onboarding.display_name.title" = "想让我怎么称呼你？";
+"onboarding.display_name.subtitle" = "这个名字只会用于应用里的问候语。";
+"onboarding.display_name.skip" = "稍后再说";
+"onboarding.display_name.save" = "保存";
+"settings.thinking_mode" = "思考模式";
+"settings.thinking_mode.hint" = "影响后续使用该偏好的 AI 能力。「小花园」里的每日建议已固定使用快速模型以降低延迟。";
+"settings.language.title" = "应用语言";
+"settings.language.hint" = "覆盖应用内的系统语言，切换后立即生效。";
+"settings.language.system" = "跟随系统";
+"settings.language.english" = "English";
+"settings.language.chinese" = "简体中文";
+
+/* Billing */
+"billing.section.account" = "Credits 账户";
+"billing.section.recharge" = "充值";
+"billing.section.subscription" = "订阅";
+"billing.section.metrics" = "近 7 天指标";
+"billing.section.ledger" = "流水明细";
+"billing.balance.title" = "可用余额";
+"billing.balance.value" = "%d credits";
+"billing.balance.inline" = "余额 %d";
+"billing.subscription.title" = "AI 权益";
+"billing.subscription.badge_active" = "AI Pro";
+"billing.subscription.badge_inactive" = "免费版";
+"billing.subscription.inactive" = "AI Pro 未开通";
+"billing.subscription.active_until" = "AI Pro 有效期至 %@";
+"billing.subscription.required_hint" = "免费对话用完后，订阅 AI Pro 可继续使用 AI 对话。";
+"billing.subscription.monthly_price" = "AI Pro %@";
+"billing.subscription.monthly_detail" = "1 个月自动续订订阅，免费对话用完后解锁 AI Pro 对话。";
+"billing.free_chat.remaining" = "免费对话剩余 %d 次";
+"billing.free_chat.warning_low" = "免费对话仅剩 %d 次，用完后需订阅 AI Pro";
+"billing.free_chat.warning_dismiss_a11y" = "关闭提示";
+"billing.suggestion.remaining" = "AI建议剩余 %d/3";
+"billing.low_balance.hint" = "余额较低，建议先充值避免对话中断";
+"billing.package.credits" = "%d credits";
+"billing.menu.buy_pack" = "充值 %@（%d credits）";
+"billing.menu.subscribe" = "订阅 %@";
+"billing.menu.balance" = "%d credits";
+"billing.metrics.chat_7d" = "对话次数";
+"billing.metrics.refresh_7d" = "AI建议刷新";
+"billing.metrics.consume_7d" = "消耗 credits";
+"billing.metrics.revenue_7d" = "付费金额";
+"billing.metrics.amount_cny" = "¥%.2f";
+"billing.tuning.keep" = "调价建议：维持当前套餐。";
+"billing.tuning.decrease" = "调价建议：毛利偏低，建议下调各档 credits 10%-15%。";
+"billing.tuning.increase_entry" = "调价建议：毛利较高且转化偏低，建议提高低档 credits 约 10%。";
+"billing.tuning.mid_tier" = "调价建议：超额包购买偏高，建议提升中档套餐性价比。";
+"billing.ledger.empty" = "暂无流水";
+"billing.ledger.balance" = "余额 %d";
+"billing.ledger.hold" = "对话预扣";
+"billing.ledger.rollback" = "请求失败回退";
+"billing.ledger.refund" = "结算返还";
+"billing.ledger.consume_extra" = "结算补扣";
+"billing.ledger.settle" = "本次对话结算（%d credits）";
+"billing.ledger.recharge" = "充值 %@";
+"billing.ledger.subscription" = "AI Pro 订阅";
+"billing.error.insufficient_credits" = "credits 不足，请先充值";
+"billing.error.rate_limited" = "请求过于频繁，请稍后再试";
+"billing.error.daily_limit" = "今日对话次数已达上限，请明天再试";
+"billing.error.purchase_unavailable" = "暂时无法购买，请稍后再试";
+"billing.error.purchase_not_verified" = "购买无法验证，请稍后重试";
+"billing.error.subscription_required" = "免费对话已用完，订阅 AI Pro 后可继续使用。";
+"billing.error.product_load_failed" = "订阅信息加载失败，点此重试。";
+"billing.suggestion.quota_exhausted" = "今日 AI 建议刷新次数已用完（早/中/晚各 1 次）";
+
+/* 订阅相关合规文案（App Store Guideline 3.1.1 / 3.1.2） */
+"billing.action.subscribe_aipro" = "订阅 AI Pro";
+"billing.action.purchasing_aipro" = "正在购买 AI Pro…";
+"billing.action.restore" = "恢复购买";
+"billing.action.restoring" = "恢复中…";
+"billing.action.restored" = "订阅已恢复。";
+"billing.action.no_purchases" = "当前 Apple ID 下未发现已购订阅。";
+"billing.action.manage" = "管理订阅";
+"billing.action.purchasing" = "购买中…";
+"billing.action.purchase_cancelled" = "购买已取消。";
+"billing.action.purchase_pending" = "购买正在处理中，完成后会自动更新订阅状态。";
+"billing.action.purchase_in_progress" = "已有一笔购买正在进行，请稍等。";
+"billing.subscription.loading" = "订阅信息加载中…";
+"billing.subscription.info_a11y" = "订阅信息";
+"billing.subscription.disclosure" = "AI Pro 是 1 个月自动续订订阅，免费对话用完后解锁 AI Pro 对话。确认购买时将通过你的 Apple ID 扣款。订阅会按上方价格自动续订，除非在当前周期结束前至少 24 小时取消。订阅权益可在使用同一 Apple ID 登录的设备上使用。可随时在 Apple ID 的订阅设置中管理或取消。";
+"billing.legal.terms" = "使用条款";
+"billing.legal.privacy" = "隐私政策";
+
+/* AI Assistant tab */
+"assistant.intro.title" = "你的周期助手";
+"assistant.intro.body" = "针对你的周期、生活方式和养生问题随时提问，我会根据当前阶段给出建议。";
+"assistant.greeting %@ %@ %lld %@" = "%1$@，见到你真好。现在是%2$@第 %3$lld 天 %4$@\n我们可以慢慢来，先照顾好今天的身体。";
+"assistant.greeting.predicted %@ %@ %lld %@" = "%1$@，见到你真好。预计现在是%2$@第 %3$lld 天 %4$@\n我们可以慢慢来，先照顾好今天的身体。";
+"assistant.suggested_questions_label" = "你可能想问：";
+"assistant.followup_label" = "还可以问问：";
+"assistant.thinking.in_progress" = "思考中…";
+"assistant.thinking.completed" = "思考过程";
+"assistant.new_chat" = "新对话";
+"assistant.clear_history" = "清除所有对话";
+"assistant.history.title" = "历史会话";
+"assistant.history.untitled" = "未命名对话";
+"assistant.history.messages_count_suffix" = "条消息";
+"assistant.error_fallback" = "抱歉，出了点小问题，请再试一次 🙏";
+"assistant.input_placeholder" = "输入你想问的…";
+"assistant.date.today" = "今天";
+"assistant.date.yesterday" = "昨天";
+"assistant.date.day_before_yesterday" = "前天";
+"assistant.message.copy" = "复制";
+"assistant.message.refresh" = "刷新";
+"assistant.message.delete" = "删除";
+
+"assistant.header.day_format %@ %lld" = "%1$@ · 第%2$lld天";
+"assistant.header.exercise" = "锻炼";
+"assistant.header.steps" = "步数";
+"assistant.header.hrv" = "HRV";
+
+/* Units (formatted health metrics) */
+"unit.duration.hour_minute %lld %lld" = "%1$lld小时%2$lld分";
+"unit.duration.hour %lld" = "%1$lld小时";
+"unit.duration.minute %lld" = "%1$lld分钟";
+"unit.duration.minute_zero" = "0分钟";
+"unit.steps.count %lld" = "%1$lld步";
+"unit.hrv_ms %lld" = "%1$lldms";
+
+/* Home cycle ring */
+"home.cycle_ring.day_label" = "周期日";
+
+/* Thinking mode (DeepSeek) */
+"thinking.fast" = "快速";
+"thinking.deep" = "深度";
+
+/* Home */
+"home.navigation.title" = "小花园";
+"home.greeting %@" = "Hello, %@";
+"home.cycle_stage.current" = "当前阶段";
+"home.cycle_stage.explore" = "阶段浏览";
+"home.cycle_stage.a11y %lld %@" = "周期第 %1$lld 天，%2$@";
+"home.health_metrics.title" = "健康数据";
+"home.health_metrics.today" = "今日健康";
+"home.health_metrics.daylight" = "日照";
+"home.health_metrics.exercise" = "运动";
+"home.health_metrics.steps" = "步数";
+"home.health_metrics.refresh_a11y" = "刷新健康数据";
+"health.metric.meaning.title" = "这是什么意思";
+"health.metric.source.title" = "数据来源";
+"health.metric.hrv.meaning" = "HRV 指心率变异性，反映连续心跳间隔的变化。它常被用来观察身体恢复、压力和自主神经状态的趋势；单日数值只适合参考，不代表诊断。";
+"health.metric.hrv.source" = "来自 Apple 健康中的心率变异性数据。通常由 Apple Watch 或兼容设备在后台测量。";
+"health.metric.daylight.meaning" = "日照时长表示今天累计处在自然日光下的时间。它可以帮助你了解户外光照暴露，对昼夜节律、心情和作息有参考价值。";
+"health.metric.daylight.source" = "来自 Apple 健康中的 Time in Daylight（日照时间）数据，通常由支持该指标的 Apple Watch 记录。";
+"health.metric.exercise.meaning" = "运动分钟表示今天累计达到 Apple 活动圆环中“锻炼”标准的时间，通常代表较明显的活动强度。";
+"health.metric.exercise.source" = "来自 Apple 健康中的 Exercise Minutes（锻炼分钟）数据，由 Apple Watch、健身记录或兼容 App 写入。";
+"health.metric.steps.meaning" = "步数表示今天累计记录的行走步数，可用于观察日常活动量。它不是运动强度的完整衡量，但适合看趋势。";
+"health.metric.steps.source" = "来自 Apple 健康中的步数数据，由 iPhone、Apple Watch 或兼容设备记录。";
+"home.mock_data_banner" = "正在使用示例数据 — 请在健康 App 中记录经期后重启";
+"home.suggestion_source.ai" = "当前为 AI 生成建议";
+"home.suggestion_source.fallback" = "当前为回退建议（AI 暂时不可用）";
+"home.reference_badge" = "科学依据";
+"home.thinking.label" = "正在分析你的数据…";
+"home.suggestion.refreshing" = "正在刷新建议…";
+"home.suggestion.refreshing_a11y" = "正在刷新建议";
+"home.suggestion.empty_dimension" = "该维度暂无建议";
+"home.suggestion.empty_dimension_a11y" = "暂无建议";
+"home.cycle_detail.current_badge" = "当前阶段";
+"home.cycle_detail.duration_format" = "约 %d 天";
+
+/* Disclaimer */
+"disclaimer.text" = "仅供参考，非医疗建议";
+
+/* Citations */
+"citation.sources.title" = "信息来源";
+"citation.sources.count_format" = "%d 条";
+"citation.toggle_sources_a11y" = "展开或收起信息来源";
+"citation.open_source_a11y" = "打开信息来源";
+"citation.owh.publisher" = "美国女性健康办公室";
+"citation.owh_menstrual.title" = "月经周期";
+"citation.owh_menstrual.summary" = "周期阶段、经期症状，以及何时需要就医。";
+"citation.owh_pms.title" = "经前综合征（PMS）";
+"citation.owh_pms.summary" = "常见经前症状，以及可能有帮助的生活方式做法。";
+"citation.cdc.publisher" = "美国疾病控制与预防中心";
+"citation.cdc_activity.title" = "成年人身体活动指南";
+"citation.cdc_activity.summary" = "基于证据的活动目标与运动强度参考。";
+"citation.nih.publisher" = "美国国立卫生研究院";
+"citation.nih_sleep.title" = "睡眠不足与睡眠缺乏";
+"citation.nih_sleep.summary" = "充足、高质量睡眠对健康的重要性。";
+"citation.dga.publisher" = "美国膳食指南";
+"citation.dga_nutrition.title" = "美国居民膳食指南";
+"citation.dga_nutrition.summary" = "关于健康饮食模式的官方营养参考。";
+"citation.nccih.publisher" = "美国国家补充与综合健康中心";
+"citation.nccih_tcm.title" = "关于传统中医你需要知道的事";
+"citation.nccih_tcm.summary" = "传统与补充健康实践的安全性背景信息。";
+
+/* Cycle Phases */
+"phase.menstrual" = "经期";
+"phase.follicular" = "卵泡期";
+"phase.ovulation" = "排卵期";
+"phase.luteal" = "黄体期";
+"phase.predicted_prefix" = "预计";
+"phase.predicted_label" = "推算";
+
+"phase.menstrual.desc" = "雌激素和孕酮降至低位，身体处于恢复期。注意保暖休息，适当补充铁质，适合散步或温和瑜伽。";
+"phase.follicular.desc" = "此处指经后期（经期结束到排卵前）。卵泡发育，雌激素回升，精力和情绪逐渐走高。适合尝试新运动、推进重要计划。";
+"phase.ovulation.desc" = "雌激素峰值，体能与专注力处于周期最佳。适合高强度训练和需要创造力的工作。";
+"phase.luteal.desc" = "孕酮升高，体温与代谢率增加。后半段可能出现情绪波动或经前不适，注意规律作息与均衡饮食。";
+
+"phase.overlay_format %1$@ %2$@" = "%1$@：%2$@";
+"phase.menstrual.overlay"  = "避免受凉，注意保暖腹部，饮食以温补易消化为主。";
+"phase.follicular.overlay" = "精力回升，可加强有氧与力量训练，多摄入优质蛋白。";
+"phase.ovulation.overlay"  = "体感轻盈，适合高强度运动或社交活动，注意补水。";
+"phase.luteal.overlay"     = "容易水肿胀气，减盐、加强柔和运动，情绪易波动需放松。";
+
+/* Suggestion Dimensions */
+"dim.diet" = "饮食";
+"dim.exercise" = "运动";
+"dim.mood" = "情绪";
+"dim.sleep" = "睡眠";
+
+/* Period Detail */
+"period.detail.title" = "经期档案";
+"period.detail.flow" = "出血量";
+"period.detail.symptoms" = "近期症状";
+"period.detail.no_data" = "暂无经期症状记录 — 可在健康 App 中记录";
+"period.symptoms.title" = "经期症状";
+"period.symptoms.summary %lld" = "%lld 个近期症状";
+
+/* Flow Level */
+"flow.unspecified" = "未指定";
+"flow.light" = "少量";
+"flow.medium" = "中等";
+"flow.heavy" = "大量";
+"flow.none" = "无";
+
+/* Symptom Severity */
+"severity.not_present" = "无";
+"severity.mild" = "轻微";
+"severity.moderate" = "中等";
+"severity.severe" = "严重";
+
+/* Symptom Types */
+"symptom.abdominal_cramps" = "腹部痉挛";
+"symptom.bloating" = "腹胀";
+"symptom.breast_pain" = "乳房胀痛";
+"symptom.headache" = "头痛";
+"symptom.acne" = "痤疮";
+"symptom.lower_back_pain" = "腰痛";
+"symptom.pelvic_pain" = "骨盆痛";
+"symptom.mood_changes" = "情绪变化";
+"symptom.fatigue" = "疲劳";
+"symptom.appetite_changes" = "食欲变化";
+
+/* Profile */
+"profile.title" = "我的档案";
+"profile.empty" = "暂无档案数据\n使用一段时间后将自动积累";
+"profile.section.body" = "身体信息";
+"profile.section.name" = "称呼";
+"profile.section.cycle" = "周期统计";
+"profile.section.workout" = "运动习惯";
+"profile.section.symptoms" = "症状记录";
+"profile.section.lifestyle" = "生活方式";
+"profile.age" = "年龄";
+"profile.height" = "身高";
+"profile.weight" = "体重";
+"profile.avg_cycle" = "平均周期";
+"profile.avg_period" = "平均经期";
+"profile.days" = "天";
+"profile.cycles_recorded" = "已记录周期";
+"profile.flow_pattern" = "出血量模式";
+"profile.weekly_freq" = "每周运动";
+"profile.times_week" = "次/周";
+"profile.avg_duration" = "平均时长";
+"profile.minutes" = "分钟";
+"profile.sleep" = "睡眠习惯";
+"profile.diet" = "饮食偏好";
+"profile.sensitivities" = "敏感因素";
+"profile.conditions" = "健康状况";
+"profile.ai_source" = "由 AI 对话中提取";
+"profile.reset" = "重置档案";
+"profile.reset.confirm" = "确定要重置所有档案数据吗？";
+"profile.reset.cancel" = "取消";
+"profile.reset.action" = "重置";
+
+/* Errors */
+"error.empty_response" = "AI 未返回内容，请稍后重试";
+"error.invalid_response" = "网络响应格式异常";
+"error.http_format" = "服务器错误（%d），请稍后重试";
+"error.decoding" = "数据解析失败，请稍后重试";
+
+/* Widget */
+"widget.display_name" = "今日健康";
+"widget.description" = "查看今日日照时长和心率变异性";
+"widget.today_health" = "今日健康";
+"widget.daylight" = "日照时长";
+"widget.day_in_phase %lld" = "第 %lld 天";
+"widget.cycle_day %lld %lld" = "第 %1$lld 天 · 周期第 %2$lld 天";
+"widget.no_suggestion" = "暂无建议";
+"widget.hrv_avg %lld" = "均 %lld";
+
+/* Mock Suggestions (fallback when AI unavailable) */
+"mock.diet.title" = "补充镁和B6";
+"mock.diet.detail.1" = "富含镁的食物：深绿叶蔬菜、坚果";
+"mock.diet.detail.2" = "维生素B6：香蕉、鸡胸肉";
+"mock.diet.detail.3" = "减少咖啡因和高盐食物";
+
+"mock.exercise.title" = "中等强度有氧";
+"mock.exercise.detail.1" = "推荐快走、游泳 30-40 分钟";
+"mock.exercise.detail.2" = "避免高强度间歇训练";
+"mock.exercise.detail.3" = "瑜伽有助缓解经前不适";
+
+"mock.mood.title" = "正念冥想";
+"mock.mood.detail.1" = "每天 10 分钟正念练习";
+"mock.mood.detail.2" = "写日记记录情绪变化";
+"mock.mood.detail.3" = "允许自己放慢节奏";
+
+"mock.sleep.title" = "提前入睡";
+"mock.sleep.detail.1" = "比平时提前 30 分钟上床";
+"mock.sleep.detail.2" = "睡前避免屏幕蓝光";
+"mock.sleep.detail.3" = "温热饮品帮助放松";
+
+/* Solar Terms Tab */
+"tab.solar_terms" = "节气";
+
+/* Seasons */
+"season.spring" = "春";
+"season.summer" = "夏";
+"season.autumn" = "秋";
+"season.winter" = "冬";
+
+/* Solar Terms UI */
+"solar.current" = "当前节气";
+"solar.next" = "下一节气";
+"solar.days_until %lld" = "距下一节气还有 %lld 天";
+
+/* 24 Solar Terms — Names */
+"solar.lichun" = "立春";
+"solar.yushui" = "雨水";
+"solar.jingzhe" = "惊蛰";
+"solar.chunfen" = "春分";
+"solar.qingming" = "清明";
+"solar.guyu" = "谷雨";
+"solar.lixia" = "立夏";
+"solar.xiaoman" = "小满";
+"solar.mangzhong" = "芒种";
+"solar.xiazhi" = "夏至";
+"solar.xiaoshu" = "小暑";
+"solar.dashu" = "大暑";
+"solar.liqiu" = "立秋";
+"solar.chushu" = "处暑";
+"solar.bailu" = "白露";
+"solar.qiufen" = "秋分";
+"solar.hanlu" = "寒露";
+"solar.shuangjang" = "霜降";
+"solar.lidong" = "立冬";
+"solar.xiaoxue" = "小雪";
+"solar.daxue" = "大雪";
+"solar.dongzhi" = "冬至";
+"solar.xiaohan" = "小寒";
+"solar.dahan" = "大寒";
+
+/* 24 Solar Terms — Climate */
+"solar.lichun.climate" = "春季开始，气温回升但仍有倒春寒。早晚温差大，午后渐暖。";
+"solar.yushui.climate" = "冰雪消融，降水渐增，空气明显回暖，湿度上升。";
+"solar.jingzhe.climate" = "春雷始鸣，万物复苏。气温稳步上升，偶有春季雷阵雨。";
+"solar.chunfen.climate" = "昼夜等长，气候温和宜人，春风和煦。";
+"solar.qingming.climate" = "天清气朗，草木繁茂，气温舒适宜人。";
+"solar.guyu.climate" = "终霜已过，雨量充沛，滋润春播作物。";
+"solar.lixia.climate" = "夏季来临，白天渐热，傍晚雷阵雨增多。";
+"solar.xiaoman.climate" = "作物灌浆渐满，暖湿气流主导，阵雨频繁。";
+"solar.mangzhong.climate" = "小麦成熟、夏播开始。闷热潮湿的天气定型。";
+"solar.xiazhi.climate" = "日照最长，阳光最烈；虽已入盛夏，但最热的日子尚在后头。";
+"solar.xiaoshu.climate" = "暑气渐盛，闷热多雨，午后常有雷阵雨。";
+"solar.dashu.climate" = "一年中最热最潮湿的时段，高温高湿持续。";
+"solar.liqiu.climate" = "名义上入秋，暑热犹存。清晨可能略感凉意。";
+"solar.chushu.climate" = "暑气消退，白天余热渐散，夜间清风徐来。";
+"solar.bailu.climate" = "夜凉显著，晨间露水初现。昼夜温差加大。";
+"solar.qiufen.climate" = "再次昼夜等长，秋高气爽，天朗气清。";
+"solar.hanlu.climate" = "寒露凝结，气温明显下降，空气干爽清冽。";
+"solar.shuangjang.climate" = "多地初霜，早晨寒凉，秋叶正盛。";
+"solar.lidong.climate" = "冬季开始，冷空气南下；北方可能迎来初雪。";
+"solar.xiaoxue.climate" = "北方小雪飘落，阴冷潮湿蔓延。";
+"solar.daxue.climate" = "可能出现大雪，气温骤降，地面冰冻。";
+"solar.dongzhi.climate" = "白昼最短，严寒正式开始；此后日照将缓慢回升。";
+"solar.xiaohan.climate" = "临近全年最冷时段，寒风凛冽，天寒地冻。";
+"solar.dahan.climate" = "全年最冷，极端低温，空气干燥，偶有暴雪。";
+
+/* 24 Solar Terms — Wellness Tips */
+"solar.lichun.wellness" = "养肝护肝，多吃绿叶蔬菜。开始温和拉伸，迎接阳气生发。";
+"solar.yushui.wellness" = "健脾祛湿，多吃温热易消化的食物，少吃生冷。";
+"solar.jingzhe.wellness" = "疏肝解郁，适当轻运动。梨和蜂蜜可润喉养肺。";
+"solar.chunfen.wellness" = "饮食作息讲求平衡。室内静养与户外活动交替进行。";
+"solar.qingming.wellness" = "踏青出游，登山散步舒畅身心。应季蔬菜如菠菜正当时。";
+"solar.guyu.wellness" = "多饮水和花草茶。绿豆汤、菊花茶帮助应对上升的湿气。";
+"solar.lixia.wellness" = "心静自然凉，避免过劳。苦瓜等苦味食物可清心火。";
+"solar.xiaoman.wellness" = "饮食清淡：黄瓜、西瓜、绿豆消暑。注意补水。";
+"solar.mangzhong.wellness" = "暑热中注意节奏，午间小憩，饮食易消化为主。";
+"solar.xiazhi.wellness" = "养心为要：少喝冰饮，多吃番茄等红色食物，避开正午烈日。";
+"solar.xiaoshu.wellness" = "防暑降温，清粥水果平衡暑热，注意补充水分。";
+"solar.dashu.wellness" = "谨防中暑：午间休息，饮温水，减少剧烈运动。";
+"solar.liqiu.wellness" = "开始润肺：梨、百合、蜂蜜抵御秋燥。";
+"solar.chushu.wellness" = "饮食从清凉过渡到温补，增加杂粮和根茎类蔬菜。";
+"solar.bailu.wellness" = "早晚添衣注意保暖。温润汤粥养护肺气。";
+"solar.qiufen.wellness" = "阴阳平衡，温和运动加均衡饮食维持身体平衡。";
+"solar.hanlu.wellness" = "注意足部和腰部保暖。生姜、肉桂等温性香料适合此时。";
+"solar.shuangjang.wellness" = "养护脾胃，多吃温软食物。柿子、板栗正当季。";
+"solar.lidong.wellness" = "冬藏养生：早睡补眠，炖煮羊肉或鸡汤温补身体。";
+"solar.xiaoxue.wellness" = "温热慢炖汤品滋养身体，适度室内运动保持气血流通。";
+"solar.daxue.wellness" = "注重内在保暖：黑芝麻、核桃、枸杞补肾养元气。";
+"solar.dongzhi.wellness" = "最佳滋补时节。饺子、羊肉火锅暖身；注意防寒保暖。";
+"solar.xiaohan.wellness" = "高蛋白温补饮食。太极或瑜伽保持循环而不损耗元气。";
+"solar.dahan.wellness" = "迎接最后的严寒。充分休息，温热粥品养胃，注意多层穿衣。";
+
+/* HealthKit Workout Activities */
+"workout.activity.american_football" = "美式橄榄球";
+"workout.activity.archery" = "射箭";
+"workout.activity.australian_football" = "澳式足球";
+"workout.activity.badminton" = "羽毛球";
+"workout.activity.baseball" = "棒球";
+"workout.activity.basketball" = "篮球";
+"workout.activity.bowling" = "保龄球";
+"workout.activity.boxing" = "拳击";
+"workout.activity.climbing" = "攀岩";
+"workout.activity.cricket" = "板球";
+"workout.activity.cross_training" = "交叉训练";
+"workout.activity.curling" = "冰壶";
+"workout.activity.cycling" = "骑行";
+"workout.activity.dance" = "舞蹈";
+"workout.activity.dance_inspired_training" = "舞蹈训练";
+"workout.activity.elliptical" = "椭圆机";
+"workout.activity.equestrian_sports" = "马术";
+"workout.activity.fencing" = "击剑";
+"workout.activity.fishing" = "钓鱼";
+"workout.activity.functional_strength_training" = "功能性力量训练";
+"workout.activity.golf" = "高尔夫";
+"workout.activity.gymnastics" = "体操";
+"workout.activity.handball" = "手球";
+"workout.activity.hiking" = "徒步";
+"workout.activity.hockey" = "曲棍球";
+"workout.activity.hunting" = "狩猎";
+"workout.activity.lacrosse" = "长曲棍球";
+"workout.activity.martial_arts" = "武术";
+"workout.activity.mind_and_body" = "身心训练";
+"workout.activity.mixed_metabolic_cardio_training" = "混合代谢有氧训练";
+"workout.activity.paddle_sports" = "桨板运动";
+"workout.activity.play" = "玩耍活动";
+"workout.activity.preparation_and_recovery" = "热身与恢复";
+"workout.activity.racquetball" = "短柄墙球";
+"workout.activity.rowing" = "划船";
+"workout.activity.rugby" = "橄榄球";
+"workout.activity.running" = "跑步";
+"workout.activity.sailing" = "帆船";
+"workout.activity.skating_sports" = "滑冰运动";
+"workout.activity.snow_sports" = "雪上运动";
+"workout.activity.soccer" = "足球";
+"workout.activity.softball" = "垒球";
+"workout.activity.squash" = "壁球";
+"workout.activity.stair_climbing" = "爬楼梯";
+"workout.activity.surfing_sports" = "冲浪";
+"workout.activity.swimming" = "游泳";
+"workout.activity.table_tennis" = "乒乓球";
+"workout.activity.tennis" = "网球";
+"workout.activity.track_and_field" = "田径";
+"workout.activity.traditional_strength_training" = "传统力量训练";
+"workout.activity.volleyball" = "排球";
+"workout.activity.walking" = "步行";
+"workout.activity.water_fitness" = "水中健身";
+"workout.activity.water_polo" = "水球";
+"workout.activity.water_sports" = "水上运动";
+"workout.activity.wrestling" = "摔跤";
+"workout.activity.yoga" = "瑜伽";
+"workout.activity.barre" = "芭蕾塑形";
+"workout.activity.core_training" = "核心训练";
+"workout.activity.cross_country_skiing" = "越野滑雪";
+"workout.activity.downhill_skiing" = "高山滑雪";
+"workout.activity.flexibility" = "柔韧训练";
+"workout.activity.high_intensity_interval_training" = "HIIT";
+"workout.activity.jump_rope" = "跳绳";
+"workout.activity.kickboxing" = "踢拳";
+"workout.activity.pilates" = "普拉提";
+"workout.activity.snowboarding" = "单板滑雪";
+"workout.activity.stairs" = "楼梯训练";
+"workout.activity.step_training" = "踏板训练";
+"workout.activity.wheelchair_walk_pace" = "轮椅步行配速";
+"workout.activity.wheelchair_run_pace" = "轮椅跑步配速";
+"workout.activity.tai_chi" = "太极";
+"workout.activity.mixed_cardio" = "有氧运动";
+"workout.activity.hand_cycling" = "手摇车";
+"workout.activity.disc_sports" = "飞盘运动";
+"workout.activity.fitness_gaming" = "健身游戏";
+"workout.activity.cardio_dance" = "有氧舞蹈";
+"workout.activity.social_dance" = "社交舞";
+"workout.activity.pickleball" = "匹克球";
+"workout.activity.cooldown" = "放松整理";
+"workout.activity.swim_bike_run" = "铁人三项";
+"workout.activity.transition" = "转换区";
+"workout.activity.underwater_diving" = "潜水";
+"workout.activity.other" = "其他运动";

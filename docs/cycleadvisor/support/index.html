@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Technical Support — Cycle Life Advisor</title>
+  <meta name="description" content="Cycle Life Advisor support and help. 技术支持。" />
+  <style>
+    :root {
+      --text: #1a1a1a;
+      --muted: #5c5c5c;
+      --border: #e8e8e8;
+      --bg: #fafafa;
+      --accent: #6b4f6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .wrap { max-width: 42rem; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 0.5rem; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    nav.lang {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    nav.lang a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+    }
+    nav.lang a:hover { border-color: var(--accent); }
+    section { margin-bottom: 2.5rem; scroll-margin-top: 1rem; }
+    section h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .card strong { display: block; margin-bottom: 0.35rem; }
+    p, li { color: #333; }
+    ul { margin: 0.5rem 0 0; padding-left: 1.25rem; }
+    li { margin-bottom: 0.35rem; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+    .en section h2 { font-family: Georgia, "Times New Roman", serif; }
+    .note { font-size: 0.9rem; color: var(--muted); margin-top: 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>技术支持 · Technical Support</h1>
+      <p class="sub">Cycle Life Advisor</p>
+      <nav class="lang" aria-label="Language">
+        <a href="#zh">简体中文</a>
+        <a href="#en">English</a>
+        <a href="../terms/">使用条款 Terms</a>
+        <a href="../privacy/">隐私政策 Privacy</a>
+      </nav>
+    </header>
+
+    <section id="zh" lang="zh-Hans">
+      <h2>简体中文</h2>
+      <div class="card">
+        <strong>联系邮箱</strong>
+        <p style="margin:0;">请发送邮件至：<a href="mailto:loyatfei@gmail.com">loyatfei@gmail.com</a></p>
+        <p class="note">建议在邮件中说明设备型号、iOS 版本、问题复现步骤（如有截图更佳），便于我们排查。</p>
+      </div>
+      <div class="card">
+        <strong>应用说明</strong>
+        <p style="margin:0;">Cycle Life Advisor 是一款基于 Apple 健康数据与 AI 的<strong>生活向周期建议</strong>应用，帮助你了解周期阶段并获得饮食、运动、情绪、睡眠等参考提示。</p>
+        <p class="note"><strong>重要：</strong>本应用仅供参考，不构成医疗建议、诊断或治疗。如有健康问题，请咨询合格医疗人员。</p>
+      </div>
+      <div class="card">
+        <strong>常见问题</strong>
+        <ul style="margin-bottom:0;">
+          <li><strong>看不到周期数据？</strong> 请在「健康」App 中记录经期相关数据，并在系统设置中授予本应用读取权限。</li>
+          <li><strong>AI 建议无法加载？</strong> 请检查网络连接；若问题持续，请通过上方邮箱联系我们并说明大致时间与界面提示。</li>
+          <li><strong>数据存在哪里？</strong> 详见<a href="../privacy/">隐私政策</a>：健康数据以设备本地为主，具体以应用实际行为为准。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="en" class="en" lang="en">
+      <h2>English</h2>
+      <div class="card">
+        <strong>Contact</strong>
+        <p style="margin:0;">Email: <a href="mailto:loyatfei@gmail.com">loyatfei@gmail.com</a></p>
+        <p class="note">Please include your device model, iOS version, and steps to reproduce the issue (screenshots help).</p>
+      </div>
+      <div class="card">
+        <strong>About the App</strong>
+        <p style="margin:0;">Cycle Life Advisor is a lifestyle-oriented cycle wellness app that uses Apple Health data and AI to provide reference tips for diet, exercise, mood, and sleep based on your cycle phase.</p>
+        <p class="note"><strong>Important:</strong> The App is for informational purposes only and does not provide medical advice, diagnosis, or treatment. Consult a qualified professional for health concerns.</p>
+      </div>
+      <div class="card">
+        <strong>FAQ</strong>
+        <ul style="margin-bottom:0;">
+          <li><strong>No cycle data?</strong> Log cycle-related data in the Health app and grant this App read access in Settings.</li>
+          <li><strong>AI suggestions not loading?</strong> Check your network connection. If it persists, email us with the approximate time and any on-screen message.</li>
+          <li><strong>Where is my data stored?</strong> See our <a href="../privacy/">Privacy Policy</a> — health data is primarily on-device; details follow the App’s actual behavior.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p><a href="../privacy/">Privacy Policy 隐私政策</a> · <a href="../terms/">Terms of Use 使用条款</a> · Cycle Life Advisor</p>
+    </footer>
+  </div>
+</body>
+</html>

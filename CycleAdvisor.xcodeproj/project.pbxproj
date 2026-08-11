@@ -1,0 +1,901 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1000001 /* CycleAdvisorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001 /* CycleAdvisorApp.swift */; };
+		A1000002 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002 /* MainTabView.swift */; };
+		A1000003 /* CyclePhaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000003 /* CyclePhaseEngine.swift */; };
+		A1000004 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
+		A1000005 /* ResearchReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000005 /* ResearchReference.swift */; };
+		A1000006 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000006 /* Suggestion.swift */; };
+		A1000007 /* CycleRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000007 /* CycleRingView.swift */; };
+		A1000008 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000008 /* HomeView.swift */; };
+		A1000009 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000009 /* DisclaimerView.swift */; };
+		A100000A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000A /* MockData.swift */; };
+		A100000B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		A100000C /* CyclePhaseEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000C /* CyclePhaseEngineTests.swift */; };
+		A100000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1000011 /* Assets.xcassets */; };
+		A100000E /* GrainOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012 /* GrainOverlay.swift */; };
+		A100000F /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
+		A1000010 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000014 /* HomeViewModel.swift */; };
+		A1000020 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000020 /* LLMService.swift */; };
+		A1000021 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000021 /* Secrets.swift */; };
+		A1000024 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
+		A1000025 /* Itim-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = VR000003 /* Itim-Regular.ttf */; };
+		A1000030 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000030 /* SettingsView.swift */; };
+		A1000031 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000031 /* SubscriptionView.swift */; };
+		A1000032 /* HomeSideMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000032 /* HomeSideMenuPanel.swift */; };
+		A1000040 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000040 /* LanguageManager.swift */; };
+		A2000001 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001 /* ChatMessage.swift */; };
+		A2000002 /* AssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000002 /* AssistantViewModel.swift */; };
+		A2000003 /* AssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000003 /* AssistantView.swift */; };
+		A2000004 /* PhaseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000004 /* PhaseHeaderView.swift */; };
+		A2000005 /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000005 /* ChatBubbleView.swift */; };
+		A2000006 /* ChatInputBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000006 /* ChatInputBarView.swift */; };
+		A2000007 /* SuggestedQuestionChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000007 /* SuggestedQuestionChip.swift */; };
+		A2000008 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000008 /* MarkdownTextView.swift */; };
+		A3000001 /* SolarTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000001 /* SolarTerm.swift */; };
+		A3000002 /* SolarTermEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000002 /* SolarTermEngine.swift */; };
+		A3000005 /* SolarTermCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000005 /* SolarTermCardView.swift */; };
+		A3000006 /* SolarTermTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000006 /* SolarTermTimelineView.swift */; };
+		A3000007 /* SolarTermEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000007 /* SolarTermEngineTests.swift */; };
+		A4000001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B4000001 /* PrivacyInfo.xcprivacy */; };
+		A5000001 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
+		A5000002 /* PeriodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000002 /* PeriodDetailView.swift */; };
+		A6000001 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
+		A6000002 /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000002 /* UserProfileManager.swift */; };
+		A6000003 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000003 /* ProfileView.swift */; };
+		A6000004 /* WorkoutDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000004 /* WorkoutDashboardView.swift */; };
+		W1000001 /* CycleAdvisorWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = WB000001 /* CycleAdvisorWidget.swift */; };
+		W1000002 /* CycleWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = WB000002 /* CycleWidgetProvider.swift */; };
+		W1000003 /* CycleWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = WB000003 /* CycleWidgetViews.swift */; };
+		W1000004 /* CycleWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WB000004 /* CycleWidgetEntryView.swift */; };
+		W1000005 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
+		W1000006 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000006 /* Suggestion.swift */; };
+		W1000007 /* ResearchReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000005 /* ResearchReference.swift */; };
+		W1000008 /* CyclePhaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000003 /* CyclePhaseEngine.swift */; };
+		W1000009 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		W100000A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000A /* MockData.swift */; };
+		W100000B /* WidgetAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = WB000005 /* WidgetAssets.xcassets */; };
+		W100000C /* GrainOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012 /* GrainOverlay.swift */; };
+		W100000D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
+		W5000001 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
+		W6000001 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
+		WCP00002 /* CycleAdvisorWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = WB000007 /* CycleAdvisorWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C1000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1000001;
+			remoteInfo = CycleAdvisor;
+		};
+		WC000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = WE000001;
+			remoteInfo = CycleAdvisorWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		WCP00001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				WCP00002 /* CycleAdvisorWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9C7F89722FADA3BF007F5968 /* CycleAdvisor.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = CycleAdvisor.storekit; sourceTree = "<group>"; };
+		9C7F89742FADB245007F5968 /* File 2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "File 2.txt"; sourceTree = "<group>"; };
+		B1000001 /* CycleAdvisorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorApp.swift; sourceTree = "<group>"; };
+		B1000002 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		B1000003 /* CyclePhaseEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePhaseEngine.swift; sourceTree = "<group>"; };
+		B1000004 /* CyclePhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePhase.swift; sourceTree = "<group>"; };
+		B1000005 /* ResearchReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResearchReference.swift; sourceTree = "<group>"; };
+		B1000006 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
+		B1000007 /* CycleRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleRingView.swift; sourceTree = "<group>"; };
+		B1000008 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B1000009 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
+		B100000A /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		B100000B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		B100000C /* CyclePhaseEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePhaseEngineTests.swift; sourceTree = "<group>"; };
+		B100000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B100000E /* CycleAdvisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisor.entitlements; sourceTree = "<group>"; };
+		B100000F /* CycleAdvisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1000010 /* CycleAdvisorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CycleAdvisorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1000011 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B1000012 /* GrainOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrainOverlay.swift; sourceTree = "<group>"; };
+		B1000013 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		B1000014 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B1000020 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
+		B1000021 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		B1000030 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B1000031 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
+		B1000032 /* HomeSideMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSideMenuPanel.swift; sourceTree = "<group>"; };
+		B1000040 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		B2000001 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		B2000002 /* AssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantViewModel.swift; sourceTree = "<group>"; };
+		B2000003 /* AssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantView.swift; sourceTree = "<group>"; };
+		B2000004 /* PhaseHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseHeaderView.swift; sourceTree = "<group>"; };
+		B2000005 /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
+		B2000006 /* ChatInputBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBarView.swift; sourceTree = "<group>"; };
+		B2000007 /* SuggestedQuestionChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedQuestionChip.swift; sourceTree = "<group>"; };
+		B2000008 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
+		B3000001 /* SolarTerm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarTerm.swift; sourceTree = "<group>"; };
+		B3000002 /* SolarTermEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarTermEngine.swift; sourceTree = "<group>"; };
+		B3000005 /* SolarTermCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarTermCardView.swift; sourceTree = "<group>"; };
+		B3000006 /* SolarTermTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarTermTimelineView.swift; sourceTree = "<group>"; };
+		B3000007 /* SolarTermEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarTermEngineTests.swift; sourceTree = "<group>"; };
+		B4000001 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B5000001 /* MenstrualSymptoms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualSymptoms.swift; sourceTree = "<group>"; };
+		B5000002 /* PeriodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailView.swift; sourceTree = "<group>"; };
+		B6000001 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		B6000002 /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
+		B6000003 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B6000004 /* WorkoutDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDashboardView.swift; sourceTree = "<group>"; };
+		VR000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		VR000002 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		VR000003 /* Itim-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Itim-Regular.ttf"; sourceTree = "<group>"; };
+		WB000001 /* CycleAdvisorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorWidget.swift; sourceTree = "<group>"; };
+		WB000002 /* CycleWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleWidgetProvider.swift; sourceTree = "<group>"; };
+		WB000003 /* CycleWidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleWidgetViews.swift; sourceTree = "<group>"; };
+		WB000004 /* CycleWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleWidgetEntryView.swift; sourceTree = "<group>"; };
+		WB000005 /* WidgetAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WidgetAssets.xcassets; sourceTree = "<group>"; };
+		WB000006 /* Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widget.entitlements; sourceTree = "<group>"; };
+		WB000007 /* CycleAdvisorWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CycleAdvisorWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		WB000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F1000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		WF000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G1000001 = {
+			isa = PBXGroup;
+			children = (
+				9C7F89742FADB245007F5968 /* File 2.txt */,
+				9C7F89722FADA3BF007F5968 /* CycleAdvisor.storekit */,
+				G1000002 /* Sources */,
+				G100000A /* CycleAdvisorTests */,
+				G100000B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		G1000002 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B100000E /* CycleAdvisor.entitlements */,
+				B100000D /* Info.plist */,
+				B4000001 /* PrivacyInfo.xcprivacy */,
+				B1000011 /* Assets.xcassets */,
+				B1000001 /* CycleAdvisorApp.swift */,
+				B1000002 /* MainTabView.swift */,
+				G1000003 /* Core */,
+				G1000006 /* Features */,
+				G100000C /* Resources */,
+				G1000009 /* Shared */,
+				WG000001 /* Widget */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		G1000003 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B1000003 /* CyclePhaseEngine.swift */,
+				B1000013 /* HealthKitManager.swift */,
+				B1000020 /* LLMService.swift */,
+				B1000021 /* Secrets.swift */,
+				B3000002 /* SolarTermEngine.swift */,
+				B6000002 /* UserProfileManager.swift */,
+				G1000004 /* Models */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		G1000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B1000004 /* CyclePhase.swift */,
+				B5000001 /* MenstrualSymptoms.swift */,
+				B1000005 /* ResearchReference.swift */,
+				B3000001 /* SolarTerm.swift */,
+				B1000006 /* Suggestion.swift */,
+				B6000001 /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		G1000006 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				G1000007 /* Home */,
+				G6000001 /* Profile */,
+				G100000D /* Settings */,
+				G3000001 /* SolarTerms */,
+				G2000001 /* Assistant */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		G1000007 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B1000007 /* CycleRingView.swift */,
+				B1000008 /* HomeView.swift */,
+				B1000014 /* HomeViewModel.swift */,
+				B1000032 /* HomeSideMenuPanel.swift */,
+				B5000002 /* PeriodDetailView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		G1000009 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B1000009 /* DisclaimerView.swift */,
+				B100000A /* MockData.swift */,
+				B100000B /* Theme.swift */,
+				B1000012 /* GrainOverlay.swift */,
+				B1000040 /* LanguageManager.swift */,
+				B2000008 /* MarkdownTextView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		G100000A /* CycleAdvisorTests */ = {
+			isa = PBXGroup;
+			children = (
+				B100000C /* CyclePhaseEngineTests.swift */,
+				B3000007 /* SolarTermEngineTests.swift */,
+			);
+			path = CycleAdvisorTests;
+			sourceTree = "<group>";
+		};
+		G100000B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B100000F /* CycleAdvisor.app */,
+				B1000010 /* CycleAdvisorTests.xctest */,
+				WB000007 /* CycleAdvisorWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		G100000C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				G100000E /* Fonts */,
+				VG000001 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		G100000E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				VR000003 /* Itim-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		G100000D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B1000030 /* SettingsView.swift */,
+				B1000031 /* SubscriptionView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		G2000001 /* Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				B2000002 /* AssistantViewModel.swift */,
+				G2000002 /* Models */,
+				G2000003 /* Views */,
+			);
+			path = Assistant;
+			sourceTree = "<group>";
+		};
+		G2000002 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B2000001 /* ChatMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		G2000003 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B2000003 /* AssistantView.swift */,
+				B2000004 /* PhaseHeaderView.swift */,
+				B2000005 /* ChatBubbleView.swift */,
+				B2000006 /* ChatInputBarView.swift */,
+				B2000007 /* SuggestedQuestionChip.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		G3000001 /* SolarTerms */ = {
+			isa = PBXGroup;
+			children = (
+				G3000002 /* Views */,
+			);
+			path = SolarTerms;
+			sourceTree = "<group>";
+		};
+		G3000002 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B3000005 /* SolarTermCardView.swift */,
+				B3000006 /* SolarTermTimelineView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		G6000001 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B6000003 /* ProfileView.swift */,
+				B6000004 /* WorkoutDashboardView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		WG000001 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				WB000001 /* CycleAdvisorWidget.swift */,
+				WB000002 /* CycleWidgetProvider.swift */,
+				WB000003 /* CycleWidgetViews.swift */,
+				WB000004 /* CycleWidgetEntryView.swift */,
+				WB000005 /* WidgetAssets.xcassets */,
+				WB000006 /* Widget.entitlements */,
+				WB000008 /* Info.plist */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E1000001 /* CycleAdvisor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = L1000002 /* Build configuration list for PBXNativeTarget "CycleAdvisor" */;
+			buildPhases = (
+				R1000001 /* Resources */,
+				S1000001 /* Sources */,
+				F1000001 /* Frameworks */,
+				WCP00001 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				WT000001 /* PBXTargetDependency */,
+			);
+			name = CycleAdvisor;
+			productName = CycleAdvisor;
+			productReference = B100000F /* CycleAdvisor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E1000002 /* CycleAdvisorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = L1000003 /* Build configuration list for PBXNativeTarget "CycleAdvisorTests" */;
+			buildPhases = (
+				S1000002 /* Sources */,
+				F1000002 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				T1000001 /* PBXTargetDependency */,
+			);
+			name = CycleAdvisorTests;
+			productName = CycleAdvisorTests;
+			productReference = B1000010 /* CycleAdvisorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		WE000001 /* CycleAdvisorWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = WL000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWidget" */;
+			buildPhases = (
+				WR000001 /* Resources */,
+				WS000001 /* Sources */,
+				WF000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CycleAdvisorWidget;
+			productName = CycleAdvisorWidget;
+			productReference = WB000007 /* CycleAdvisorWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D1000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 2650;
+			};
+			buildConfigurationList = L1000001 /* Build configuration list for PBXProject "CycleAdvisor" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = G1000001;
+			productRefGroup = G100000B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E1000001 /* CycleAdvisor */,
+				E1000002 /* CycleAdvisorTests */,
+				WE000001 /* CycleAdvisorWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		R1000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A100000D /* Assets.xcassets in Resources */,
+				A1000024 /* Localizable.strings in Resources */,
+				A1000025 /* Itim-Regular.ttf in Resources */,
+				A4000001 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		WR000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				W100000B /* WidgetAssets.xcassets in Resources */,
+				W100000D /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		S1000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001 /* CycleAdvisorApp.swift in Sources */,
+				A1000002 /* MainTabView.swift in Sources */,
+				A1000003 /* CyclePhaseEngine.swift in Sources */,
+				A1000004 /* CyclePhase.swift in Sources */,
+				A1000005 /* ResearchReference.swift in Sources */,
+				A1000006 /* Suggestion.swift in Sources */,
+				A1000007 /* CycleRingView.swift in Sources */,
+				A1000008 /* HomeView.swift in Sources */,
+				A1000009 /* DisclaimerView.swift in Sources */,
+				A100000A /* MockData.swift in Sources */,
+				A100000B /* Theme.swift in Sources */,
+				A100000E /* GrainOverlay.swift in Sources */,
+				A100000F /* HealthKitManager.swift in Sources */,
+				A1000010 /* HomeViewModel.swift in Sources */,
+				A1000020 /* LLMService.swift in Sources */,
+				A1000021 /* Secrets.swift in Sources */,
+				A1000030 /* SettingsView.swift in Sources */,
+				A1000031 /* SubscriptionView.swift in Sources */,
+				A1000040 /* LanguageManager.swift in Sources */,
+				A1000032 /* HomeSideMenuPanel.swift in Sources */,
+				A2000001 /* ChatMessage.swift in Sources */,
+				A2000002 /* AssistantViewModel.swift in Sources */,
+				A2000003 /* AssistantView.swift in Sources */,
+				A2000004 /* PhaseHeaderView.swift in Sources */,
+				A2000005 /* ChatBubbleView.swift in Sources */,
+				A2000006 /* ChatInputBarView.swift in Sources */,
+				A2000007 /* SuggestedQuestionChip.swift in Sources */,
+				A2000008 /* MarkdownTextView.swift in Sources */,
+				A3000001 /* SolarTerm.swift in Sources */,
+				A3000002 /* SolarTermEngine.swift in Sources */,
+				A3000005 /* SolarTermCardView.swift in Sources */,
+				A3000006 /* SolarTermTimelineView.swift in Sources */,
+				A5000001 /* MenstrualSymptoms.swift in Sources */,
+				A5000002 /* PeriodDetailView.swift in Sources */,
+				A6000001 /* UserProfile.swift in Sources */,
+				A6000002 /* UserProfileManager.swift in Sources */,
+				A6000003 /* ProfileView.swift in Sources */,
+				A6000004 /* WorkoutDashboardView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		S1000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A100000C /* CyclePhaseEngineTests.swift in Sources */,
+				A3000007 /* SolarTermEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		WS000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				W1000001 /* CycleAdvisorWidget.swift in Sources */,
+				W1000002 /* CycleWidgetProvider.swift in Sources */,
+				W1000003 /* CycleWidgetViews.swift in Sources */,
+				W1000004 /* CycleWidgetEntryView.swift in Sources */,
+				W1000005 /* CyclePhase.swift in Sources */,
+				W1000006 /* Suggestion.swift in Sources */,
+				W1000007 /* ResearchReference.swift in Sources */,
+				W1000008 /* CyclePhaseEngine.swift in Sources */,
+				W1000009 /* Theme.swift in Sources */,
+				W100000A /* MockData.swift in Sources */,
+				W100000C /* GrainOverlay.swift in Sources */,
+				W5000001 /* MenstrualSymptoms.swift in Sources */,
+				W6000001 /* UserProfile.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		T1000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1000001 /* CycleAdvisor */;
+			targetProxy = C1000001 /* PBXContainerItemProxy */;
+		};
+		WT000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = WE000001 /* CycleAdvisorWidget */;
+			targetProxy = WC000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		VG000001 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				VR000001 /* en */,
+				VR000002 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		WX000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Widget.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/Widget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		WX000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Widget.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/Widget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		X1000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		X1000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		X1000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
+				CODE_SIGN_ENTITLEMENTS = Sources/CycleAdvisor.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		X1000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
+				CODE_SIGN_ENTITLEMENTS = Sources/CycleAdvisor.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		X1000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CycleAdvisor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CycleAdvisor";
+			};
+			name = Debug;
+		};
+		X1000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CycleAdvisor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CycleAdvisor";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		L1000001 /* Build configuration list for PBXProject "CycleAdvisor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				X1000001 /* Debug */,
+				X1000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		L1000002 /* Build configuration list for PBXNativeTarget "CycleAdvisor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				X1000003 /* Debug */,
+				X1000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		L1000003 /* Build configuration list for PBXNativeTarget "CycleAdvisorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				X1000005 /* Debug */,
+				X1000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		WL000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				WX000001 /* Debug */,
+				WX000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D1000001 /* Project object */;
+}

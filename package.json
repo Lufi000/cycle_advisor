@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "eval:profile": "npx --yes promptfoo@0.121.17 eval -c promptfooconfig.profile.yaml --no-progress-bar",
+    "eval:profile:example": "PROMPTFOO_PROFILE_ANSWERS=tools/assistant_profile_harness_answers.example.json npx --yes promptfoo@0.121.17 eval -c promptfooconfig.profile.yaml --no-progress-bar",
+    "eval:profile:live": "PROMPTFOO_PROFILE_PROVIDER=live npx --yes promptfoo@0.121.17 eval -c promptfooconfig.profile.yaml --no-progress-bar"
+  }
+}

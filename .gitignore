@@ -1,0 +1,48 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.pem
+Sources/Core/Secrets.swift
+
+# Xcode / Swift
+DerivedData/
+build/
+.build/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+
+# Node (若后续使用)
+node_modules/
+dist/
+.next/
+.turbo/
+
+# Python (若后续使用)
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# IDE
+.idea/
+.claude/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Go 编译产物
+bff/cycle-advisor-bff

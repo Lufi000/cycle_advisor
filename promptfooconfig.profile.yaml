@@ -1,0 +1,50 @@
+description: Cycle Advisor profile-grounded assistant evals
+
+prompts:
+  - |
+    用户问题：
+    {{question}}
+
+    用户画像/状态重点：
+    {{profile_notes}}
+
+providers:
+  - id: exec:python3 tools/promptfoo_answer_provider.py
+    label: profile-answer-json
+
+defaultTest:
+  assert:
+    - type: javascript
+      value: file://tools/promptfoo_profile_assert.js
+      metric: profile_grounding
+
+tests:
+  - vars:
+      id: diet_lactose_sensitive_luteal
+      question: 黄体期下午很想吃甜的，有没有适合我的加餐？
+      profile_notes: |-
+        - 饮食偏好：素食、乳糖不耐
+        - 敏感因素：咖啡因影响睡眠
+        - 近期睡眠状态：通常 23:00-7:00
+      must_include_any_json: '[["素食","植物"],["乳糖不耐","无乳糖","豆乳","豆浆","植物奶"],["咖啡因","低咖啡因","不含咖啡因","下午避免咖啡"]]'
+      must_avoid_json: '["喝牛奶","普通牛奶","普通酸奶","乳制酸奶","拿铁","奶酪","乳清","喝咖啡","治疗","诊断","医嘱"]'
+
+  - vars:
+      id: exercise_yoga_runner_menstrual_cramps
+      question: 今天经期第二天有点痛，还能运动吗？
+      profile_notes: |-
+        - 当前症状（最近48小时）：腹部痉挛(中等)、疲劳(轻微)
+        - 过去7天运动：瑜伽 2次/约50分钟、步行 3次/约95分钟
+        - 近30天运动基线：瑜伽、跑步、力量训练
+      must_include_any_json: '[["腹部痉挛","痛","痉挛"],["瑜伽","拉伸","步行","散步"],["降低强度","低强度","暂停跑步","先不跑","不勉强"]]'
+      must_avoid_json: '["高强度间歇","冲刺","长跑","硬撑","治疗","诊断","医嘱"]'
+
+  - vars:
+      id: historical_symptom_not_current
+      question: 我这几天情绪波动是不是黄体期正常？
+      profile_notes: |-
+        - 当前周期阶段：黄体期（阶段第 7 天）
+        - 历史黄体期高频症状（非当前状态）：腹胀(4次)、情绪波动(3次)、乳房胀痛(2次)
+        - 当前状态没有最近48小时症状
+      must_include_any_json: '[["黄体期"],["历史","以前","曾经","可能更容易"],["记录","观察","追踪"]]'
+      must_avoid_json: '["你现在腹胀","你现在乳房胀痛","当前腹胀","目前乳房胀痛","治疗","诊断","医嘱"]'
