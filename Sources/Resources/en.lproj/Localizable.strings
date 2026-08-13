@@ -78,13 +78,17 @@
 "billing.subscription.badge_inactive" = "Free";
 "billing.subscription.inactive" = "AI Pro is inactive";
 "billing.subscription.active_until" = "AI Pro active until %@";
-"billing.subscription.required_hint" = "Subscribe to continue AI chat after free messages are used.";
+"billing.subscription.active_title" = "AI Pro Active";
+"billing.subscription.active_detail" = "Your subscription is active. Tap to manage it.";
+"billing.subscription.chat_active" = "AI Pro chat available";
+"billing.subscription.free_plan" = "Free plan";
+"billing.subscription.required_hint" = "Subscribe to continue AI chat after today's free messages are used.";
 "billing.subscription.monthly_price" = "AI Pro %@";
-"billing.subscription.monthly_detail" = "1-month auto-renewable subscription. Unlocks AI Pro chat after free messages are used.";
-"billing.free_chat.remaining" = "%d free chats left";
-"billing.free_chat.warning_low" = "Only %d free chats left — AI Pro is required after.";
+"billing.subscription.monthly_detail" = "1-month auto-renewable subscription. Unlocks AI Pro chat after today's free messages are used.";
+"billing.chat.remaining_today" = "%d chats available today";
+"billing.free_chat.remaining" = "%d free chats left today";
+"billing.free_chat.warning_low" = "Only %d free chats left today — subscribe to AI Pro to continue after.";
 "billing.free_chat.warning_dismiss_a11y" = "Dismiss notice";
-"billing.suggestion.remaining" = "AI cards left %d/3";
 "billing.low_balance.hint" = "Low balance. Recharge to avoid interrupted chats.";
 "billing.package.credits" = "%d credits";
 "billing.menu.buy_pack" = "Buy %@ (%d credits)";
@@ -113,7 +117,7 @@
 "billing.error.daily_limit" = "Daily chat limit reached. Please try again tomorrow.";
 "billing.error.purchase_unavailable" = "Purchase is unavailable. Please try again later.";
 "billing.error.purchase_not_verified" = "Purchase could not be verified. Please try again.";
-"billing.error.subscription_required" = "Free chats are used up. Subscribe to AI Pro to continue.";
+"billing.error.subscription_required" = "Today's free chats are used up. Subscribe to AI Pro to continue.";
 "billing.error.product_load_failed" = "Couldn't load subscription details. Tap to retry.";
 "billing.suggestion.quota_exhausted" = "Today's AI card refreshes are exhausted (morning/noon/evening).";
 
@@ -131,7 +135,7 @@
 "billing.action.purchase_in_progress" = "A purchase is already in progress. Please wait.";
 "billing.subscription.loading" = "Loading subscription…";
 "billing.subscription.info_a11y" = "Subscription information";
-"billing.subscription.disclosure" = "AI Pro is a 1-month auto-renewable subscription that unlocks AI Pro chat after free messages are used. Payment is charged to your Apple ID at confirmation of purchase. It renews automatically at the listed price unless canceled at least 24 hours before the end of the current period. Subscription access is available on devices signed in with the same Apple ID. Manage or cancel anytime in your Apple ID Subscription settings.";
+"billing.subscription.disclosure" = "AI Pro is a 1-month auto-renewable subscription that unlocks AI Pro chat after today's free messages are used. Payment is charged to your Apple ID at confirmation of purchase. It renews automatically at the listed price unless canceled at least 24 hours before the end of the current period. Subscription access is available on devices signed in with the same Apple ID. Manage or cancel anytime in your Apple ID Subscription settings.";
 "billing.legal.terms" = "Terms of Use";
 "billing.legal.privacy" = "Privacy Policy";
 
@@ -330,6 +334,8 @@
 "error.empty_response" = "No response from AI, please try again";
 "error.invalid_response" = "Invalid network response";
 "error.http_format" = "Server error (%d), please try again";
+"error.auth_failed" = "AI service authentication failed. Please check the app token.";
+"error.network_unavailable" = "Unable to connect to the AI service. Please check your network and try again.";
 "error.decoding" = "Failed to parse response, please try again";
 
 /* Widget */

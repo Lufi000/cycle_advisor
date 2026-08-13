@@ -292,6 +292,8 @@ struct BillingAccountState: Codable, Equatable {
     var creditsBalance: Int
     var freeChatQuotaTotal: Int
     var freeChatQuotaUsed: Int
+    /// yyyy-MM-dd -> used free assistant chats
+    var freeChatUsageByDay: [String: Int]?
     var subscriptionExpirationDate: Date?
     var subscriptionProductID: String?
     /// 每日卡片建议刷新配额（早/中/晚）
@@ -309,6 +311,7 @@ struct BillingAccountState: Codable, Equatable {
         creditsBalance: 0,
         freeChatQuotaTotal: 10,
         freeChatQuotaUsed: 0,
+        freeChatUsageByDay: [:],
         subscriptionExpirationDate: nil,
         subscriptionProductID: nil,
         dailySuggestionQuota: 3,

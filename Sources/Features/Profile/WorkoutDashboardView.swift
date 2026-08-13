@@ -123,8 +123,10 @@ struct WorkoutDashboardView: View {
     private var weeklyRhythmSection: some View {
         let weeklyCount = stats.weeklyWorkoutCount ?? 0
         let totalMinutes = stats.weeklyTotalDurationMinutes ?? 0
-        let featuredActivity = stats.weeklyActivities?.first ?? stats.topActivities.first
-        let displayActivities = (stats.weeklyActivities?.isEmpty == false) ? (stats.weeklyActivities ?? []) : stats.topActivities
+        let weeklyActivities = sortedWorkoutActivities(stats.weeklyActivities ?? [])
+        let topActivities = sortedWorkoutActivities(stats.topActivities)
+        let displayActivities = weeklyActivities.isEmpty ? topActivities : weeklyActivities
+        let featuredActivity = displayActivities.first
         let title = weeklyTitle(for: featuredActivity, weeklyCount: weeklyCount)
 
         return VStack {
@@ -286,9 +288,12 @@ struct WorkoutDashboardView: View {
         let minutes = activity.totalDurationMinutes ?? 0
         let share = totalMinutes > 0 ? min(max(minutes / totalMinutes, 0.04), 1) : 0.04
         return HStack(alignment: .top, spacing: 14) {
-            Circle()
-                .fill(Theme.peachBlush)
+            Image(systemName: workoutIconName(for: activity))
+                .font(.system(size: 24, weight: .medium))
+                .foregroundStyle(Theme.accent)
                 .frame(width: 52, height: 52)
+                .background(Theme.peachBlush)
+                .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: 7) {
                 HStack(alignment: .firstTextBaseline) {
@@ -332,6 +337,20 @@ struct WorkoutDashboardView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(String(format: String(localized: "workout.category.accessibility_format"), localizedActivityName(for: activity), activity.count, formatDurationCompact(minutes)))
+    }
+
+    private func sortedWorkoutActivities(_ activities: [WorkoutStats.WorkoutActivity]) -> [WorkoutStats.WorkoutActivity] {
+        activities.sorted { lhs, rhs in
+            if lhs.count != rhs.count {
+                return lhs.count > rhs.count
+            }
+            let lhsDuration = lhs.totalDurationMinutes ?? 0
+            let rhsDuration = rhs.totalDurationMinutes ?? 0
+            if lhsDuration != rhsDuration {
+                return lhsDuration > rhsDuration
+            }
+            return lhs.key < rhs.key
+        }
     }
 
     private func workoutIconName(for activity: WorkoutStats.WorkoutActivity) -> String {
@@ -426,12 +445,12 @@ struct WorkoutDashboardView: View {
         let hours = roundedMinutes / 60
         let mins = roundedMinutes % 60
         if hours > 0, mins > 0 {
-            return String(format: String(localized: "workout.duration.hour_min_format"), hours, mins)
+            return "\(hours)h\(mins)min"
         }
         if hours > 0 {
-            return String(format: String(localized: "workout.duration.hour_format"), hours)
+            return "\(hours)h"
         }
-        return String(format: String(localized: "workout.duration.minute_format"), mins)
+        return "\(mins)min"
     }
 
 }

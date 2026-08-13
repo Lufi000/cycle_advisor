@@ -54,13 +54,11 @@ struct MainTabView: View {
         }
         // 切换到助手 Tab 时懒加载推荐问题（首页加载不再触发此请求）
         .onChange(of: selectedTab) { oldTab, newTab in
-            if oldTab == 2, newTab != 2 {
-                assistantViewModel.discardCurrentConversation()
-            }
             if newTab == 1 {
                 Task { await homeViewModel.load() }
             }
             if newTab == 2 {
+                assistantViewModel.prepareCurrentDayConversation()
                 Task { await homeViewModel.loadSuggestedQuestionsIfNeeded() }
             }
         }

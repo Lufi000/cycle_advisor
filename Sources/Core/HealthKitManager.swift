@@ -556,7 +556,7 @@ final class HealthKitManager {
         }
 
         let topActivities = activitySummaries.values
-            .sorted { $0.count > $1.count }
+            .sorted(by: Self.compareWorkoutActivitySummaries)
             .prefix(5)
             .map { $0.workoutActivity() }
 
@@ -574,7 +574,7 @@ final class HealthKitManager {
         }
 
         let weeklyActivities = weeklyActivitySummaries.values
-            .sorted { $0.count > $1.count }
+            .sorted(by: Self.compareWorkoutActivitySummaries)
             .prefix(5)
             .map { $0.workoutActivity(includeDuration: true) }
 
@@ -637,6 +637,19 @@ final class HealthKitManager {
                 totalDurationMinutes: includeDuration ? totalDuration / 60.0 : nil
             )
         }
+    }
+
+    private static func compareWorkoutActivitySummaries(
+        _ lhs: WorkoutActivitySummary,
+        _ rhs: WorkoutActivitySummary
+    ) -> Bool {
+        if lhs.count != rhs.count {
+            return lhs.count > rhs.count
+        }
+        if lhs.totalDuration != rhs.totalDuration {
+            return lhs.totalDuration > rhs.totalDuration
+        }
+        return lhs.descriptor.key < rhs.descriptor.key
     }
 
     private static func workoutDescriptor(for type: HKWorkoutActivityType) -> WorkoutActivityDescriptor {

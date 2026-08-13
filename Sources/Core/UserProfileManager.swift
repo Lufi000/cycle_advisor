@@ -217,6 +217,7 @@ final class BillingManager {
         let estimatedCredits: Int
         let usedFreeChat: Bool
         let usedSubscription: Bool
+        let freeChatDayKey: String?
         let source: CreditLedgerSource
         let createdAt: Date
     }
@@ -316,8 +317,15 @@ final class BillingManager {
         }
     }
 
-    var freeChatRemaining: Int { state.freeChatRemaining }
+    var freeChatRemaining: Int {
+        freeChatRemaining(on: Date())
+    }
     var creditsBalance: Int { state.creditsBalance }
+    var assistantChatsRemainingToday: Int {
+        let todayKey = dayKeyString(for: Date())
+        let todayCount = state.dailyMetrics[todayKey]?.assistantChatCount ?? 0
+        return max(0, maxAssistantChatsPerDay - todayCount)
+    }
     var isSubscriptionActive: Bool {
         guard let expiration = state.subscriptionExpirationDate else { return false }
         return expiration > Date()
@@ -336,6 +344,12 @@ final class BillingManager {
 
     func estimatedCredits(forTokens tokens: Int) -> Int {
         max(1, Int(ceil(Double(max(0, tokens)) / Double(Self.tokensPerCredit))))
+    }
+
+    private func freeChatRemaining(on date: Date) -> Int {
+        let dayKey = dayKeyString(for: date)
+        let used = state.freeChatUsageByDay?[dayKey] ?? 0
+        return max(0, state.freeChatQuotaTotal - used)
     }
 
     func suggestionRefreshRemainingToday(on date: Date = Date()) -> Int {
@@ -367,21 +381,6 @@ final class BillingManager {
         try guardAssistantRiskRules(at: now)
         let reservationID = UUID().uuidString
 
-        if state.freeChatRemaining > 0 {
-            state.freeChatQuotaUsed += 1
-            state.lastAssistantRequestAt = now
-            pendingReservations[reservationID] = PendingChargeReservation(
-                id: reservationID,
-                estimatedCredits: 0,
-                usedFreeChat: true,
-                usedSubscription: false,
-                source: .assistantChat,
-                createdAt: now
-            )
-            save()
-            return reservationID
-        }
-
         if isSubscriptionActive {
             state.lastAssistantRequestAt = now
             pendingReservations[reservationID] = PendingChargeReservation(
@@ -389,6 +388,26 @@ final class BillingManager {
                 estimatedCredits: 0,
                 usedFreeChat: false,
                 usedSubscription: true,
+                freeChatDayKey: nil,
+                source: .assistantChat,
+                createdAt: now
+            )
+            save()
+            return reservationID
+        }
+
+        if freeChatRemaining(on: now) > 0 {
+            let dayKey = dayKeyString(for: now)
+            var usageByDay = state.freeChatUsageByDay ?? [:]
+            usageByDay[dayKey, default: 0] += 1
+            state.freeChatUsageByDay = usageByDay
+            state.lastAssistantRequestAt = now
+            pendingReservations[reservationID] = PendingChargeReservation(
+                id: reservationID,
+                estimatedCredits: 0,
+                usedFreeChat: true,
+                usedSubscription: false,
+                freeChatDayKey: dayKey,
                 source: .assistantChat,
                 createdAt: now
             )
@@ -412,8 +431,10 @@ final class BillingManager {
                     }
                 }
             } else {
-                if reservation.usedFreeChat {
-                    state.freeChatQuotaUsed = max(0, state.freeChatQuotaUsed - 1)
+                if reservation.usedFreeChat, let dayKey = reservation.freeChatDayKey {
+                    var usageByDay = state.freeChatUsageByDay ?? [:]
+                    usageByDay[dayKey] = max(0, (usageByDay[dayKey] ?? 0) - 1)
+                    state.freeChatUsageByDay = usageByDay
                 }
             }
             save()
@@ -741,6 +762,7 @@ final class BillingManager {
             calendar.date(byAdding: .day, value: -$0, to: referenceDate).map(dayKeyString(for:))
         })
         state.suggestionQuotaUsageByDay = state.suggestionQuotaUsageByDay.filter { validDayKeys.contains($0.key) }
+        state.freeChatUsageByDay = (state.freeChatUsageByDay ?? [:]).filter { validDayKeys.contains($0.key) }
         state.dailyMetrics = state.dailyMetrics.filter { validDayKeys.contains($0.key) }
         save()
     }

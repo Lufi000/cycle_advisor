@@ -66,7 +66,7 @@ final class AssistantViewModel {
 
     init() {
         loadChatSessions()
-        discardCurrentConversation(archiveCurrent: false)
+        openTodaySessionIfAvailable()
     }
 
     // MARK: - Send Message
@@ -140,7 +140,7 @@ final class AssistantViewModel {
             usage = result.usage
         } catch {
             if let idx = messages.firstIndex(where: { $0.id == assistantId }) {
-                messages[idx].content = String(localized: "assistant.error_fallback")
+                messages[idx].content = Self.assistantErrorMessage(for: error)
             }
         }
 
@@ -301,6 +301,39 @@ final class AssistantViewModel {
         try? FileManager.default.removeItem(at: legacyHistoryURL)
     }
 
+    func prepareCurrentDayConversation() {
+        guard !isStreaming else { return }
+        let today = Calendar.current.startOfDay(for: Date())
+        if let currentDate = messages.first?.sessionDate,
+           Calendar.current.isDate(currentDate, inSameDayAs: today) {
+            return
+        }
+        saveCurrentSession()
+        openTodaySessionIfAvailable()
+    }
+
+    private func openTodaySessionIfAvailable() {
+        let today = Calendar.current.startOfDay(for: Date())
+        guard let session = chatSessions.first(where: { session in
+            guard let date = session.messages.first?.sessionDate else { return false }
+            return Calendar.current.isDate(date, inSameDayAs: today)
+        }) else {
+            messages = []
+            inputText = ""
+            billingNotice = ""
+            activeSessionID = nil
+            return
+        }
+        messages = session.messages.map {
+            var message = $0
+            message.isStreaming = false
+            return message
+        }
+        inputText = ""
+        billingNotice = ""
+        activeSessionID = session.id
+    }
+
     func openSession(_ id: UUID) {
         guard !isStreaming,
               let session = chatSessions.first(where: { $0.id == id })
@@ -402,7 +435,7 @@ final class AssistantViewModel {
             usage = result.usage
         } catch {
             if let idx = messages.firstIndex(where: { $0.id == assistantId }) {
-                messages[idx].content = String(localized: "assistant.error_fallback")
+                messages[idx].content = Self.assistantErrorMessage(for: error)
             }
         }
 
@@ -500,6 +533,14 @@ final class AssistantViewModel {
         guard !title.isEmpty else { return String(localized: "assistant.history.untitled") }
         if title.count <= 28 { return title }
         return String(title.prefix(28)) + "..."
+    }
+
+    private static func assistantErrorMessage(for error: Error) -> String {
+        if let localized = (error as? LocalizedError)?.errorDescription, !localized.isEmpty {
+            return localized
+        }
+        let message = error.localizedDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        return message.isEmpty ? String(localized: "assistant.error_fallback") : message
     }
 
     // MARK: - Billing

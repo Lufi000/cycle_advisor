@@ -82,6 +82,7 @@ enum LLMError: LocalizedError {
     case invalidResponse
     case httpError(statusCode: Int)
     case decodingFailed(String)
+    case networkUnavailable
 
     var errorDescription: String? {
         switch self {
@@ -90,9 +91,14 @@ enum LLMError: LocalizedError {
         case .invalidResponse:
             return String(localized: "error.invalid_response")
         case .httpError(let code):
+            if code == 401 || code == 403 {
+                return String(localized: "error.auth_failed")
+            }
             return String(format: String(localized: "error.http_format"), code)
         case .decodingFailed:
             return String(localized: "error.decoding")
+        case .networkUnavailable:
+            return String(localized: "error.network_unavailable")
         }
     }
 }
@@ -208,10 +214,18 @@ actor LLMService {
         )
 
         let urlRequest = try buildURLRequest(for: request)
-        let (asyncBytes, httpResponse) = try await session.bytes(for: urlRequest)
+        let asyncBytes: URLSession.AsyncBytes
+        let httpResponse: URLResponse
+        do {
+            (asyncBytes, httpResponse) = try await session.bytes(for: urlRequest)
+        } catch {
+            print("[LLM] streamChat network error: \(error)")
+            throw LLMError.networkUnavailable
+        }
 
         guard let http = httpResponse as? HTTPURLResponse, http.statusCode == 200 else {
             let code = (httpResponse as? HTTPURLResponse)?.statusCode ?? -1
+            print("[LLM] streamChat status: \(code)")
             throw LLMError.httpError(statusCode: code)
         }
 
@@ -273,7 +287,7 @@ actor LLMService {
             (data, response) = try await session.data(for: urlRequest)
         } catch {
             print("[LLM] network error: \(error)")
-            throw error
+            throw LLMError.networkUnavailable
         }
 
         guard let http = response as? HTTPURLResponse else {

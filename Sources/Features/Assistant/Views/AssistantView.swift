@@ -125,24 +125,28 @@ struct AssistantView: View {
                     }
                     .accessibilityLabel(String(localized: "common.back"))
                 }
-                if !viewModel.messages.isEmpty {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Menu {
-                            Button {
-                                viewModel.discardCurrentConversation()
-                            } label: {
-                                Label(String(localized: "assistant.new_chat"), systemImage: "square.and.pencil")
-                            }
-
-                            Button(role: .destructive) {
-                                viewModel.clearHistory()
-                            } label: {
-                                Label(String(localized: "assistant.clear_history"), systemImage: "trash")
-                            }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Button {
+                            showingChatHistory = true
                         } label: {
-                            Image(systemName: "ellipsis.circle")
-                                .foregroundStyle(Theme.textSecondary)
+                            Label(String(localized: "assistant.history.title"), systemImage: "clock.arrow.circlepath")
                         }
+
+                        Button {
+                            viewModel.discardCurrentConversation()
+                        } label: {
+                            Label(String(localized: "assistant.new_chat"), systemImage: "square.and.pencil")
+                        }
+
+                        Button(role: .destructive) {
+                            viewModel.clearHistory()
+                        } label: {
+                            Label(String(localized: "assistant.clear_history"), systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                            .foregroundStyle(Theme.textSecondary)
                     }
                 }
             }

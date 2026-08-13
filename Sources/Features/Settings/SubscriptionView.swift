@@ -22,12 +22,23 @@ struct SubscriptionView: View {
                         Spacer()
                         Text(billing.isSubscriptionActive ? String(localized: "billing.subscription.badge_active") : String(localized: "billing.subscription.badge_inactive"))
                             .font(.system(size: Theme.titleSize, weight: .bold, design: .rounded))
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                isDisclosureExpanded.toggle()
+                            }
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .font(.system(size: Theme.bodySize + 2))
+                        }
+                        .buttonStyle(.plain)
+                        .foregroundStyle(Theme.textSecondary)
+                        .accessibilityLabel(String(localized: "billing.subscription.info_a11y"))
                     }
 
                     HStack(spacing: 12) {
-                        Text(String(format: String(localized: "billing.free_chat.remaining"), billing.freeChatRemaining))
+                        Text(String(format: String(localized: billing.isSubscriptionActive ? "billing.chat.remaining_today" : "billing.free_chat.remaining"), billing.isSubscriptionActive ? billing.assistantChatsRemainingToday : billing.freeChatRemaining))
                         Spacer()
-                        Text(String(format: String(localized: "billing.suggestion.remaining"), billing.suggestionRefreshRemainingToday()))
+                        Text(billing.isSubscriptionActive ? String(localized: "billing.subscription.chat_active") : String(localized: "billing.subscription.free_plan"))
                     }
                     .font(.system(size: Theme.captionSize))
                     .foregroundStyle(Theme.textSecondary)
@@ -40,6 +51,13 @@ struct SubscriptionView: View {
                         Text("billing.subscription.required_hint")
                             .font(.system(size: Theme.captionSize))
                             .foregroundStyle(Theme.phaseMenstrual)
+                    }
+
+                    if isDisclosureExpanded {
+                        Text("billing.subscription.disclosure")
+                            .font(.system(size: Theme.captionSize))
+                            .foregroundStyle(Theme.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .padding(.vertical, 4)
@@ -83,25 +101,6 @@ struct SubscriptionView: View {
                     }
                 }
 
-                Button {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        isDisclosureExpanded.toggle()
-                    }
-                } label: {
-                    Image(systemName: "info.circle")
-                        .font(.system(size: Theme.bodySize + 2))
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(Theme.textSecondary)
-                .accessibilityLabel(String(localized: "billing.subscription.info_a11y"))
-
-                if isDisclosureExpanded {
-                    Text("billing.subscription.disclosure")
-                        .font(.system(size: Theme.captionSize))
-                        .foregroundStyle(Theme.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-
                 HStack(spacing: 16) {
                     Link(String(localized: "billing.legal.terms"), destination: Self.termsURL)
                     Link(String(localized: "billing.legal.privacy"), destination: Self.privacyURL)
@@ -134,16 +133,20 @@ struct SubscriptionView: View {
     @ViewBuilder
     private var subscribeButton: some View {
         Button {
-            Task { await purchaseSubscription() }
+            if billing.isSubscriptionActive {
+                showingManageSubscriptions = true
+            } else {
+                Task { await purchaseSubscription() }
+            }
         } label: {
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(subscribePrimaryText)
                         .font(.system(size: Theme.bodySize + 1, weight: .bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(subscribePrimaryColor)
                     Text(subscribeSecondaryText)
                         .font(.system(size: Theme.captionSize))
-                        .foregroundStyle(.white.opacity(0.85))
+                        .foregroundStyle(subscribeSecondaryColor)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -154,18 +157,21 @@ struct SubscriptionView: View {
             .padding(.horizontal, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(Theme.accent)
+                RoundedRectangle(cornerRadius: Theme.cardCornerRadius, style: .continuous)
+                    .fill(subscribeBackgroundColor)
             )
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+        .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
         .listRowBackground(Color.clear)
-        .disabled(billing.isPurchasing)
+        .disabled(billing.isPurchasing || (!billing.isSubscriptionActive && billing.isLoadingStoreProducts))
     }
 
     private var subscribePrimaryText: String {
+        if billing.isSubscriptionActive {
+            return String(localized: "billing.subscription.active_title")
+        }
         if billing.isPurchasing {
             return String(localized: "billing.action.purchasing_aipro")
         }
@@ -176,6 +182,9 @@ struct SubscriptionView: View {
     }
 
     private var subscribeSecondaryText: String {
+        if billing.isSubscriptionActive {
+            return String(localized: "billing.subscription.active_detail")
+        }
         if billing.isPurchasing {
             return ""
         }
@@ -185,9 +194,25 @@ struct SubscriptionView: View {
         return String(localized: "billing.subscription.monthly_detail")
     }
 
+    private var subscribeBackgroundColor: Color {
+        billing.isSubscriptionActive ? Theme.cardBackgroundSolid : Theme.accent
+    }
+
+    private var subscribePrimaryColor: Color {
+        billing.isSubscriptionActive ? Theme.textPrimary : .white
+    }
+
+    private var subscribeSecondaryColor: Color {
+        billing.isSubscriptionActive ? Theme.textSecondary : .white.opacity(0.85)
+    }
+
     @ViewBuilder
     private var subscribeButtonTrailingIcon: some View {
-        if billing.isPurchasing || billing.isLoadingStoreProducts {
+        if billing.isSubscriptionActive {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundStyle(Theme.accent)
+        } else if billing.isPurchasing || billing.isLoadingStoreProducts {
             ProgressView()
                 .tint(.white)
         } else {

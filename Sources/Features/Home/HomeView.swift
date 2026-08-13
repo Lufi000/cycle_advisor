@@ -510,6 +510,7 @@ private struct CycleTrackingTimelineView: View {
     let engine: CyclePhaseEngine
     let selectedPhase: CyclePhase
     let onSelectPhase: (CyclePhase) -> Void
+    private let segmentSpacing: CGFloat = 3
 
     private var durations: PhaseDurations {
         engine.phaseDurations(for: context.avgCycleLength)
@@ -528,7 +529,7 @@ private struct CycleTrackingTimelineView: View {
                 let markerX = width * currentProgress
 
                 ZStack(alignment: .leading) {
-                    HStack(spacing: 3) {
+                    HStack(spacing: segmentSpacing) {
                         ForEach(CyclePhase.allCases, id: \.self) { phase in
                             Button {
                                 onSelectPhase(phase)
@@ -571,16 +572,20 @@ private struct CycleTrackingTimelineView: View {
             }
             .frame(height: 48)
 
-            HStack(spacing: 6) {
-                ForEach(CyclePhase.allCases, id: \.self) { phase in
-                    Text(phase.displayName)
-                        .font(Theme.itim(size: 12))
-                        .foregroundStyle(phase == selectedPhase ? phase.color : Color.black.opacity(0.50))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.72)
-                        .frame(maxWidth: .infinity)
-                }
+            GeometryReader { proxy in
+                let width = proxy.size.width
+                let labelWidth: CGFloat = 56
+                let labelX = phaseMidpoint(for: selectedPhase, totalWidth: width)
+
+                Text(selectedPhase.displayName)
+                    .font(Theme.itim(size: 12))
+                    .foregroundStyle(selectedPhase.color)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+                    .frame(width: labelWidth, height: 16)
+                    .offset(x: min(max(labelX - labelWidth / 2, 0), max(width - labelWidth, 0)))
             }
+            .frame(height: 16)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(String(format: String(localized: "home.cycle_stage.a11y %lld %@"), Int64(context.cycleDay), context.phase.displayName))
@@ -593,10 +598,18 @@ private struct CycleTrackingTimelineView: View {
     }
 
     private func segmentWidth(for phase: CyclePhase, totalWidth: CGFloat) -> CGFloat {
-        let gapTotal: CGFloat = 9
+        let gapTotal = segmentSpacing * CGFloat(max(CyclePhase.allCases.count - 1, 0))
         let available = max(totalWidth - gapTotal, 1)
         let phaseDuration = durations.duration(for: phase)
         return available * CGFloat(phaseDuration) / CGFloat(max(durations.total, 1))
+    }
+
+    private func phaseMidpoint(for phase: CyclePhase, totalWidth: CGFloat) -> CGFloat {
+        let phases = CyclePhase.allCases
+        let precedingWidth = phases.prefix { $0 != phase }.reduce(CGFloat.zero) { partial, item in
+            partial + segmentWidth(for: item, totalWidth: totalWidth) + segmentSpacing
+        }
+        return precedingWidth + segmentWidth(for: phase, totalWidth: totalWidth) / 2
     }
 }
 

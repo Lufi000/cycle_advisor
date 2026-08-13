@@ -78,13 +78,17 @@
 "billing.subscription.badge_inactive" = "免费版";
 "billing.subscription.inactive" = "AI Pro 未开通";
 "billing.subscription.active_until" = "AI Pro 有效期至 %@";
-"billing.subscription.required_hint" = "免费对话用完后，订阅 AI Pro 可继续使用 AI 对话。";
+"billing.subscription.active_title" = "AI Pro 已开通";
+"billing.subscription.active_detail" = "订阅权益已生效，点此管理订阅。";
+"billing.subscription.chat_active" = "AI Pro 对话可用";
+"billing.subscription.free_plan" = "免费版";
+"billing.subscription.required_hint" = "今日免费对话用完后，订阅 AI Pro 可继续使用 AI 对话。";
 "billing.subscription.monthly_price" = "AI Pro %@";
-"billing.subscription.monthly_detail" = "1 个月自动续订订阅，免费对话用完后解锁 AI Pro 对话。";
-"billing.free_chat.remaining" = "免费对话剩余 %d 次";
-"billing.free_chat.warning_low" = "免费对话仅剩 %d 次，用完后需订阅 AI Pro";
+"billing.subscription.monthly_detail" = "1 个月自动续订订阅，今日免费对话用完后解锁 AI Pro 对话。";
+"billing.chat.remaining_today" = "今日可用对话 %d 次";
+"billing.free_chat.remaining" = "今日免费对话剩余 %d 次";
+"billing.free_chat.warning_low" = "今日免费对话仅剩 %d 次，用完后可订阅 AI Pro 继续使用";
 "billing.free_chat.warning_dismiss_a11y" = "关闭提示";
-"billing.suggestion.remaining" = "AI建议剩余 %d/3";
 "billing.low_balance.hint" = "余额较低，建议先充值避免对话中断";
 "billing.package.credits" = "%d credits";
 "billing.menu.buy_pack" = "充值 %@（%d credits）";
@@ -113,7 +117,7 @@
 "billing.error.daily_limit" = "今日对话次数已达上限，请明天再试";
 "billing.error.purchase_unavailable" = "暂时无法购买，请稍后再试";
 "billing.error.purchase_not_verified" = "购买无法验证，请稍后重试";
-"billing.error.subscription_required" = "免费对话已用完，订阅 AI Pro 后可继续使用。";
+"billing.error.subscription_required" = "今日免费对话已用完，订阅 AI Pro 后可继续使用。";
 "billing.error.product_load_failed" = "订阅信息加载失败，点此重试。";
 "billing.suggestion.quota_exhausted" = "今日 AI 建议刷新次数已用完（早/中/晚各 1 次）";
 
@@ -131,7 +135,7 @@
 "billing.action.purchase_in_progress" = "已有一笔购买正在进行，请稍等。";
 "billing.subscription.loading" = "订阅信息加载中…";
 "billing.subscription.info_a11y" = "订阅信息";
-"billing.subscription.disclosure" = "AI Pro 是 1 个月自动续订订阅，免费对话用完后解锁 AI Pro 对话。确认购买时将通过你的 Apple ID 扣款。订阅会按上方价格自动续订，除非在当前周期结束前至少 24 小时取消。订阅权益可在使用同一 Apple ID 登录的设备上使用。可随时在 Apple ID 的订阅设置中管理或取消。";
+"billing.subscription.disclosure" = "AI Pro 是 1 个月自动续订订阅，今日免费对话用完后解锁 AI Pro 对话。确认购买时将通过你的 Apple ID 扣款。订阅会按上方价格自动续订，除非在当前周期结束前至少 24 小时取消。订阅权益可在使用同一 Apple ID 登录的设备上使用。可随时在 Apple ID 的订阅设置中管理或取消。";
 "billing.legal.terms" = "使用条款";
 "billing.legal.privacy" = "隐私政策";
 
@@ -331,6 +335,8 @@
 "error.empty_response" = "AI 未返回内容，请稍后重试";
 "error.invalid_response" = "网络响应格式异常";
 "error.http_format" = "服务器错误（%d），请稍后重试";
+"error.auth_failed" = "AI 服务鉴权失败，请检查 appToken 配置。";
+"error.network_unavailable" = "无法连接 AI 服务，请检查网络后重试。";
 "error.decoding" = "数据解析失败，请稍后重试";
 
 /* Widget */
