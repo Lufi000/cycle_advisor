@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -24,8 +25,10 @@ func main() {
 	}
 
 	proxy := &Proxy{
-		APIKey:    apiKey,
-		AppTokens: tokens,
+		APIKey:               apiKey,
+		AppTokens:            tokens,
+		AllowUnauthenticated: envBool("ALLOW_UNAUTHENTICATED_APP"),
+		UnauthRatePerMinute:  envInt("UNAUTH_RATE_LIMIT_PER_MINUTE", defaultUnauthRatePerMin),
 	}
 
 	mux := http.NewServeMux()
@@ -39,7 +42,12 @@ func main() {
 	for _, l := range tokens {
 		labels = append(labels, l)
 	}
-	log.Printf("BFF proxy listening on %s (apps: %s)", addr, strings.Join(labels, ", "))
+	log.Printf("BFF proxy listening on %s (apps: %s, allow_unauthenticated=%t, unauth_rate_per_minute=%d)",
+		addr,
+		strings.Join(labels, ", "),
+		proxy.AllowUnauthenticated,
+		proxy.UnauthRatePerMinute,
+	)
 	if err := http.ListenAndServe(addr, mux); err != nil {
 		log.Fatal(err)
 	}
@@ -80,3 +88,20 @@ func loadAppTokens() (map[string]string, error) {
 type errEnv string
 
 func (e errEnv) Error() string { return string(e) }
+
+func envBool(name string) bool {
+	value := strings.TrimSpace(strings.ToLower(os.Getenv(name)))
+	return value == "1" || value == "true" || value == "yes" || value == "on"
+}
+
+func envInt(name string, fallback int) int {
+	value := strings.TrimSpace(os.Getenv(name))
+	if value == "" {
+		return fallback
+	}
+	parsed, err := strconv.Atoi(value)
+	if err != nil || parsed <= 0 {
+		return fallback
+	}
+	return parsed
+}

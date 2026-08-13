@@ -6,19 +6,34 @@ import (
 	"encoding/json"
 	"io"
 	"log"
+	"net"
 	"net/http"
+	"strings"
+	"sync"
 	"time"
 )
 
 const (
-	upstreamURL    = "https://api.deepseek.com/v1/chat/completions"
-	maxBodySize    = 64 * 1024 // 64 KB
-	requestTimeout = 180 * time.Second
+	upstreamURL              = "https://api.deepseek.com/v1/chat/completions"
+	maxBodySize              = 64 * 1024 // 64 KB
+	requestTimeout           = 180 * time.Second
+	defaultUnauthRatePerMin  = 12
+	unauthRateWindowDuration = time.Minute
 )
 
 type Proxy struct {
-	APIKey    string
-	AppTokens map[string]string // token -> app label (e.g. "zhiji", "cycle", "nvc")
+	APIKey               string
+	AppTokens            map[string]string // token -> app label (e.g. "zhiji", "cycle", "nvc")
+	AllowUnauthenticated bool
+	UnauthRatePerMinute  int
+
+	mu           sync.Mutex
+	unauthCounts map[string]rateCounter
+}
+
+type rateCounter struct {
+	windowStart time.Time
+	count       int
 }
 
 func (p *Proxy) HandleCompletions(w http.ResponseWriter, r *http.Request) {
@@ -27,12 +42,21 @@ func (p *Proxy) HandleCompletions(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Authenticate
+	// Authenticate. Static app tokens are optional only when explicitly enabled for
+	// TestFlight/public clients; unauthenticated traffic is rate-limited by IP.
 	token := r.Header.Get("X-App-Token")
 	appLabel, ok := p.AppTokens[token]
 	if !ok || token == "" {
-		http.Error(w, `{"error":"unauthorized"}`, http.StatusUnauthorized)
-		return
+		if !p.AllowUnauthenticated {
+			http.Error(w, `{"error":"unauthorized"}`, http.StatusUnauthorized)
+			return
+		}
+		clientIP := clientIPFromRequest(r)
+		if !p.allowUnauthenticatedRequest(clientIP) {
+			http.Error(w, `{"error":"rate limited"}`, http.StatusTooManyRequests)
+			return
+		}
+		appLabel = "unauthenticated:" + clientIP
 	}
 
 	// Read request body with size limit
@@ -113,4 +137,46 @@ func peekStream(body []byte) bool {
 		return false
 	}
 	return peek.Stream
+}
+
+func clientIPFromRequest(r *http.Request) string {
+	if forwarded := r.Header.Get("X-Forwarded-For"); forwarded != "" {
+		parts := strings.Split(forwarded, ",")
+		if ip := strings.TrimSpace(parts[0]); ip != "" {
+			return ip
+		}
+	}
+	if realIP := strings.TrimSpace(r.Header.Get("X-Real-IP")); realIP != "" {
+		return realIP
+	}
+	host, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err == nil && host != "" {
+		return host
+	}
+	return r.RemoteAddr
+}
+
+func (p *Proxy) allowUnauthenticatedRequest(clientIP string) bool {
+	limit := p.UnauthRatePerMinute
+	if limit <= 0 {
+		limit = defaultUnauthRatePerMin
+	}
+	now := time.Now()
+
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	if p.unauthCounts == nil {
+		p.unauthCounts = map[string]rateCounter{}
+	}
+	counter := p.unauthCounts[clientIP]
+	if now.Sub(counter.windowStart) >= unauthRateWindowDuration {
+		counter = rateCounter{windowStart: now}
+	}
+	if counter.count >= limit {
+		p.unauthCounts[clientIP] = counter
+		return false
+	}
+	counter.count++
+	p.unauthCounts[clientIP] = counter
+	return true
 }
