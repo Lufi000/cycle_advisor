@@ -23,9 +23,7 @@ struct SubscriptionView: View {
                         Text(billing.isSubscriptionActive ? String(localized: "billing.subscription.badge_active") : String(localized: "billing.subscription.badge_inactive"))
                             .font(.system(size: Theme.titleSize, weight: .bold, design: .rounded))
                         Button {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                isDisclosureExpanded.toggle()
-                            }
+                            isDisclosureExpanded.toggle()
                         } label: {
                             Image(systemName: "info.circle")
                                 .font(.system(size: Theme.bodySize + 2))
@@ -35,18 +33,6 @@ struct SubscriptionView: View {
                         .accessibilityLabel(String(localized: "billing.subscription.info_a11y"))
                     }
 
-                    HStack(spacing: 12) {
-                        Text(String(format: String(localized: billing.isSubscriptionActive ? "billing.chat.remaining_today" : "billing.free_chat.remaining"), billing.isSubscriptionActive ? billing.assistantChatsRemainingToday : billing.freeChatRemaining))
-                        Spacer()
-                        Text(billing.isSubscriptionActive ? String(localized: "billing.subscription.chat_active") : String(localized: "billing.subscription.free_plan"))
-                    }
-                    .font(.system(size: Theme.captionSize))
-                    .foregroundStyle(Theme.textSecondary)
-
-                    Text(billing.subscriptionStatusText)
-                        .font(.system(size: Theme.captionSize))
-                        .foregroundStyle(Theme.textSecondary)
-
                     if billing.shouldWarnLowBalance {
                         Text("billing.subscription.required_hint")
                             .font(.system(size: Theme.captionSize))
@@ -54,10 +40,17 @@ struct SubscriptionView: View {
                     }
 
                     if isDisclosureExpanded {
-                        Text("billing.subscription.disclosure")
-                            .font(.system(size: Theme.captionSize))
-                            .foregroundStyle(Theme.textSecondary)
-                            .fixedSize(horizontal: false, vertical: true)
+                        VStack(alignment: .leading, spacing: 6) {
+                            ForEach(subscriptionInfoLines, id: \.self) { line in
+                                Text(line)
+                            }
+
+                            Text("billing.subscription.disclosure")
+                                .padding(.top, 2)
+                        }
+                        .font(.system(size: Theme.captionSize))
+                        .foregroundStyle(Theme.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .padding(.vertical, 4)
@@ -204,6 +197,19 @@ struct SubscriptionView: View {
 
     private var subscribeSecondaryColor: Color {
         billing.isSubscriptionActive ? Theme.textSecondary : .white.opacity(0.85)
+    }
+
+    private var subscriptionInfoLines: [String] {
+        [
+            String(
+                format: String(localized: billing.isSubscriptionActive ? "billing.chat.remaining_today" : "billing.free_chat.remaining"),
+                billing.isSubscriptionActive ? billing.assistantChatsRemainingToday : billing.freeChatRemaining
+            ),
+            billing.isSubscriptionActive
+                ? String(localized: "billing.subscription.chat_active")
+                : String(localized: "billing.subscription.free_plan"),
+            billing.subscriptionStatusText
+        ]
     }
 
     @ViewBuilder
