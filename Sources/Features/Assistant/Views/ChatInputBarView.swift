@@ -34,7 +34,7 @@ struct ChatInputBarView: View {
                         isStreaming
                             ? Theme.textSecondary
                             : (text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                               ? Color.clear
+                               ? Color.black.opacity(0.30)
                                : Theme.accent)
                     )
                     .frame(width: 58, height: 46)

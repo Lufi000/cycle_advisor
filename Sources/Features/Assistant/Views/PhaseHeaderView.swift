@@ -3,10 +3,21 @@ import SwiftUI
 /// 助手页顶部固定 Header，展示关键健康指标
 struct PhaseHeaderView: View {
     let context: CycleContext
+    let displayName: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 18) {
+        VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(displayName)
+                Text(String(localized: "assistant.header.summary_title"))
+            }
+            .font(Theme.itim(size: 22))
+            .foregroundStyle(Theme.textPrimary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.78)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(spacing: 10) {
                 if let hrv = context.healthMetrics.hrvCurrent {
                     metricChip(
                         label: String(localized: "assistant.header.hrv"),
@@ -27,7 +38,7 @@ struct PhaseHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
         .padding(.top, 8)
-        .padding(.bottom, 20)
+        .padding(.bottom, 14)
         .background(
             Theme.background
                 .ignoresSafeArea(edges: .top)
@@ -40,7 +51,7 @@ struct PhaseHeaderView: View {
         HStack(spacing: 10) {
             Text(label)
                 .font(Theme.itim(size: 18))
-                .foregroundStyle(Color.black.opacity(0.30))
+                .foregroundStyle(Theme.accent)
             Text(parts.number)
                 .font(Theme.itim(size: 18))
                 .foregroundStyle(Color.black)
@@ -71,5 +82,5 @@ struct PhaseHeaderView: View {
 }
 
 #Preview {
-    PhaseHeaderView(context: MockData.lutealContext)
+    PhaseHeaderView(context: MockData.lutealContext, displayName: "Lufi")
 }

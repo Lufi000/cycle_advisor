@@ -163,6 +163,7 @@
 "assistant.message.delete" = "Delete";
 
 "assistant.header.day_format %@ %lld" = "%1$@ · Day %2$lld";
+"assistant.header.summary_title" = "Daily snapshot";
 "assistant.header.exercise" = "Exercise";
 "assistant.header.steps" = "Steps";
 "assistant.header.hrv" = "HRV";

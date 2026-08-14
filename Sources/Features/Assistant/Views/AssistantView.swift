@@ -22,7 +22,7 @@ struct AssistantView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 // 顶部固定健康 Header
-                PhaseHeaderView(context: viewModel.context)
+                PhaseHeaderView(context: viewModel.context, displayName: sanitizedDisplayName)
                 lowQuotaWarningBar
 
                 // 首屏不滚动；有对话后才进入聊天滚动列表

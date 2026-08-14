@@ -163,6 +163,7 @@
 "assistant.message.delete" = "删除";
 
 "assistant.header.day_format %@ %lld" = "%1$@ · 第%2$lld天";
+"assistant.header.summary_title" = "今日概览";
 "assistant.header.exercise" = "锻炼";
 "assistant.header.steps" = "步数";
 "assistant.header.hrv" = "HRV";
