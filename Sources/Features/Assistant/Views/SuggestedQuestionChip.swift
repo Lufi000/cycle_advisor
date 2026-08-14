@@ -7,16 +7,20 @@ struct SuggestedQuestionChip: View {
 
     var body: some View {
         Button(action: onTap) {
-            HStack {
+            HStack(alignment: .center, spacing: 10) {
                 Text(question)
                     .font(Theme.itim(size: 18))
                     .foregroundStyle(Theme.textPrimary)
                     .multilineTextAlignment(.leading)
-                Spacer()
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
                 Image(systemName: "chevron.right")
                     .font(.system(size: 10, weight: .semibold))
                     .foregroundStyle(Theme.textSecondary)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 14)
             .padding(.vertical, 11)
             .background(Theme.cardBackgroundSolid)
@@ -28,6 +32,7 @@ struct SuggestedQuestionChip: View {
             )
         }
         .buttonStyle(.plain)
+        .frame(maxWidth: .infinity)
     }
 }
 

@@ -173,6 +173,9 @@ struct ChatBubbleView: View {
             }
         }
         .padding(.top, 4)
+        .padding(.leading, 18)
+        .padding(.trailing, 18)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: - Thinking Accordion
