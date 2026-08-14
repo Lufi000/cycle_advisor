@@ -10,7 +10,7 @@ struct SuggestedQuestionChip: View {
             HStack(alignment: .center, spacing: 0) {
                 Text(question)
                     .font(Theme.itim(size: 18))
-                    .foregroundStyle(Theme.accent)
+                    .foregroundStyle(Theme.textPrimary.opacity(0.70))
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
@@ -20,7 +20,7 @@ struct SuggestedQuestionChip: View {
             .padding(.horizontal, 14)
             .padding(.vertical, 11)
             .background(Theme.cardBackgroundSolid)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
             .shadow(
                 color: Theme.textPrimary.opacity(0.05),
                 radius: 4,
