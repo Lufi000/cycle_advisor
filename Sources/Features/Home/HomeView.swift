@@ -44,6 +44,8 @@ struct HomeView: View {
                         .ignoresSafeArea()
                 )
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar(isSideMenuOpen ? .hidden : .visible, for: .navigationBar)
+                .toolbar(isSideMenuOpen ? .hidden : .visible, for: .tabBar)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
