@@ -492,10 +492,18 @@ actor LLMService {
         )
 
         let urlRequest = try buildURLRequest(for: request)
-        let (asyncBytes, httpResponse) = try await session.bytes(for: urlRequest)
+        let asyncBytes: URLSession.AsyncBytes
+        let httpResponse: URLResponse
+        do {
+            (asyncBytes, httpResponse) = try await session.bytes(for: urlRequest)
+        } catch {
+            print("[LLM] streamChat network error: \(error)")
+            throw LLMError.networkUnavailable
+        }
 
         guard let http = httpResponse as? HTTPURLResponse, http.statusCode == 200 else {
             let code = (httpResponse as? HTTPURLResponse)?.statusCode ?? -1
+            print("[LLM] streamChat status: \(code)")
             throw LLMError.httpError(statusCode: code)
         }
 
@@ -503,34 +511,42 @@ actor LLMService {
         var fullReasoning = ""
         var emittedLength = 0
 
-        for try await line in asyncBytes.lines {
-            guard let data = Self.sseData(from: line),
-                  let parsed = try? decoder.decode(LLMResponse.self, from: data)
-            else { continue }
+        do {
+            for try await line in asyncBytes.lines {
+                guard let data = Self.sseData(from: line),
+                      let parsed = try? decoder.decode(LLMResponse.self, from: data)
+                else { continue }
 
-            let choice = parsed.choices.first
+                let choice = parsed.choices.first
 
-            // DeepSeek reasoner 把推理过程放在独立字段；非推理模型该字段为空，分支自然跳过
-            if let reasoning = choice?.delta?.reasoningContent, !reasoning.isEmpty {
-                fullReasoning += reasoning
-                onThinking(fullReasoning)
-            }
-
-            let chunk = choice?.delta?.content ?? choice?.message?.content ?? ""
-            if !chunk.isEmpty {
-                fullContent += chunk
-                let cleaned = Self.cleanContent(fullContent)
-                if cleaned.count > emittedLength {
-                    let newPart = String(cleaned.dropFirst(emittedLength))
-                    onToken(newPart)
-                    emittedLength = cleaned.count
+                // DeepSeek reasoner 把推理过程放在独立字段；非推理模型该字段为空，分支自然跳过
+                if let reasoning = choice?.delta?.reasoningContent, !reasoning.isEmpty {
+                    fullReasoning += reasoning
+                    onThinking(fullReasoning)
                 }
-            }
 
-            if choice?.finishReason == "stop" { break }
+                let chunk = choice?.delta?.content ?? choice?.message?.content ?? ""
+                if !chunk.isEmpty {
+                    fullContent += chunk
+                    let cleaned = Self.cleanContent(fullContent)
+                    if cleaned.count > emittedLength {
+                        let newPart = String(cleaned.dropFirst(emittedLength))
+                        onToken(newPart)
+                        emittedLength = cleaned.count
+                    }
+                }
+
+                if choice?.finishReason == "stop" { break }
+            }
+        } catch {
+            print("[LLM] streamChat read error: \(error)")
+            throw LLMError.networkUnavailable
         }
 
         let cleaned = Self.cleanContent(fullContent)
+        guard !cleaned.isEmpty else {
+            throw LLMError.emptyResponse
+        }
         let inputTokens = Self.estimateTokenCount(messages: request.messages)
         let outputTokens = Self.estimateTokenCount(from: cleaned)
         return LLMChatStreamResult(

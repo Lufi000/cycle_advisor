@@ -112,6 +112,12 @@ struct AssistantView: View {
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .tabBar)
+            .task {
+                await billing.refreshSubscriptionStatus()
+                if billing.isSubscriptionActive {
+        viewModel.billingNotice = ""
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -283,7 +289,7 @@ struct AssistantView: View {
     private func sendCurrentInput() {
         let text = viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
-        viewModel.billingNotice = ""
+                    viewModel.billingNotice = ""
         pendingForceScrollToBottom = true
         viewModel.inputText = ""
         Task { await viewModel.sendMessage(text) }
@@ -432,7 +438,8 @@ struct AssistantView: View {
     @ViewBuilder
     private var lowQuotaWarningBar: some View {
         let remaining = billing.freeChatRemaining
-        if !dismissedLowQuotaWarning,
+        if !billing.isSubscriptionActive,
+           !dismissedLowQuotaWarning,
            remaining > 0,
            remaining <= Self.lowQuotaWarningThreshold {
             HStack(spacing: 8) {

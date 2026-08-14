@@ -83,7 +83,7 @@ final class AssistantViewModel {
                 return LLMMessage(role: msg.role.rawValue, content: msg.content)
             } + [LLMMessage(role: "user", content: trimmed)]
 
-        guard let reservationID = reserveChatCredits(history: previewHistory, systemPrompt: systemPrompt) else {
+        guard let reservationID = await reserveChatCredits(history: previewHistory, systemPrompt: systemPrompt) else {
             return
         }
         billingNotice = ""
@@ -399,7 +399,7 @@ final class AssistantViewModel {
             }
 
         let systemPrompt = LLMService.buildChatSystemPrompt(context: context, profile: UserProfileManager.shared.profile)
-        guard let reservationID = reserveChatCredits(history: apiHistory, systemPrompt: systemPrompt) else {
+        guard let reservationID = await reserveChatCredits(history: apiHistory, systemPrompt: systemPrompt) else {
             if let idx = messages.firstIndex(where: { $0.id == assistantId }) {
                 messages[idx].isStreaming = false
                 messages[idx].content = billingNotice
@@ -545,12 +545,18 @@ final class AssistantViewModel {
 
     // MARK: - Billing
 
-    private func reserveChatCredits(history: [LLMMessage], systemPrompt: String) -> String? {
+    private func reserveChatCredits(history: [LLMMessage], systemPrompt: String) async -> String? {
         let inputTokens = LLMService.estimateTokenCount(from: systemPrompt) + LLMService.estimateTokenCount(messages: history)
         let estimatedTotalTokens = inputTokens + 800 + Self.postProcessTokenBudget
         let estimatedCredits = BillingManager.shared.estimatedCredits(forTokens: estimatedTotalTokens)
+        let billing = BillingManager.shared
+
+        if !billing.isSubscriptionActive && billing.freeChatRemaining == 0 {
+            await billing.refreshSubscriptionStatus()
+        }
+
         do {
-            return try BillingManager.shared.reserveAssistantChat(estimatedCredits: estimatedCredits)
+            return try billing.reserveAssistantChat(estimatedCredits: estimatedCredits)
         } catch {
             billingNotice = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             return nil

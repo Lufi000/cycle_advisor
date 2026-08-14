@@ -378,6 +378,7 @@ final class BillingManager {
 
     func reserveAssistantChat(estimatedCredits: Int) throws -> String {
         let now = Date()
+        cleanupExpiredUsageWindow(referenceDate: now)
         try guardAssistantRiskRules(at: now)
         let reservationID = UUID().uuidString
 
