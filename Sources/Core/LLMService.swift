@@ -358,6 +358,43 @@ actor LLMService {
         return Array(parsed.prefix(3))
     }
 
+    func generateWorkoutSummary(
+        context: CycleContext,
+        profile: UserProfile?,
+        featuredActivity: WorkoutStats.WorkoutActivity,
+        weeklyCount: Int,
+        weeklyTotalDurationMinutes: Double,
+        responseLanguage: ResponseLanguage = .simplifiedChinese
+    ) async throws -> String {
+        let request = LLMRequest(
+            model: Self.utilityModelName,
+            messages: [
+                LLMMessage(role: "system", content: Self.buildWorkoutSummarySystemPrompt(responseLanguage: responseLanguage)),
+                LLMMessage(
+                    role: "user",
+                    content: Self.buildWorkoutSummaryUserPrompt(
+                        context: context,
+                        profile: profile,
+                        featuredActivity: featuredActivity,
+                        weeklyCount: weeklyCount,
+                        weeklyTotalDurationMinutes: weeklyTotalDurationMinutes,
+                        responseLanguage: responseLanguage
+                    )
+                )
+            ],
+            stream: false,
+            temperature: 0.72,
+            maxTokens: 140,
+            responseFormat: .init(type: "json_object")
+        )
+
+        let response: LLMResponse = try await sendRequest(request, timeout: 20)
+        guard let content = response.choices.first?.message?.content else {
+            throw LLMError.emptyResponse
+        }
+        return try Self.parseWorkoutSummary(from: content)
+    }
+
     private nonisolated static func parseQuestions(from content: String) throws -> [String] {
         let cleaned = cleanContent(content)
         guard let data = cleaned.data(using: .utf8) else { return [] }
@@ -371,6 +408,20 @@ actor LLMService {
             return arr.filter { !$0.isEmpty }
         }
         return []
+    }
+
+    private nonisolated static func parseWorkoutSummary(from content: String) throws -> String {
+        let cleaned = cleanContent(content)
+        guard let data = cleaned.data(using: .utf8),
+              let obj = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+              let summary = obj["summary"] as? String
+        else {
+            throw LLMError.decodingFailed(cleaned)
+        }
+
+        let trimmed = summary.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw LLMError.emptyResponse }
+        return trimmed
     }
 
     // MARK: - Prompt Builders
@@ -557,6 +608,52 @@ actor LLMService {
         }
 
         return lines
+    }
+
+    nonisolated static func buildWorkoutSummarySystemPrompt(
+        responseLanguage: ResponseLanguage = .simplifiedChinese
+    ) -> String {
+        """
+        你是周期生活应用里的运动周报文案模块。请根据用户的周期阶段、健康数据和运动记录，生成一段显示在运动称号标题下方的短小结。
+
+        要求：
+        - 回复语言必须使用：\(responseLanguage.displayName)
+        - 只输出 JSON：{"summary":"..."}
+        - summary 只写 1 句，中文 35-55 字；英文 18-28 words
+        - 语气温柔、具体、有画面感，不评判、不催促、不制造焦虑
+        - 可以结合主要运动类型，但不要每种运动都套同一句模板
+        - 不使用「治疗」「诊断」「医嘱」等医疗措辞
+        - 不夸大运动与周期/症状的因果关系
+        - 不要提到“AI”“数据”“HealthKit”“标题下方”
+        """
+    }
+
+    nonisolated static func buildWorkoutSummaryUserPrompt(
+        context: CycleContext,
+        profile: UserProfile?,
+        featuredActivity: WorkoutStats.WorkoutActivity,
+        weeklyCount: Int,
+        weeklyTotalDurationMinutes: Double,
+        responseLanguage: ResponseLanguage = .simplifiedChinese
+    ) -> String {
+        let contextSummary = buildContextLines(context: context).joined(separator: "\n")
+        let profileSummary = buildProfileSummary(profile: profile)
+        let activityDuration = featuredActivity.totalDurationMinutes.map { "约 \(Int($0.rounded())) 分钟" } ?? "未记录时长"
+
+        return """
+        【用户当前状态】
+        \(contextSummary)
+        \(profileSummary)
+
+        【本周运动】
+        主运动：\(featuredActivity.name)
+        主运动次数：\(featuredActivity.count)
+        主运动时长：\(activityDuration)
+        本周运动总次数：\(weeklyCount)
+        本周运动总时长：约 \(Int(weeklyTotalDurationMinutes.rounded())) 分钟
+
+        请生成 \(responseLanguage.displayName) 的 summary。只输出 JSON，不要其他说明。
+        """
     }
 
     /// 对话助手的 System Prompt：注入周期上下文 + 用户档案，设定温暖体贴语气

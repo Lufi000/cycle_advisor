@@ -3,6 +3,9 @@ import SwiftUI
 struct WorkoutDashboardView: View {
     private var profileManager = UserProfileManager.shared
     let context: CycleContext
+    @State private var generatedWeeklySummary: String?
+    @State private var activeSummaryID: String?
+    @State private var weeklySummaryGenerationFailed = false
 
     private var stats: WorkoutStats {
         let storedStats = profileManager.profile.workoutStats
@@ -128,6 +131,7 @@ struct WorkoutDashboardView: View {
         let displayActivities = weeklyActivities.isEmpty ? topActivities : weeklyActivities
         let featuredActivity = displayActivities.first
         let title = weeklyTitle(for: featuredActivity, weeklyCount: weeklyCount)
+        let summaryID = weeklySummaryID(for: featuredActivity, weeklyCount: weeklyCount, totalMinutes: totalMinutes)
 
         return VStack {
             VStack(alignment: .leading, spacing: 26) {
@@ -138,10 +142,7 @@ struct WorkoutDashboardView: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.72)
 
-                    Text(weeklySummary(for: featuredActivity, weeklyCount: weeklyCount))
-                        .font(Theme.itim(size: 18))
-                        .foregroundStyle(workoutPosterMuted)
-                        .lineSpacing(5)
+                    weeklySummaryText(for: featuredActivity, weeklyCount: weeklyCount)
                 }
 
                 workoutPosterImage(for: featuredActivity)
@@ -157,6 +158,14 @@ struct WorkoutDashboardView: View {
         .padding(.horizontal, 24)
         .background(workoutPosterCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .task(id: summaryID) {
+            await loadGeneratedWeeklySummary(
+                id: summaryID,
+                activity: featuredActivity,
+                weeklyCount: weeklyCount,
+                totalMinutes: totalMinutes
+            )
+        }
     }
 
     private var workoutPosterInk: Color {
@@ -200,14 +209,107 @@ struct WorkoutDashboardView: View {
         return NSLocalizedString(workoutTitleKey(for: activity), comment: "")
     }
 
-    private func weeklySummary(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
+    private func weeklySummaryFallback(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
         guard weeklyCount > 0 else {
             return String(localized: "workout.summary.no_workouts")
         }
-        guard let activity else {
-            return String(localized: "workout.summary.no_activity_type")
+        return String(localized: "workout.summary.no_activity_type")
+    }
+
+    @ViewBuilder
+    private func weeklySummaryText(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> some View {
+        if weeklyCount <= 0 || activity == nil {
+            Text(weeklySummaryFallback(for: activity, weeklyCount: weeklyCount))
+                .font(Theme.itim(size: 18))
+                .foregroundStyle(workoutPosterMuted)
+                .lineSpacing(5)
+        } else if let generatedWeeklySummary {
+            Text(generatedWeeklySummary)
+                .font(Theme.itim(size: 18))
+                .foregroundStyle(workoutPosterMuted)
+                .lineSpacing(5)
+        } else if weeklySummaryGenerationFailed {
+            Color.clear
+                .frame(height: 44)
+        } else {
+            ProgressView()
+                .tint(workoutPosterMuted)
+                .frame(height: 44, alignment: .leading)
         }
-        return String(format: NSLocalizedString(workoutSummaryKey(for: activity), comment: ""), localizedActivityName(for: activity))
+    }
+
+    @MainActor
+    private func loadGeneratedWeeklySummary(
+        id: String,
+        activity: WorkoutStats.WorkoutActivity?,
+        weeklyCount: Int,
+        totalMinutes: Double
+    ) async {
+        guard weeklyCount > 0, let activity else {
+            generatedWeeklySummary = nil
+            activeSummaryID = id
+            return
+        }
+
+        if activeSummaryID != id {
+            activeSummaryID = id
+            generatedWeeklySummary = cachedWorkoutSummary(for: id)
+            weeklySummaryGenerationFailed = false
+        }
+
+        guard generatedWeeklySummary == nil else { return }
+
+        do {
+            let summary = try await LLMService.shared.generateWorkoutSummary(
+                context: context,
+                profile: profileManager.profile,
+                featuredActivity: activity,
+                weeklyCount: weeklyCount,
+                weeklyTotalDurationMinutes: totalMinutes,
+                responseLanguage: LLMService.preferredResponseLanguage()
+            )
+            guard activeSummaryID == id else { return }
+            generatedWeeklySummary = summary
+            cacheWorkoutSummary(summary, for: id)
+        } catch {
+            print("[WorkoutDashboard] AI summary failed: \(error)")
+            guard activeSummaryID == id else { return }
+            weeklySummaryGenerationFailed = true
+        }
+    }
+
+    private func weeklySummaryID(
+        for activity: WorkoutStats.WorkoutActivity?,
+        weeklyCount: Int,
+        totalMinutes: Double
+    ) -> String {
+        let activityKey = activity?.key ?? "none"
+        let activityCount = activity?.count ?? 0
+        let activityMinutes = Int((activity?.totalDurationMinutes ?? 0).rounded())
+        let language = LLMService.preferredResponseLanguage().displayName
+        return [
+            "v1",
+            language,
+            context.phase.rawValue,
+            "\(context.dayInPhase)",
+            activityKey,
+            "\(activityCount)",
+            "\(activityMinutes)",
+            "\(weeklyCount)",
+            "\(Int(totalMinutes.rounded()))"
+        ].joined(separator: "|")
+    }
+
+    private func cachedWorkoutSummary(for id: String) -> String? {
+        UserDefaults.standard.string(forKey: workoutSummaryCacheKey(for: id))
+    }
+
+    private func cacheWorkoutSummary(_ summary: String, for id: String) {
+        UserDefaults.standard.set(summary, forKey: workoutSummaryCacheKey(for: id))
+    }
+
+    private func workoutSummaryCacheKey(for id: String) -> String {
+        "workout.weekly.ai_summary.\(id)"
     }
 
     private func workoutTitleKey(for activity: WorkoutStats.WorkoutActivity) -> String {
@@ -236,25 +338,6 @@ struct WorkoutDashboardView: View {
             return "workout.title.cardio"
         case .other:
             return "workout.title.steady_rhythm"
-        }
-    }
-
-    private func workoutSummaryKey(for activity: WorkoutStats.WorkoutActivity) -> String {
-        switch workoutActivityKind(for: activity) {
-        case .climbing:
-            return "workout.summary.climbing_format"
-        case .walking:
-            return "workout.summary.walking_format"
-        case .running:
-            return "workout.summary.running_format"
-        case .yoga, .flexibility:
-            return "workout.summary.gentle_format"
-        case .cycling, .swimming, .cardio:
-            return "workout.summary.cardio_format"
-        case .strength:
-            return "workout.summary.strength_format"
-        case .dance, .ballSports, .other:
-            return "workout.summary.activity_insight_format"
         }
     }
 
