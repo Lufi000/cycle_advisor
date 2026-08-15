@@ -30,10 +30,6 @@ struct HomeView: View {
                         cycleStageHeader
                         healthDashboard
                         periodSymptomsEntry
-                        if viewModel.usingMockData {
-                            mockDataBanner
-                        }
-                        DisclaimerView()
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
@@ -160,19 +156,6 @@ struct HomeView: View {
             }
             .buttonStyle(.plain)
         }
-    }
-
-    // MARK: - Mock Data Banner
-
-    private var mockDataBanner: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "exclamationmark.circle")
-                .font(.system(size: 12))
-            Text("home.mock_data_banner")
-                .font(Theme.itim(size: 16))
-        }
-        .foregroundStyle(homeMutedText)
-        .padding(.horizontal, 4)
     }
 
     // MARK: - Cycle Stage Header
