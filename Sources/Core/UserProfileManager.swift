@@ -224,7 +224,6 @@ final class BillingManager {
 
     struct BillingSevenDaySnapshot {
         var assistantChatCount: Int
-        var suggestionRefreshCount: Int
         var creditsConsumed: Int
         var rechargeOrderCount: Int
         var paidAmountCNYFen: Int
@@ -350,30 +349,6 @@ final class BillingManager {
         let dayKey = dayKeyString(for: date)
         let used = state.freeChatUsageByDay?[dayKey] ?? 0
         return max(0, state.freeChatQuotaTotal - used)
-    }
-
-    func suggestionRefreshRemainingToday(on date: Date = Date()) -> Int {
-        let dayKey = dayKeyString(for: date)
-        let used = Set(state.suggestionQuotaUsageByDay[dayKey] ?? [])
-        return max(0, state.dailySuggestionQuota - used.count)
-    }
-
-    /// 早/中/晚各 1 次刷新配额，不累计到次日。
-    func consumeSuggestionRefreshIfAvailable(on date: Date = Date()) -> Bool {
-        cleanupExpiredUsageWindow(referenceDate: date)
-        let dayKey = dayKeyString(for: date)
-        let slot = SuggestionRefreshSlot.slot(for: date).rawValue
-        var used = Set(state.suggestionQuotaUsageByDay[dayKey] ?? [])
-        guard used.count < state.dailySuggestionQuota, !used.contains(slot) else {
-            return false
-        }
-        used.insert(slot)
-        state.suggestionQuotaUsageByDay[dayKey] = Array(used).sorted()
-        bumpDailyMetric(on: date) { metric in
-            metric.suggestionRefreshCount += 1
-        }
-        save()
-        return true
     }
 
     func reserveAssistantChat(estimatedCredits: Int) throws -> String {
@@ -657,7 +632,6 @@ final class BillingManager {
         let calendar = Calendar.current
         var snapshot = BillingSevenDaySnapshot(
             assistantChatCount: 0,
-            suggestionRefreshCount: 0,
             creditsConsumed: 0,
             rechargeOrderCount: 0,
             paidAmountCNYFen: 0,
@@ -668,7 +642,6 @@ final class BillingManager {
             let key = dayKeyString(for: day)
             guard let metric = state.dailyMetrics[key] else { continue }
             snapshot.assistantChatCount += metric.assistantChatCount
-            snapshot.suggestionRefreshCount += metric.suggestionRefreshCount
             snapshot.creditsConsumed += metric.creditsConsumed
             snapshot.rechargeOrderCount += metric.rechargeOrderCount
             snapshot.paidAmountCNYFen += metric.paidAmountCNYFen
@@ -762,7 +735,6 @@ final class BillingManager {
         let validDayKeys = Set((0..<keepUsageHistoryDays).compactMap {
             calendar.date(byAdding: .day, value: -$0, to: referenceDate).map(dayKeyString(for:))
         })
-        state.suggestionQuotaUsageByDay = state.suggestionQuotaUsageByDay.filter { validDayKeys.contains($0.key) }
         state.freeChatUsageByDay = (state.freeChatUsageByDay ?? [:]).filter { validDayKeys.contains($0.key) }
         state.dailyMetrics = state.dailyMetrics.filter { validDayKeys.contains($0.key) }
         save()
@@ -774,18 +746,5 @@ final class BillingManager {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: date)
-    }
-}
-
-private enum SuggestionRefreshSlot: String {
-    case morning
-    case noon
-    case evening
-
-    static func slot(for date: Date) -> SuggestionRefreshSlot {
-        let hour = Calendar.current.component(.hour, from: date)
-        if hour < 12 { return .morning }
-        if hour < 18 { return .noon }
-        return .evening
     }
 }

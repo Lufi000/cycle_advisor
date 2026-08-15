@@ -241,17 +241,13 @@ private func trendColor(_ trend: Trend) -> Color {
 #Preview("Small", as: .systemSmall) {
     CycleAdvisorWidget()
 } timeline: {
-    CycleWidgetEntry(date: .now, context: MockData.lutealContext,
-                     suggestion: MockData.sampleSuggestions.suggestion(for: .sleep))
-    CycleWidgetEntry(date: .now, context: MockData.ovulationContext,
-                     suggestion: MockData.sampleSuggestions.suggestion(for: .exercise))
+    CycleWidgetEntry(date: .now, context: MockData.lutealContext)
+    CycleWidgetEntry(date: .now, context: MockData.ovulationContext)
 }
 
 #Preview("Medium", as: .systemMedium) {
     CycleAdvisorWidget()
 } timeline: {
-    CycleWidgetEntry(date: .now, context: MockData.follicularContext,
-                     suggestion: MockData.sampleSuggestions.suggestion(for: .diet))
-    CycleWidgetEntry(date: .now, context: MockData.menstrualContext,
-                     suggestion: MockData.sampleSuggestions.suggestion(for: .mood))
+    CycleWidgetEntry(date: .now, context: MockData.follicularContext)
+    CycleWidgetEntry(date: .now, context: MockData.menstrualContext)
 }

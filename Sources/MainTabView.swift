@@ -52,7 +52,7 @@ struct MainTabView: View {
         .onChange(of: homeViewModel.suggestedQuestions) { _, newQuestions in
             assistantViewModel.suggestedQuestions = newQuestions
         }
-        // 切换到助手 Tab 时懒加载推荐问题（首页加载不再触发此请求）
+        // 切换到助手 Tab 时按当前周期阶段生成推荐问题
         .onChange(of: selectedTab) { oldTab, newTab in
             if newTab == 1 {
                 Task { await homeViewModel.load() }

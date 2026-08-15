@@ -57,7 +57,7 @@
 "onboarding.display_name.skip" = "稍后再说";
 "onboarding.display_name.save" = "保存";
 "settings.thinking_mode" = "思考模式";
-"settings.thinking_mode.hint" = "影响后续使用该偏好的 AI 能力。「小花园」里的每日建议已固定使用快速模型以降低延迟。";
+"settings.thinking_mode.hint" = "影响后续使用该偏好的 AI 对话能力。";
 "settings.language.title" = "应用语言";
 "settings.language.hint" = "覆盖应用内的系统语言，切换后立即生效。";
 "settings.language.system" = "跟随系统";
@@ -95,7 +95,6 @@
 "billing.menu.subscribe" = "订阅 %@";
 "billing.menu.balance" = "%d credits";
 "billing.metrics.chat_7d" = "对话次数";
-"billing.metrics.refresh_7d" = "AI建议刷新";
 "billing.metrics.consume_7d" = "消耗 credits";
 "billing.metrics.revenue_7d" = "付费金额";
 "billing.metrics.amount_cny" = "¥%.2f";
@@ -119,7 +118,6 @@
 "billing.error.purchase_not_verified" = "购买无法验证，请稍后重试";
 "billing.error.subscription_required" = "今日免费对话已用完，订阅 AI Pro 后可继续使用。";
 "billing.error.product_load_failed" = "订阅信息加载失败，点此重试。";
-"billing.suggestion.quota_exhausted" = "今日 AI 建议刷新次数已用完（早/中/晚各 1 次）";
 
 /* 订阅相关合规文案（App Store Guideline 3.1.1 / 3.1.2） */
 "billing.action.subscribe_aipro" = "订阅 AI Pro";
@@ -205,15 +203,6 @@
 "health.metric.exercise.source" = "来自 Apple 健康中的 Exercise Minutes（锻炼分钟）数据，由 Apple Watch、健身记录或兼容 App 写入。";
 "health.metric.steps.meaning" = "步数表示今天累计记录的行走步数，可用于观察日常活动量。它不是运动强度的完整衡量，但适合看趋势。";
 "health.metric.steps.source" = "来自 Apple 健康中的步数数据，由 iPhone、Apple Watch 或兼容设备记录。";
-"home.mock_data_banner" = "正在使用示例数据 — 请在健康 App 中记录经期后重启";
-"home.suggestion_source.ai" = "当前为 AI 生成建议";
-"home.suggestion_source.fallback" = "当前为回退建议（AI 暂时不可用）";
-"home.reference_badge" = "科学依据";
-"home.thinking.label" = "正在分析你的数据…";
-"home.suggestion.refreshing" = "正在刷新建议…";
-"home.suggestion.refreshing_a11y" = "正在刷新建议";
-"home.suggestion.empty_dimension" = "该维度暂无建议";
-"home.suggestion.empty_dimension_a11y" = "暂无建议";
 "home.cycle_detail.current_badge" = "当前阶段";
 "home.cycle_detail.duration_format" = "约 %d 天";
 
@@ -347,29 +336,7 @@
 "widget.daylight" = "日照时长";
 "widget.day_in_phase %lld" = "第 %lld 天";
 "widget.cycle_day %lld %lld" = "第 %1$lld 天 · 周期第 %2$lld 天";
-"widget.no_suggestion" = "暂无建议";
 "widget.hrv_avg %lld" = "均 %lld";
-
-/* Mock Suggestions (fallback when AI unavailable) */
-"mock.diet.title" = "补充镁和B6";
-"mock.diet.detail.1" = "富含镁的食物：深绿叶蔬菜、坚果";
-"mock.diet.detail.2" = "维生素B6：香蕉、鸡胸肉";
-"mock.diet.detail.3" = "减少咖啡因和高盐食物";
-
-"mock.exercise.title" = "中等强度有氧";
-"mock.exercise.detail.1" = "推荐快走、游泳 30-40 分钟";
-"mock.exercise.detail.2" = "避免高强度间歇训练";
-"mock.exercise.detail.3" = "瑜伽有助缓解经前不适";
-
-"mock.mood.title" = "正念冥想";
-"mock.mood.detail.1" = "每天 10 分钟正念练习";
-"mock.mood.detail.2" = "写日记记录情绪变化";
-"mock.mood.detail.3" = "允许自己放慢节奏";
-
-"mock.sleep.title" = "提前入睡";
-"mock.sleep.detail.1" = "比平时提前 30 分钟上床";
-"mock.sleep.detail.2" = "睡前避免屏幕蓝光";
-"mock.sleep.detail.3" = "温热饮品帮助放松";
 
 /* Solar Terms Tab */
 "tab.solar_terms" = "节气";

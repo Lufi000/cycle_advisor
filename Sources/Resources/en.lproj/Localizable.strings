@@ -57,7 +57,7 @@
 "onboarding.display_name.skip" = "Maybe later";
 "onboarding.display_name.save" = "Save";
 "settings.thinking_mode" = "Thinking mode";
-"settings.thinking_mode.hint" = "Affects future AI features that use this preference. Daily suggestions in Bloom use the fast model for speed.";
+"settings.thinking_mode.hint" = "Affects future AI chat features that use this preference.";
 "settings.language.title" = "App language";
 "settings.language.hint" = "Overrides the system language inside the app. The change applies immediately.";
 "settings.language.system" = "Follow system";
@@ -95,7 +95,6 @@
 "billing.menu.subscribe" = "Subscribe %@";
 "billing.menu.balance" = "%d credits";
 "billing.metrics.chat_7d" = "Chat count";
-"billing.metrics.refresh_7d" = "AI card refreshes";
 "billing.metrics.consume_7d" = "Credits consumed";
 "billing.metrics.revenue_7d" = "Paid amount";
 "billing.metrics.amount_cny" = "¥%.2f";
@@ -119,7 +118,6 @@
 "billing.error.purchase_not_verified" = "Purchase could not be verified. Please try again.";
 "billing.error.subscription_required" = "Today's free chats are used up. Subscribe to AI Pro to continue.";
 "billing.error.product_load_failed" = "Couldn't load subscription details. Tap to retry.";
-"billing.suggestion.quota_exhausted" = "Today's AI card refreshes are exhausted (morning/noon/evening).";
 
 /* Subscription actions & legal (App Store Guideline 3.1.1 / 3.1.2) */
 "billing.action.subscribe_aipro" = "Subscribe AI Pro";
@@ -205,15 +203,6 @@
 "health.metric.exercise.source" = "From Exercise Minutes in Apple Health, written by Apple Watch, workouts, or compatible apps.";
 "health.metric.steps.meaning" = "Steps are the total walking steps recorded today. They are useful for everyday activity trends, though they do not fully describe exercise intensity.";
 "health.metric.steps.source" = "From Steps in Apple Health, recorded by iPhone, Apple Watch, or compatible devices.";
-"home.mock_data_banner" = "Using sample data — log your period in the Health app and restart";
-"home.suggestion_source.ai" = "AI-generated suggestions";
-"home.suggestion_source.fallback" = "Fallback suggestions (AI temporarily unavailable)";
-"home.reference_badge" = "References";
-"home.thinking.label" = "Analyzing your data…";
-"home.suggestion.refreshing" = "Refreshing…";
-"home.suggestion.refreshing_a11y" = "Refreshing suggestions";
-"home.suggestion.empty_dimension" = "No suggestion here yet.";
-"home.suggestion.empty_dimension_a11y" = "No suggestion yet";
 "home.cycle_detail.current_badge" = "Current";
 "home.cycle_detail.duration_format" = "~%d days";
 
@@ -346,29 +335,7 @@
 "widget.daylight" = "Daylight";
 "widget.day_in_phase %lld" = "Day %lld";
 "widget.cycle_day %lld %lld" = "Day %1$lld · Cycle day %2$lld";
-"widget.no_suggestion" = "No suggestions";
 "widget.hrv_avg %lld" = "avg %lld";
-
-/* Mock Suggestions (fallback when AI unavailable) */
-"mock.diet.title" = "Magnesium & B6";
-"mock.diet.detail.1" = "Magnesium-rich foods: dark leafy greens, nuts";
-"mock.diet.detail.2" = "Vitamin B6: bananas, chicken breast";
-"mock.diet.detail.3" = "Reduce caffeine and high-sodium foods";
-
-"mock.exercise.title" = "Moderate Cardio";
-"mock.exercise.detail.1" = "Try brisk walking or swimming, 30–40 min";
-"mock.exercise.detail.2" = "Avoid high-intensity interval training";
-"mock.exercise.detail.3" = "Yoga helps ease premenstrual discomfort";
-
-"mock.mood.title" = "Mindfulness Practice";
-"mock.mood.detail.1" = "10 minutes of mindfulness daily";
-"mock.mood.detail.2" = "Journal to track emotional changes";
-"mock.mood.detail.3" = "Allow yourself to slow down";
-
-"mock.sleep.title" = "Earlier Bedtime";
-"mock.sleep.detail.1" = "Go to bed 30 minutes earlier than usual";
-"mock.sleep.detail.2" = "Avoid blue light before sleep";
-"mock.sleep.detail.3" = "A warm drink helps you relax";
 
 /* Solar Terms Tab */
 "tab.solar_terms" = "Solar Terms";

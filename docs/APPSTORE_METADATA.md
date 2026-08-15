@@ -165,10 +165,10 @@ period,cycle,menstrual,ovulation,luteal,wellness,diet,exercise,sleep,mood,HRV,he
 
 **建议截图内容（按顺序）：**
 
-1. **首页周期环** — 展示当前阶段、健康指标、AI建议卡片
-2. **AI 建议详情** — 点开一个建议卡片的详情页
-3. **节气养生卡片** — 首页节气区域
-4. **AI 助手对话** — 展示与AI的对话界面和推荐问题
+1. **首页周期阶段** — 展示当前阶段、健康指标和经期症状入口
+2. **节气养生卡片** — 首页节气区域
+3. **AI 助手对话** — 展示与 AI 的对话界面和推荐问题
+4. **AI Pro 订阅** — 展示订阅价格、周期、恢复购买与法律链接
 5. **个人档案** — Profile 页面展示积累的健康数据
 6. **Widget 小组件** — 主屏幕小组件效果
 
@@ -247,15 +247,14 @@ This app uses HealthKit to read menstrual cycle data, health metrics (HRV, resti
 
 The app does NOT write any data to HealthKit — it is read-only.
 
-Raw HealthKit records remain on the user's device and are not uploaded to our servers. The AI features send only minimized, de-identified summary context to our backend proxy and DeepSeek for generating suggestions (e.g., "luteal phase day 7, HRV 42ms"), never raw HealthKit records, names, or directly identifying information.
+Raw HealthKit records remain on the user's device and are not uploaded to our servers. The AI chat feature sends only minimized, de-identified summary context to our backend proxy and DeepSeek for generating responses (e.g., "luteal phase day 7, HRV 42ms"), never raw HealthKit records, names, or directly identifying information.
 
 To test the app:
 1. Open Apple Health app → Browse → Cycle Tracking → Add Data
 2. Add a period start date (e.g., 7 days ago with "Flow" = Medium)
 3. Launch Cycle Life Advisor — it will read the period data and show your current phase
-4. The AI suggestions will load automatically on the home screen
-5. Switch to the AI Assistant tab to chat
-6. To test the paid subscription, open the Assistant tab AI Pro menu or Settings > Subscription, then purchase AI Pro Monthly with a sandbox Apple ID
+4. Switch to the AI Assistant tab to chat
+5. To test the paid subscription, open the Assistant tab AI Pro menu or Settings > Subscription, then purchase AI Pro Monthly with a sandbox Apple ID
 
 No login or account is required. The app works immediately after granting HealthKit permissions.
 ```
@@ -361,13 +360,13 @@ All processing serves the app's core functionality only.
 - Widget data is shared within the app group on your device only
 
 4. Data Sharing
-- We send anonymized cycle context (phase, day, health metrics) to our AI service to generate suggestions
+- We send anonymized cycle context (phase, day, health metrics) to our AI service to generate AI chat responses
 - We NEVER send raw HealthKit records, names, or identifiers
 - We do NOT sell, share, or monetize your data
 - We do NOT use any analytics, advertising, or tracking SDKs
 
 5. Third-Party Services
-- AI suggestions are powered by DeepSeek, accessed through our proxy server
+- AI chat responses are powered by DeepSeek, accessed through our proxy server
 - Only anonymized context is transmitted; no personally identifiable information
 
 6. Data Deletion

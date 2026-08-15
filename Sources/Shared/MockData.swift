@@ -83,55 +83,6 @@ enum MockData {
         activityTrend: .declining
     )
 
-    // MARK: - Suggestions
-
-    static let sampleSuggestions = SuggestionSet(
-        phase: .luteal,
-        suggestions: [
-            Suggestion(
-                id: "diet-1", dimension: .diet,
-                title: String(localized: "mock.diet.title"),
-                details: [
-                    String(localized: "mock.diet.detail.1"),
-                    String(localized: "mock.diet.detail.2"),
-                    String(localized: "mock.diet.detail.3")
-                ],
-                referenceIds: ["ref-001"]
-            ),
-            Suggestion(
-                id: "exercise-1", dimension: .exercise,
-                title: String(localized: "mock.exercise.title"),
-                details: [
-                    String(localized: "mock.exercise.detail.1"),
-                    String(localized: "mock.exercise.detail.2"),
-                    String(localized: "mock.exercise.detail.3")
-                ],
-                referenceIds: ["ref-002"]
-            ),
-            Suggestion(
-                id: "mood-1", dimension: .mood,
-                title: String(localized: "mock.mood.title"),
-                details: [
-                    String(localized: "mock.mood.detail.1"),
-                    String(localized: "mock.mood.detail.2"),
-                    String(localized: "mock.mood.detail.3")
-                ],
-                referenceIds: []
-            ),
-            Suggestion(
-                id: "sleep-1", dimension: .sleep,
-                title: String(localized: "mock.sleep.title"),
-                details: [
-                    String(localized: "mock.sleep.detail.1"),
-                    String(localized: "mock.sleep.detail.2"),
-                    String(localized: "mock.sleep.detail.3")
-                ],
-                referenceIds: ["ref-003"]
-            ),
-        ],
-        generatedAt: .now
-    )
-
     // MARK: - Menstrual Symptoms
 
     static let sampleSymptoms = MenstrualSymptoms(
@@ -212,53 +163,4 @@ enum MockData {
         version: 1
     )
 
-    // MARK: - Research References
-
-    static let sampleReferences: [ResearchReference] = [
-        ResearchReference(
-            id: "ref-001",
-            title: "Magnesium supplementation and premenstrual symptoms",
-            authors: "Quaranta S, Buscaglia MA, Meroni MG",
-            journal: "Gynecological Endocrinology",
-            year: 2007,
-            doi: "10.1080/09513590701672311",
-            summary: "镁补充可显著减轻经前综合征症状",
-            phases: [.luteal],
-            dimensions: [.diet],
-            keyFindings: [
-                "每日补充 250mg 镁可缓解 PMS 症状",
-                "镁与 B6 联合效果更佳"
-            ]
-        ),
-        ResearchReference(
-            id: "ref-002",
-            title: "Exercise and premenstrual symptomatology",
-            authors: "Daley AJ",
-            journal: "Journal of Psychosomatic Obstetrics & Gynecology",
-            year: 2009,
-            doi: "10.1080/01674820802507324",
-            summary: "规律有氧运动可缓解经前综合征症状",
-            phases: [.luteal, .menstrual],
-            dimensions: [.exercise],
-            keyFindings: [
-                "每周 3 次中等强度有氧运动可改善 PMS",
-                "运动通过提高内啡肽水平改善情绪"
-            ]
-        ),
-        ResearchReference(
-            id: "ref-003",
-            title: "Sleep quality changes across the menstrual cycle",
-            authors: "Baker FC, Driver HS",
-            journal: "Sleep Medicine Reviews",
-            year: 2007,
-            doi: "10.1016/j.smrv.2007.01.003",
-            summary: "黄体期睡眠质量通常下降，深睡比例减少",
-            phases: [.luteal],
-            dimensions: [.sleep],
-            keyFindings: [
-                "黄体期核心体温升高影响入睡",
-                "建议降低卧室温度、提前入睡时间"
-            ]
-        ),
-    ]
 }

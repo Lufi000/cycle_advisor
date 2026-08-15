@@ -6,7 +6,6 @@ import SwiftUI
 struct CycleWidgetEntry: TimelineEntry {
     let date: Date
     let context: CycleContext
-    let suggestion: Suggestion?
 }
 
 // MARK: - Timeline Provider
@@ -20,8 +19,7 @@ struct CycleWidgetProvider: TimelineProvider {
     func placeholder(in context: Context) -> CycleWidgetEntry {
         CycleWidgetEntry(
             date: .now,
-            context: MockData.follicularContext,
-            suggestion: nil
+            context: MockData.follicularContext
         )
     }
 
@@ -43,8 +41,7 @@ struct CycleWidgetProvider: TimelineProvider {
     private func currentEntry() -> CycleWidgetEntry {
         let fallback = CycleWidgetEntry(
             date: .now,
-            context: MockData.lutealContext,
-            suggestion: nil
+            context: MockData.lutealContext
         )
 
         guard FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID) != nil else {
@@ -61,6 +58,6 @@ struct CycleWidgetProvider: TimelineProvider {
             return fallback
         }
 
-        return CycleWidgetEntry(date: .now, context: context, suggestion: nil)
+        return CycleWidgetEntry(date: .now, context: context)
     }
 }

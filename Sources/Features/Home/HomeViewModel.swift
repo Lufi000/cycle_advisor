@@ -1,24 +1,14 @@
 import SwiftUI
 import WidgetKit
 
-enum SuggestionDataSource {
-    case ai
-    case fallback
-}
-
 @Observable
 final class HomeViewModel {
 
     var context: CycleContext       = MockData.lutealContext
-    var suggestions: SuggestionSet  = .empty(phase: MockData.lutealContext.phase)
-    /// HealthKit 授权与读数、更新周期上下文期间为 true（与建议生成独立）
+    /// HealthKit 授权与读数、更新周期上下文期间为 true
     var isLoadingHealthData         = false
-    /// AI 生成首页建议期间为 true
-    var isLoadingSuggestions        = false
     var usingMockData               = false
-    var suggestionDataSource: SuggestionDataSource = .fallback
-    var suggestionErrorMessage      = ""
-    /// AI 根据当前阶段生成的推荐问题，供助手 Tab 首屏展示
+    /// 根据当前阶段生成的推荐问题，供助手 Tab 首屏展示
     var suggestedQuestions: [String] = []
 
     // 节气
@@ -38,76 +28,33 @@ final class HomeViewModel {
     private var isLoadingQuestions  = false
     private let appGroupID          = "group.com.cycleadvisor.shared"
     private let widgetContextKey    = "widget.context"
-    private let widgetSuggestionsKey = "widget.suggestions"
 
     /// - Parameter force: `true` 时忽略「已成功加载」门禁，用于用户主动刷新健康数据。
     @MainActor
     func load(force: Bool = false) async {
         guard !isLoadingHealthData else { return }
 
-        if isLoadingSuggestions {
-            if force {
-                await performHealthKitUpdate()
-                persistWidgetSnapshot()
-            }
-            return
-        }
-
-        // 首次加载后，若当前是回退结果，允许后续再次触发自动重试；`force` 时始终重拉
         if !force {
-            guard !hasLoaded || suggestionDataSource == .fallback else { return }
+            guard !hasLoaded else { return }
         }
-        // 强制刷新时重置推荐问题，下次切到助手 Tab 时懒加载新版本
+        // 强制刷新时重置推荐问题，下次切到助手 Tab 时按新周期阶段重建
         if force { suggestedQuestions = [] }
 
         await performHealthKitUpdate()
         loadSolarTerms()
 
-        if suggestions.suggestions.isEmpty {
-            suggestions = .empty(phase: context.phase)
-        }
-
-        guard BillingManager.shared.consumeSuggestionRefreshIfAvailable() else {
-            suggestionDataSource = .fallback
-            suggestionErrorMessage = String(localized: "billing.suggestion.quota_exhausted")
-            hasLoaded = true
-            persistWidgetSnapshot()
-            return
-        }
-
-        // 首页建议生成（推荐问题移至助手 Tab 懒加载，不阻塞首页）
-        isLoadingSuggestions = true
-        defer { isLoadingSuggestions = false }
-
-        let snapshotContext = context
-        let snapshotProfile = UserProfileManager.shared.profile
-        async let suggestionsTask = LLMService.shared.generateSuggestions(for: snapshotContext, profile: snapshotProfile)
-
-        do {
-            suggestions = try await suggestionsTask
-            suggestionDataSource = .ai
-            suggestionErrorMessage = ""
-            suggestedQuestions = buildSuggestedQuestionsFromCards(suggestions)
-            persistWidgetSnapshot()
-        } catch {
-            print("[HomeViewModel] AI suggestions failed: \(error)")
-            suggestions = .empty(phase: context.phase)
-            suggestionDataSource = .fallback
-            suggestionErrorMessage = (error as? LLMError)?.errorDescription ?? error.localizedDescription
-            persistWidgetSnapshot()
-        }
-
         hasLoaded = true
+        persistWidgetSnapshot()
     }
 
-    /// 由助手 Tab 首次出现时调用，懒加载推荐问题，避免在首页加载时浪费 API 请求。
+    /// 由助手 Tab 首次出现时调用，按当前周期阶段提供静态推荐问题。
     @MainActor
     func loadSuggestedQuestionsIfNeeded() async {
         guard suggestedQuestions.isEmpty, !isLoadingQuestions else { return }
         guard !usingMockData else { return }
         isLoadingQuestions = true
         defer { isLoadingQuestions = false }
-        suggestedQuestions = buildSuggestedQuestionsFromCards(suggestions)
+        suggestedQuestions = buildSuggestedQuestions(for: context.phase)
     }
 
     private func loadSolarTerms() {
@@ -197,44 +144,38 @@ final class HomeViewModel {
         }
         guard let defaults = UserDefaults(suiteName: appGroupID) else { return }
         let encoder = JSONEncoder()
-        guard let contextData = try? encoder.encode(context),
-              let suggestionsData = try? encoder.encode(suggestions)
-        else { return }
+        guard let contextData = try? encoder.encode(context) else { return }
 
         defaults.set(contextData, forKey: widgetContextKey)
-        defaults.set(suggestionsData, forKey: widgetSuggestionsKey)
         WidgetCenter.shared.reloadAllTimelines()
     }
 
-    private func buildSuggestedQuestionsFromCards(_ set: SuggestionSet) -> [String] {
-        guard !set.suggestions.isEmpty else { return [] }
-        var questions: [String] = []
-        for suggestion in set.suggestions.prefix(3) {
-            switch suggestion.dimension {
-            case .diet:
-                questions.append("今天在饮食上我该先做哪一步？")
-            case .exercise:
-                questions.append("按我今天状态，运动强度怎么安排更稳妥？")
-            case .mood:
-                questions.append("情绪波动时，我可以立刻做什么？")
-            case .sleep:
-                questions.append("今晚想睡得更稳，我该怎么调整？")
-            }
+    private func buildSuggestedQuestions(for phase: CyclePhase) -> [String] {
+        switch phase {
+        case .menstrual:
+            return [
+                "今天怎么安排运动更舒服？",
+                "经期饮食有什么简单注意点？",
+                "如果疲惫感明显，我该怎么调整作息？"
+            ]
+        case .follicular:
+            return [
+                "卵泡期适合提高训练强度吗？",
+                "今天饮食怎么搭配更有精力？",
+                "这个阶段有哪些可以养成的小习惯？"
+            ]
+        case .ovulation:
+            return [
+                "排卵期运动需要注意什么？",
+                "今天身体状态波动正常吗？",
+                "我该怎么观察这个阶段的信号？"
+            ]
+        case .luteal:
+            return [
+                "黄体期情绪波动时可以怎么做？",
+                "今天适合什么强度的运动？",
+                "睡眠和饮食上有什么优先调整？"
+            ]
         }
-        if questions.count < 3 {
-            questions.append(contentsOf: [
-                "如果只能做一件事，优先做什么？",
-                "有没有一个今天就能执行的简化版？",
-                "需要避免的常见误区有哪些？"
-            ])
-        }
-        var deduped: [String] = []
-        var seen = Set<String>()
-        for q in questions where !seen.contains(q) {
-            deduped.append(q)
-            seen.insert(q)
-            if deduped.count == 3 { break }
-        }
-        return deduped
     }
 }

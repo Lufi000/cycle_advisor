@@ -269,7 +269,6 @@ struct CreditLedgerEntry: Codable, Equatable, Identifiable {
 struct BillingDailyMetric: Codable, Equatable {
     let dateKey: String
     var assistantChatCount: Int
-    var suggestionRefreshCount: Int
     var creditsConsumed: Int
     var rechargeOrderCount: Int
     var paidAmountCNYFen: Int
@@ -279,7 +278,6 @@ struct BillingDailyMetric: Codable, Equatable {
         BillingDailyMetric(
             dateKey: dateKey,
             assistantChatCount: 0,
-            suggestionRefreshCount: 0,
             creditsConsumed: 0,
             rechargeOrderCount: 0,
             paidAmountCNYFen: 0,
@@ -296,10 +294,6 @@ struct BillingAccountState: Codable, Equatable {
     var freeChatUsageByDay: [String: Int]?
     var subscriptionExpirationDate: Date?
     var subscriptionProductID: String?
-    /// 每日卡片建议刷新配额（早/中/晚）
-    var dailySuggestionQuota: Int
-    /// yyyy-MM-dd -> ["morning","noon","evening"]
-    var suggestionQuotaUsageByDay: [String: [String]]
     var lowBalanceThresholdCredits: Int
     var orders: [CreditRechargeOrder]
     var ledger: [CreditLedgerEntry]
@@ -314,8 +308,6 @@ struct BillingAccountState: Codable, Equatable {
         freeChatUsageByDay: [:],
         subscriptionExpirationDate: nil,
         subscriptionProductID: nil,
-        dailySuggestionQuota: 3,
-        suggestionQuotaUsageByDay: [:],
         lowBalanceThresholdCredits: 40,
         orders: [],
         ledger: [],

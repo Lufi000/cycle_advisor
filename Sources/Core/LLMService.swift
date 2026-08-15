@@ -63,18 +63,6 @@ struct LLMChatStreamResult: Equatable {
     let usage: LLMTokenUsage
 }
 
-// MARK: - Suggestion JSON Schema (private)
-
-private struct AISuggestionResponse: Decodable {
-    let suggestions: [AISuggestion]
-}
-
-private struct AISuggestion: Decodable {
-    let dimension: String   // "diet" | "exercise" | "mood" | "sleep"
-    let title: String
-    let details: [String]
-}
-
 // MARK: - Errors
 
 enum LLMError: LocalizedError {
@@ -164,119 +152,6 @@ actor LLMService {
         session = URLSession(configuration: config)
     }
 
-    // MARK: - Suggestion Generation (non-streaming, JSON Mode)
-
-    /// 首页建议固定用 fast 模型，与「思考模式」其它用途解耦，保证延迟与成本可控。
-    private static let suggestionModelName = ThinkingMode.fast.modelName
-
-    /// 每维度最多 5 句 details × 4 维度 + JSON 结构；过小易截断。
-    private static let suggestionMaxTokens = 3400
-
-    func generateSuggestions(for context: CycleContext, profile: UserProfile? = nil) async throws -> SuggestionSet {
-        let request = LLMRequest(
-            model: Self.suggestionModelName,
-            messages: [
-                LLMMessage(role: "system", content: Self.buildSuggestionSystemPrompt()),
-                LLMMessage(role: "user", content: Self.buildSuggestionUserPrompt(context: context, profile: profile))
-            ],
-            stream: false,
-            temperature: 0.55,
-            maxTokens: Self.suggestionMaxTokens,
-            responseFormat: .init(type: "json_object")
-        )
-
-        let response: LLMResponse = try await sendRequest(request)
-
-        guard let content = response.choices.first?.message?.content else {
-            throw LLMError.emptyResponse
-        }
-
-        return try parseSuggestions(from: content, phase: context.phase)
-    }
-
-    // MARK: - Suggestion Streaming (with think callback)
-
-    func streamSuggestions(
-        for context: CycleContext,
-        profile: UserProfile? = nil,
-        onThinking: @escaping (String) -> Void
-    ) async throws -> SuggestionSet {
-        let request = LLMRequest(
-            model: Self.suggestionModelName,
-            messages: [
-                LLMMessage(role: "system", content: Self.buildSuggestionSystemPrompt()),
-                LLMMessage(role: "user", content: Self.buildSuggestionUserPrompt(context: context, profile: profile))
-            ],
-            stream: true,
-            temperature: 0.55,
-            maxTokens: Self.suggestionMaxTokens,
-            responseFormat: .init(type: "json_object")
-        )
-
-        let urlRequest = try buildURLRequest(for: request)
-        let asyncBytes: URLSession.AsyncBytes
-        let httpResponse: URLResponse
-        do {
-            (asyncBytes, httpResponse) = try await session.bytes(for: urlRequest)
-        } catch {
-            print("[LLM] streamChat network error: \(error)")
-            throw LLMError.networkUnavailable
-        }
-
-        guard let http = httpResponse as? HTTPURLResponse, http.statusCode == 200 else {
-            let code = (httpResponse as? HTTPURLResponse)?.statusCode ?? -1
-            print("[LLM] streamChat status: \(code)")
-            throw LLMError.httpError(statusCode: code)
-        }
-
-        var fullContent = ""
-        var inThink = false
-        var thinkResolved = false
-
-        for try await line in asyncBytes.lines {
-            guard let data = Self.sseData(from: line),
-                  let parsed = try? decoder.decode(LLMResponse.self, from: data)
-            else { continue }
-
-            let choice = parsed.choices.first
-            let chunk = choice?.delta?.content ?? choice?.message?.content ?? ""
-            if !chunk.isEmpty {
-                fullContent += chunk
-
-                // 实时提取并回调 think 内容
-                if !thinkResolved {
-                    if !inThink && fullContent.contains("<think>") {
-                        inThink = true
-                    }
-                    if inThink {
-                        if let range = fullContent.range(of: "</think>") {
-                            // think 结束
-                            let thinkContent = String(fullContent[fullContent.range(of: "<think>")!.upperBound..<range.lowerBound])
-                                .trimmingCharacters(in: .whitespacesAndNewlines)
-                            onThinking(thinkContent)
-                            thinkResolved = true
-                        } else {
-                            // think 进行中，提取已有内容
-                            if let start = fullContent.range(of: "<think>") {
-                                let partial = String(fullContent[start.upperBound...])
-                                    .trimmingCharacters(in: .whitespacesAndNewlines)
-                                if !partial.isEmpty {
-                                    onThinking(partial)
-                                }
-                            }
-                        }
-                    } else if fullContent.count > 10 {
-                        thinkResolved = true
-                    }
-                }
-            }
-
-            if choice?.finishReason == "stop" { break }
-        }
-
-        return try parseSuggestions(from: fullContent, phase: context.phase)
-    }
-
     // MARK: - Private Helpers
 
     private func sendRequest<T: Decodable>(_ body: LLMRequest, timeout: TimeInterval? = nil) async throws -> T {
@@ -337,140 +212,6 @@ actor LLMService {
             .replacingOccurrences(of: "```", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         return s
-    }
-
-    private func parseSuggestions(from content: String, phase: CyclePhase) throws -> SuggestionSet {
-        let cleaned = Self.cleanContent(content)
-        guard let data = cleaned.data(using: .utf8) else {
-            throw LLMError.decodingFailed("Cannot convert response to data")
-        }
-        let timestamp = Int(Date().timeIntervalSince1970)
-
-        // 优先走严格 schema，失败时走兼容解析（应对模型偶发格式漂移）
-        let suggestions: [Suggestion]
-        if let aiResponse = try? decoder.decode(AISuggestionResponse.self, from: data) {
-            suggestions = aiResponse.suggestions.compactMap { item -> Suggestion? in
-                guard let dimension = Self.parseDimension(item.dimension) else { return nil }
-                let trimmedDetails = item.details.map { Self.stripLeadingOrdinal($0) }
-                    .filter { !$0.isEmpty }
-                return Suggestion(
-                    id: "\(dimension.rawValue)-ai-\(timestamp)",
-                    dimension: dimension,
-                    title: item.title.trimmingCharacters(in: .whitespacesAndNewlines),
-                    details: Array(trimmedDetails.prefix(5)),
-                    referenceIds: ReferenceLibrary.referenceIDs(for: dimension)
-                )
-            }
-        } else {
-            suggestions = try Self.parseSuggestionsFlexibly(from: data, timestamp: timestamp)
-        }
-
-        guard !suggestions.isEmpty else {
-            throw LLMError.decodingFailed("No valid suggestions in response")
-        }
-
-        return SuggestionSet(phase: phase, suggestions: suggestions, generatedAt: .now)
-    }
-
-    private nonisolated static func parseSuggestionsFlexibly(from data: Data, timestamp: Int) throws -> [Suggestion] {
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            throw LLMError.decodingFailed("JSON root is not object")
-        }
-
-        // 兼容结构1：{ "suggestions": [...] }
-        if let arr = json["suggestions"] as? [[String: Any]] {
-            let parsed = arr.compactMap { item -> Suggestion? in
-                guard let dimensionRaw = item["dimension"] as? String,
-                      let dimension = parseDimension(dimensionRaw)
-                else { return nil }
-
-                let title = (item["title"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? dimension.displayName
-                let details = normalizeDetails(from: item["details"]).prefix(5)
-                return details.isEmpty ? nil : Suggestion(
-                    id: "\(dimension.rawValue)-ai-\(timestamp)",
-                    dimension: dimension,
-                    title: title.isEmpty ? dimension.displayName : title,
-                    details: Array(details),
-                    referenceIds: ReferenceLibrary.referenceIDs(for: dimension)
-                )
-            }
-            if !parsed.isEmpty { return parsed }
-        }
-
-        // 兼容结构2：{ "dimensions": { "饮食营养": { "建议": [...] }, ... } }
-        let dimObject = (json["dimensions"] as? [String: Any]) ?? (json["维度"] as? [String: Any])
-        if let dimObject {
-            let parsed = dimObject.compactMap { key, value -> Suggestion? in
-                guard let dimension = parseDimension(key) else { return nil }
-                guard let obj = value as? [String: Any] else { return nil }
-                let titleRaw = (obj["title"] as? String) ?? (obj["标题"] as? String) ?? key
-                let title = titleRaw.trimmingCharacters(in: .whitespacesAndNewlines)
-
-                let detailsSource = obj["details"] ?? obj["建议"] ?? obj["tips"] ?? obj["items"]
-                let details = normalizeDetails(from: detailsSource).prefix(5)
-                guard !details.isEmpty else { return nil }
-
-                return Suggestion(
-                    id: "\(dimension.rawValue)-ai-\(timestamp)",
-                    dimension: dimension,
-                    title: title.isEmpty ? dimension.displayName : title,
-                    details: Array(details),
-                    referenceIds: ReferenceLibrary.referenceIDs(for: dimension)
-                )
-            }
-            if !parsed.isEmpty { return parsed }
-        }
-
-        throw LLMError.decodingFailed("Unsupported suggestion JSON schema")
-    }
-
-    private nonisolated static func normalizeDetails(from any: Any?) -> [String] {
-        if let lines = any as? [String] {
-            return lines.map { stripLeadingOrdinal($0) }.filter { !$0.isEmpty }
-        }
-        if let lines = any as? [[String: Any]] {
-            return lines.compactMap { ($0["content"] as? String) ?? ($0["text"] as? String) }
-                .map { stripLeadingOrdinal($0) }
-                .filter { !$0.isEmpty }
-        }
-        if let s = any as? String {
-            let trimmed = stripLeadingOrdinal(s)
-            return trimmed.isEmpty ? [] : [trimmed]
-        }
-        return []
-    }
-
-    /// 前端卡片已渲染序号徽章；剥离模型偶发输出的「第1条：」「1.」「①」「- 」等行首序号/符号，避免重复。
-    nonisolated static func stripLeadingOrdinal(_ s: String) -> String {
-        var str = s.trimmingCharacters(in: .whitespacesAndNewlines)
-        let patterns = [
-            #"^第\s*[0-9一二三四五六七八九十]+\s*条[：:、．.]?\s*"#,
-            #"^[0-9]+\s*[\.、．)）:：]\s*"#,
-            #"^[①②③④⑤⑥⑦⑧⑨⑩❶❷❸❹❺❻❼❽❾❿]\s*"#,
-            #"^[-•·*]\s+"#
-        ]
-        for p in patterns {
-            if let r = str.range(of: p, options: .regularExpression) {
-                str.removeSubrange(r)
-            }
-        }
-        return str.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    private nonisolated static func parseDimension(_ raw: String) -> SuggestionDimension? {
-        let normalized = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        switch normalized {
-        case "diet", "nutrition", "饮食", "饮食营养":
-            return .diet
-        case "exercise", "activity", "运动", "锻炼":
-            return .exercise
-        case "mood", "emotion", "mental", "情绪", "心理":
-            return .mood
-        case "sleep", "rest", "睡眠":
-            return .sleep
-        default:
-            return nil
-        }
     }
 
     // MARK: - Chat (multi-turn, plain text)
@@ -557,11 +298,12 @@ actor LLMService {
 
     // MARK: - Suggested Questions Generation
 
+    private static let utilityModelName = ThinkingMode.fast.modelName
     private static let questionsMaxTokens = 300
 
     func generateSuggestedQuestions(for context: CycleContext) async throws -> [String] {
         let request = LLMRequest(
-            model: Self.suggestionModelName,
+            model: Self.utilityModelName,
             messages: [
                 LLMMessage(role: "system", content: Self.buildSuggestedQuestionsSystemPrompt()),
                 LLMMessage(role: "user", content: Self.buildContextLines(context: context).joined(separator: "\n"))
@@ -587,7 +329,7 @@ actor LLMService {
         recentDialogue: String = ""
     ) async throws -> [String] {
         let request = LLMRequest(
-            model: Self.suggestionModelName,
+            model: Self.utilityModelName,
             messages: [
                 LLMMessage(role: "system", content: Self.buildChatFollowUpQuestionsSystemPrompt()),
                 LLMMessage(
@@ -630,35 +372,6 @@ actor LLMService {
     }
 
     // MARK: - Prompt Builders (nonisolated, always in Chinese)
-
-    nonisolated static func buildSuggestionSystemPrompt() -> String {
-        """
-        你是女性月经周期相关的生活方式顾问，输出为参考建议，非医疗诊断或治疗。
-
-        只输出纯 JSON（不要 markdown、说明文字），结构如下：
-        {
-          "suggestions": [
-            {
-              "dimension": "diet",
-              "title": "8-15 字，具体针对当前阶段",
-              "details": [
-                "结合用户数据（如 HRV/日照/锻炼/步数等）的简短个性化说明，20-38 字",
-                "具体可执行建议（含份量/时间或做法），20-38 字",
-                "替代方案或加分习惯，20-38 字",
-                "可适当避免或减少的习惯，20-38 字",
-                "（可选）一句轻松提醒或小结，15-30 字；若与前四条重复可省略，此时数组至少保留 4 条"
-              ]
-            },
-            … 另三条 dimension 分别为 exercise、mood、sleep，格式相同。
-          ]
-        }
-
-        约束：dimension 仅 diet/exercise/mood/sleep；每个 dimension 的 details 数组须含 4-5 条互不重复、具体可操作的中文短句（优先 5 条，若写不出第 5 条则必须不少于 4 条）；禁用「治疗」「诊断」「医嘱」等医疗措辞；不夸大指标的医学意义。
-        每条 details 直接写正文，不要以「第1条」「1.」「①」「·」等编号或符号开头（前端已渲染序号徽章）。
-        若上下文中出现「上午」「活动数据仍在累积」或类似说明：今日步数/消耗为截至目前累计，不得据此批评用户活动太少、施压或制造焦虑；运动相关用鼓励、非评判语气，避免「太少」「不够」「要加强」等措辞。
-        若上下文中包含「当前症状（最近48小时）」：请根据当前症状给出针对性建议，例如痉挛时建议温热敷/补镁、头痛时建议补水/避咖啡因、疲劳时调整运动强度、情绪波动时建议正念等。若只出现「本周期曾记录症状」或「历史高频症状」，只能作为历史参考，不要说成用户现在有这些症状。
-        """
-    }
 
     /// 提取用户当前状态的文本行（供多个 prompt builder 复用）
     nonisolated static func buildContextLines(context: CycleContext) -> [String] {
@@ -760,19 +473,6 @@ actor LLMService {
         }
 
         return lines
-    }
-
-    nonisolated static func buildSuggestionUserPrompt(context: CycleContext, profile: UserProfile? = nil) -> String {
-        let lines = buildContextLines(context: context)
-        let profileSummary = buildProfileSummary(profile: profile)
-        return """
-        请根据以下健康数据，为该用户生成四个维度（diet/exercise/mood/sleep）的个性化生活建议：
-
-        \(lines.joined(separator: "\n"))
-        \(profileSummary)
-
-        请只输出 JSON，不要包含任何其他文字。
-        """
     }
 
     /// 对话助手的 System Prompt：注入周期上下文 + 用户档案，设定温暖体贴语气
@@ -1006,7 +706,7 @@ actor LLMService {
     /// 从用户对话中提取档案信息（fast 模型，JSON mode）
     func extractProfileFields(userMessage: String, assistantReply: String) async throws -> ExtractedProfileFields {
         let request = LLMRequest(
-            model: Self.suggestionModelName,
+            model: Self.utilityModelName,
             messages: [
                 LLMMessage(role: "system", content: """
                 从以下对话片段中提取用户的个人生活信息。只提取用户明确提到的信息，不要推测。
