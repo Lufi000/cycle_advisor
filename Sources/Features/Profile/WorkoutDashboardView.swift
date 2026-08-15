@@ -144,7 +144,7 @@ struct WorkoutDashboardView: View {
                         .lineSpacing(5)
                 }
 
-                workoutPosterImage
+                workoutPosterImage(for: featuredActivity)
 
                 workoutStatsStrip(totalMinutes: totalMinutes, weeklyCount: weeklyCount)
 
@@ -197,7 +197,7 @@ struct WorkoutDashboardView: View {
     private func weeklyTitle(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
         guard weeklyCount > 0 else { return String(localized: "workout.title.recovery") }
         guard let activity else { return workoutMomentumLabel(count: weeklyCount, minutes: stats.weeklyTotalDurationMinutes ?? 0) }
-        return String(format: String(localized: "workout.title.activity_ace_format"), localizedActivityName(for: activity))
+        return String(localized: workoutTitleKey(for: activity))
     }
 
     private func weeklySummary(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
@@ -207,7 +207,55 @@ struct WorkoutDashboardView: View {
         guard let activity else {
             return String(localized: "workout.summary.no_activity_type")
         }
-        return String(format: String(localized: "workout.summary.activity_insight_format"), localizedActivityName(for: activity))
+        return String(format: String(localized: workoutSummaryKey(for: activity)), localizedActivityName(for: activity))
+    }
+
+    private func workoutTitleKey(for activity: WorkoutStats.WorkoutActivity) -> String.LocalizationValue {
+        switch workoutActivityKind(for: activity) {
+        case .climbing:
+            return "workout.title.climbing"
+        case .walking:
+            return "workout.title.walking"
+        case .running:
+            return "workout.title.running"
+        case .yoga:
+            return "workout.title.yoga"
+        case .cycling:
+            return "workout.title.cycling"
+        case .swimming:
+            return "workout.title.swimming"
+        case .strength:
+            return "workout.title.strength"
+        case .flexibility:
+            return "workout.title.flexibility"
+        case .dance:
+            return "workout.title.dance"
+        case .ballSports:
+            return "workout.title.ball_sports"
+        case .cardio:
+            return "workout.title.cardio"
+        case .other:
+            return "workout.title.steady_rhythm"
+        }
+    }
+
+    private func workoutSummaryKey(for activity: WorkoutStats.WorkoutActivity) -> String.LocalizationValue {
+        switch workoutActivityKind(for: activity) {
+        case .climbing:
+            return "workout.summary.climbing_format"
+        case .walking:
+            return "workout.summary.walking_format"
+        case .running:
+            return "workout.summary.running_format"
+        case .yoga, .flexibility:
+            return "workout.summary.gentle_format"
+        case .cycling, .swimming, .cardio:
+            return "workout.summary.cardio_format"
+        case .strength:
+            return "workout.summary.strength_format"
+        case .dance, .ballSports, .other:
+            return "workout.summary.activity_insight_format"
+        }
     }
 
     private func workoutMomentumLabel(count: Int, minutes: Double) -> String {
@@ -234,8 +282,8 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    private var workoutPosterImage: some View {
-        WorkoutClimbingArtView()
+    private func workoutPosterImage(for activity: WorkoutStats.WorkoutActivity?) -> some View {
+        WorkoutPosterArtView(kind: activity.map(workoutActivityKind(for:)) ?? .other)
         .aspectRatio(1, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         .accessibilityHidden(true)
@@ -354,61 +402,100 @@ struct WorkoutDashboardView: View {
     }
 
     private func workoutIconName(for activity: WorkoutStats.WorkoutActivity) -> String {
-        let text = "\(activity.key) \(activity.name)".lowercased()
-        if text.contains("攀岩") || text.contains("climb") {
+        switch workoutActivityKind(for: activity) {
+        case .climbing:
             return "figure.climbing"
-        }
-        if text.contains("步行") || text.contains("散步") || text.contains("walk") {
+        case .walking:
             return "figure.walk"
-        }
-        if text.contains("跑") || text.contains("run") {
+        case .running:
             return "figure.run"
-        }
-        if text.contains("瑜伽") || text.contains("yoga") || text.contains("身心") {
+        case .yoga:
             return "figure.mind.and.body"
-        }
-        if text.contains("骑") || text.contains("cycling") || text.contains("bike") {
+        case .cycling:
             return "figure.outdoor.cycle"
-        }
-        if text.contains("游泳") || text.contains("swim") {
+        case .swimming:
             return "figure.pool.swim"
-        }
-        if text.contains("力量") || text.contains("strength") {
+        case .strength:
             return "dumbbell"
-        }
-        if text.contains("拉伸") || text.contains("stretch") || text.contains("flexibility") {
+        case .flexibility:
             return "figure.cooldown"
+        case .dance:
+            return "figure.dance"
+        case .ballSports:
+            return "sportscourt"
+        case .cardio:
+            return "heart"
+        case .other:
+            return "figure.mixed.cardio"
         }
-        return "figure.mixed.cardio"
     }
 
     private func localizedActivityName(for activity: WorkoutStats.WorkoutActivity) -> String {
-        let text = "\(activity.key) \(activity.name)".lowercased()
-        if text.contains("攀岩") || text.contains("climb") {
+        switch workoutActivityKind(for: activity) {
+        case .climbing:
             return String(localized: "workout.activity.climbing")
-        }
-        if text.contains("步行") || text.contains("散步") || text.contains("walk") {
+        case .walking:
             return String(localized: "workout.activity.walking")
-        }
-        if text.contains("跑") || text.contains("run") {
+        case .running:
             return String(localized: "workout.activity.running")
-        }
-        if text.contains("瑜伽") || text.contains("yoga") || text.contains("身心") {
+        case .yoga:
             return String(localized: "workout.activity.yoga")
-        }
-        if text.contains("骑") || text.contains("cycling") || text.contains("bike") {
+        case .cycling:
             return String(localized: "workout.activity.cycling")
-        }
-        if text.contains("游泳") || text.contains("swim") {
+        case .swimming:
             return String(localized: "workout.activity.swimming")
-        }
-        if text.contains("力量") || text.contains("strength") {
+        case .strength:
             return String(localized: "workout.activity.traditional_strength_training")
-        }
-        if text.contains("拉伸") || text.contains("stretch") || text.contains("flexibility") {
+        case .flexibility:
             return String(localized: "workout.activity.flexibility")
+        case .dance, .ballSports, .cardio, .other:
+            return activity.name
         }
-        return activity.name
+    }
+
+    private func workoutActivityKind(for activity: WorkoutStats.WorkoutActivity) -> WorkoutActivityKind {
+        let key = activity.key.lowercased()
+        let text = "\(activity.key) \(activity.name)".lowercased()
+
+        switch key {
+        case "climbing":
+            return .climbing
+        case "walking", "hiking":
+            return .walking
+        case "running", "track_and_field", "wheelchair_run_pace":
+            return .running
+        case "yoga", "mind_and_body", "pilates", "tai_chi", "barre":
+            return .yoga
+        case "cycling", "hand_cycling", "swim_bike_run":
+            return .cycling
+        case "swimming", "water_fitness", "water_sports", "water_polo", "underwater_diving":
+            return .swimming
+        case "functional_strength_training", "traditional_strength_training", "core_training":
+            return .strength
+        case "flexibility", "preparation_and_recovery", "cooldown":
+            return .flexibility
+        case "dance", "dance_inspired_training", "cardio_dance", "social_dance":
+            return .dance
+        case "badminton", "baseball", "basketball", "cricket", "golf", "handball", "hockey", "lacrosse", "paddle_sports", "pickleball", "racquetball", "rugby", "soccer", "softball", "squash", "table_tennis", "tennis", "volleyball":
+            return .ballSports
+        case "cross_training", "elliptical", "high_intensity_interval_training", "jump_rope", "mixed_cardio", "mixed_metabolic_cardio_training", "stair_climbing", "stairs", "step_training":
+            return .cardio
+        default:
+            break
+        }
+
+        if text.contains("攀岩") || text.contains("climb") { return .climbing }
+        if text.contains("步行") || text.contains("散步") || text.contains("徒步") || text.contains("walk") || text.contains("hik") { return .walking }
+        if text.contains("跑") || text.contains("run") { return .running }
+        if text.contains("瑜伽") || text.contains("身心") || text.contains("普拉提") || text.contains("太极") || text.contains("yoga") || text.contains("pilates") { return .yoga }
+        if text.contains("骑") || text.contains("cycling") || text.contains("bike") { return .cycling }
+        if text.contains("游泳") || text.contains("水") || text.contains("swim") { return .swimming }
+        if text.contains("力量") || text.contains("核心") || text.contains("strength") { return .strength }
+        if text.contains("拉伸") || text.contains("柔韧") || text.contains("stretch") || text.contains("flexibility") { return .flexibility }
+        if text.contains("舞") || text.contains("dance") { return .dance }
+        if text.contains("球") || text.contains("ball") || text.contains("tennis") { return .ballSports }
+        if text.contains("有氧") || text.contains("hiit") || text.contains("cardio") { return .cardio }
+        return .other
     }
 
     private func workoutMetricPill(icon: String, label: String, value: String, tint: Color) -> some View {
@@ -455,7 +542,24 @@ struct WorkoutDashboardView: View {
 
 }
 
-private struct WorkoutClimbingArtView: View {
+fileprivate enum WorkoutActivityKind {
+    case climbing
+    case walking
+    case running
+    case yoga
+    case cycling
+    case swimming
+    case strength
+    case flexibility
+    case dance
+    case ballSports
+    case cardio
+    case other
+}
+
+private struct WorkoutPosterArtView: View {
+    let kind: WorkoutActivityKind
+
     var body: some View {
         GeometryReader { proxy in
             let side = min(proxy.size.width, proxy.size.height)
@@ -463,51 +567,235 @@ private struct WorkoutClimbingArtView: View {
                 Theme.peachBlush
                     .grainTexture(intensity: .subtle, seed: 533)
 
-                climbingHold(
-                    fill: Color(red: 245/255, green: 215/255, blue: 39/255),
-                    highlight: Color(red: 195/255, green: 171/255, blue: 30/255),
-                    size: CGSize(width: side * 0.40, height: side * 0.25),
-                    x: side * 0.36,
-                    y: side * 0.28,
-                    rotation: -128
-                )
-
-                climbingHold(
-                    fill: Color(red: 190/255, green: 79/255, blue: 120/255),
-                    highlight: Color(red: 136/255, green: 52/255, blue: 85/255),
-                    size: CGSize(width: side * 0.20, height: side * 0.14),
-                    x: side * 0.77,
-                    y: side * 0.23,
-                    rotation: 138
-                )
-
-                climbingHold(
-                    fill: Color(red: 107/255, green: 130/255, blue: 218/255),
-                    highlight: Color(red: 55/255, green: 73/255, blue: 149/255),
-                    size: CGSize(width: side * 0.15, height: side * 0.23),
-                    x: side * 0.19,
-                    y: side * 0.63,
-                    rotation: 8
-                )
-
-                climbingHold(
-                    fill: Color(red: 252/255, green: 79/255, blue: 112/255),
-                    highlight: Color(red: 255/255, green: 141/255, blue: 161/255),
-                    size: CGSize(width: side * 0.31, height: side * 0.17),
-                    x: side * 0.45,
-                    y: side * 0.77,
-                    rotation: -165
-                )
-
-                climbingHold(
-                    fill: Color(red: 170/255, green: 186/255, blue: 73/255),
-                    highlight: Color(red: 132/255, green: 153/255, blue: 56/255),
-                    size: CGSize(width: side * 0.31, height: side * 0.11),
-                    x: side * 0.75,
-                    y: side * 0.60,
-                    rotation: -24
-                )
+                switch kind {
+                case .climbing:
+                    climbingArt(side: side)
+                case .walking:
+                    walkingArt(side: side)
+                case .running:
+                    runningArt(side: side)
+                case .yoga, .flexibility:
+                    yogaArt(side: side)
+                case .cycling:
+                    cyclingArt(side: side)
+                case .swimming:
+                    swimmingArt(side: side)
+                case .strength:
+                    strengthArt(side: side)
+                case .dance:
+                    danceArt(side: side)
+                case .ballSports:
+                    ballSportsArt(side: side)
+                case .cardio:
+                    cardioArt(side: side)
+                case .other:
+                    mixedArt(side: side)
+                }
             }
+        }
+    }
+
+    private func climbingArt(side: CGFloat) -> some View {
+        ZStack {
+            climbingHold(
+                fill: Color(red: 245/255, green: 215/255, blue: 39/255),
+                highlight: Color(red: 195/255, green: 171/255, blue: 30/255),
+                size: CGSize(width: side * 0.40, height: side * 0.25),
+                x: side * 0.36,
+                y: side * 0.28,
+                rotation: -128
+            )
+
+            climbingHold(
+                fill: Color(red: 190/255, green: 79/255, blue: 120/255),
+                highlight: Color(red: 136/255, green: 52/255, blue: 85/255),
+                size: CGSize(width: side * 0.20, height: side * 0.14),
+                x: side * 0.77,
+                y: side * 0.23,
+                rotation: 138
+            )
+
+            climbingHold(
+                fill: Color(red: 107/255, green: 130/255, blue: 218/255),
+                highlight: Color(red: 55/255, green: 73/255, blue: 149/255),
+                size: CGSize(width: side * 0.15, height: side * 0.23),
+                x: side * 0.19,
+                y: side * 0.63,
+                rotation: 8
+            )
+
+            climbingHold(
+                fill: Color(red: 252/255, green: 79/255, blue: 112/255),
+                highlight: Color(red: 255/255, green: 141/255, blue: 161/255),
+                size: CGSize(width: side * 0.31, height: side * 0.17),
+                x: side * 0.45,
+                y: side * 0.77,
+                rotation: -165
+            )
+
+            climbingHold(
+                fill: Color(red: 170/255, green: 186/255, blue: 73/255),
+                highlight: Color(red: 132/255, green: 153/255, blue: 56/255),
+                size: CGSize(width: side * 0.31, height: side * 0.11),
+                x: side * 0.75,
+                y: side * 0.60,
+                rotation: -24
+            )
+        }
+    }
+
+    private func walkingArt(side: CGFloat) -> some View {
+        ZStack {
+            posterPath(side: side, color: Color(red: 116/255, green: 156/255, blue: 93/255))
+                .trim(from: 0.04, to: 0.95)
+                .stroke(style: StrokeStyle(lineWidth: side * 0.055, lineCap: .round))
+                .opacity(0.85)
+            footprint(side: side, x: 0.36, y: 0.34, rotation: -16, color: Color(red: 252/255, green: 111/255, blue: 120/255))
+            footprint(side: side, x: 0.58, y: 0.54, rotation: 14, color: Color(red: 107/255, green: 130/255, blue: 218/255))
+            footprint(side: side, x: 0.42, y: 0.74, rotation: -10, color: Color(red: 245/255, green: 215/255, blue: 39/255))
+        }
+    }
+
+    private func runningArt(side: CGFloat) -> some View {
+        ZStack {
+            ForEach(0..<3) { index in
+                Capsule()
+                    .stroke(Color.white.opacity(0.72), lineWidth: side * 0.018)
+                    .frame(width: side * (0.72 - CGFloat(index) * 0.12), height: side * (0.42 - CGFloat(index) * 0.06))
+                    .rotationEffect(.degrees(-12))
+                    .position(x: side * 0.50, y: side * 0.56)
+            }
+            posterBlob(side: side, fill: Color(red: 252/255, green: 111/255, blue: 120/255), size: side * 0.22, x: 0.34, y: 0.40)
+            posterBlob(side: side, fill: Color(red: 245/255, green: 215/255, blue: 39/255), size: side * 0.16, x: 0.63, y: 0.47)
+            Image(systemName: "figure.run")
+                .font(.system(size: side * 0.28, weight: .medium))
+                .foregroundStyle(Color(red: 63/255, green: 83/255, blue: 69/255))
+                .position(x: side * 0.52, y: side * 0.56)
+        }
+    }
+
+    private func yogaArt(side: CGFloat) -> some View {
+        ZStack {
+            Circle()
+                .fill(Color(red: 245/255, green: 215/255, blue: 39/255).opacity(0.90))
+                .frame(width: side * 0.26, height: side * 0.26)
+                .position(x: side * 0.70, y: side * 0.28)
+            RoundedRectangle(cornerRadius: side * 0.05, style: .continuous)
+                .fill(Color(red: 107/255, green: 130/255, blue: 218/255))
+                .frame(width: side * 0.62, height: side * 0.13)
+                .rotationEffect(.degrees(-7))
+                .position(x: side * 0.48, y: side * 0.72)
+            Image(systemName: "figure.mind.and.body")
+                .font(.system(size: side * 0.32, weight: .regular))
+                .foregroundStyle(Color(red: 63/255, green: 83/255, blue: 69/255))
+                .position(x: side * 0.45, y: side * 0.52)
+        }
+    }
+
+    private func cyclingArt(side: CGFloat) -> some View {
+        ZStack {
+            wheel(side: side, x: 0.32, y: 0.64)
+            wheel(side: side, x: 0.70, y: 0.64)
+            Path { path in
+                path.move(to: CGPoint(x: side * 0.32, y: side * 0.64))
+                path.addLine(to: CGPoint(x: side * 0.46, y: side * 0.42))
+                path.addLine(to: CGPoint(x: side * 0.57, y: side * 0.64))
+                path.addLine(to: CGPoint(x: side * 0.70, y: side * 0.64))
+                path.move(to: CGPoint(x: side * 0.46, y: side * 0.42))
+                path.addLine(to: CGPoint(x: side * 0.55, y: side * 0.42))
+            }
+            .stroke(Color(red: 63/255, green: 83/255, blue: 69/255), style: StrokeStyle(lineWidth: side * 0.035, lineCap: .round, lineJoin: .round))
+            posterBlob(side: side, fill: Color(red: 252/255, green: 111/255, blue: 120/255), size: side * 0.14, x: 0.53, y: 0.34)
+        }
+    }
+
+    private func swimmingArt(side: CGFloat) -> some View {
+        ZStack {
+            ForEach(0..<4) { index in
+                wave(side: side, y: 0.34 + CGFloat(index) * 0.13)
+                    .stroke(Color(red: 84/255, green: 132/255, blue: 196/255).opacity(0.82), style: StrokeStyle(lineWidth: side * 0.035, lineCap: .round))
+            }
+            Circle()
+                .fill(Color(red: 245/255, green: 215/255, blue: 39/255))
+                .frame(width: side * 0.18, height: side * 0.18)
+                .position(x: side * 0.30, y: side * 0.28)
+        }
+    }
+
+    private func strengthArt(side: CGFloat) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: side * 0.03)
+                .fill(Color(red: 63/255, green: 83/255, blue: 69/255))
+                .frame(width: side * 0.56, height: side * 0.045)
+                .position(x: side * 0.50, y: side * 0.52)
+            ForEach([0.25, 0.32, 0.68, 0.75], id: \.self) { x in
+                RoundedRectangle(cornerRadius: side * 0.025)
+                    .fill(x < 0.5 ? Color(red: 107/255, green: 130/255, blue: 218/255) : Color(red: 252/255, green: 111/255, blue: 120/255))
+                    .frame(width: side * 0.07, height: side * 0.25)
+                    .position(x: side * x, y: side * 0.52)
+            }
+            posterBlob(side: side, fill: Color(red: 245/255, green: 215/255, blue: 39/255), size: side * 0.18, x: 0.50, y: 0.28)
+        }
+    }
+
+    private func danceArt(side: CGFloat) -> some View {
+        ZStack {
+            posterBlob(side: side, fill: Color(red: 252/255, green: 111/255, blue: 120/255), size: side * 0.25, x: 0.35, y: 0.62)
+            posterBlob(side: side, fill: Color(red: 107/255, green: 130/255, blue: 218/255), size: side * 0.20, x: 0.67, y: 0.38)
+            Image(systemName: "music.note")
+                .font(.system(size: side * 0.28, weight: .bold))
+                .foregroundStyle(Color(red: 63/255, green: 83/255, blue: 69/255))
+                .rotationEffect(.degrees(-14))
+                .position(x: side * 0.48, y: side * 0.48)
+        }
+    }
+
+    private func ballSportsArt(side: CGFloat) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: side * 0.04, style: .continuous)
+                .stroke(Color.white.opacity(0.72), lineWidth: side * 0.018)
+                .frame(width: side * 0.72, height: side * 0.46)
+                .position(x: side * 0.50, y: side * 0.52)
+            Rectangle()
+                .fill(Color.white.opacity(0.62))
+                .frame(width: side * 0.018, height: side * 0.46)
+                .position(x: side * 0.50, y: side * 0.52)
+            Circle()
+                .fill(Color(red: 245/255, green: 215/255, blue: 39/255))
+                .frame(width: side * 0.20, height: side * 0.20)
+                .overlay(Circle().stroke(Color(red: 63/255, green: 83/255, blue: 69/255).opacity(0.45), lineWidth: side * 0.012))
+                .position(x: side * 0.65, y: side * 0.38)
+        }
+    }
+
+    private func cardioArt(side: CGFloat) -> some View {
+        ZStack {
+            posterBlob(side: side, fill: Color(red: 252/255, green: 111/255, blue: 120/255), size: side * 0.30, x: 0.38, y: 0.42)
+            posterBlob(side: side, fill: Color(red: 245/255, green: 215/255, blue: 39/255), size: side * 0.18, x: 0.70, y: 0.66)
+            Path { path in
+                path.move(to: CGPoint(x: side * 0.18, y: side * 0.55))
+                path.addLine(to: CGPoint(x: side * 0.32, y: side * 0.55))
+                path.addLine(to: CGPoint(x: side * 0.40, y: side * 0.38))
+                path.addLine(to: CGPoint(x: side * 0.51, y: side * 0.72))
+                path.addLine(to: CGPoint(x: side * 0.62, y: side * 0.48))
+                path.addLine(to: CGPoint(x: side * 0.82, y: side * 0.48))
+            }
+            .stroke(Color(red: 63/255, green: 83/255, blue: 69/255), style: StrokeStyle(lineWidth: side * 0.035, lineCap: .round, lineJoin: .round))
+        }
+    }
+
+    private func mixedArt(side: CGFloat) -> some View {
+        ZStack {
+            climbingHold(
+                fill: Color(red: 245/255, green: 215/255, blue: 39/255),
+                highlight: Color(red: 195/255, green: 171/255, blue: 30/255),
+                size: CGSize(width: side * 0.32, height: side * 0.18),
+                x: side * 0.35,
+                y: side * 0.34,
+                rotation: -20
+            )
+            posterBlob(side: side, fill: Color(red: 107/255, green: 130/255, blue: 218/255), size: side * 0.20, x: 0.66, y: 0.50)
+            posterBlob(side: side, fill: Color(red: 252/255, green: 111/255, blue: 120/255), size: side * 0.24, x: 0.42, y: 0.72)
         }
     }
 
@@ -532,6 +820,57 @@ private struct WorkoutClimbingArtView: View {
         .rotationEffect(.degrees(rotation))
         .position(x: x, y: y)
     }
+
+    private func posterBlob(side: CGFloat, fill: Color, size: CGFloat, x: CGFloat, y: CGFloat) -> some View {
+        Circle()
+            .fill(fill.opacity(0.92))
+            .frame(width: size, height: size)
+            .position(x: side * x, y: side * y)
+    }
+
+    private func footprint(side: CGFloat, x: CGFloat, y: CGFloat, rotation: Double, color: Color) -> some View {
+        Ellipse()
+            .fill(color)
+            .frame(width: side * 0.14, height: side * 0.23)
+            .rotationEffect(.degrees(rotation))
+            .position(x: side * x, y: side * y)
+    }
+
+    private func wheel(side: CGFloat, x: CGFloat, y: CGFloat) -> some View {
+        Circle()
+            .stroke(Color(red: 63/255, green: 83/255, blue: 69/255), lineWidth: side * 0.025)
+            .background(Circle().fill(Color.white.opacity(0.42)))
+            .frame(width: side * 0.25, height: side * 0.25)
+            .position(x: side * x, y: side * y)
+    }
+
+    private func posterPath(side: CGFloat, color: Color) -> Path {
+        Path { path in
+            path.move(to: CGPoint(x: side * 0.22, y: side * 0.25))
+            path.addCurve(
+                to: CGPoint(x: side * 0.72, y: side * 0.78),
+                control1: CGPoint(x: side * 0.72, y: side * 0.22),
+                control2: CGPoint(x: side * 0.22, y: side * 0.64)
+            )
+        }
+    }
+
+    private func wave(side: CGFloat, y: CGFloat) -> Path {
+        Path { path in
+            path.move(to: CGPoint(x: side * 0.18, y: side * y))
+            path.addCurve(
+                to: CGPoint(x: side * 0.48, y: side * y),
+                control1: CGPoint(x: side * 0.26, y: side * (y - 0.08)),
+                control2: CGPoint(x: side * 0.40, y: side * (y + 0.08))
+            )
+            path.addCurve(
+                to: CGPoint(x: side * 0.82, y: side * y),
+                control1: CGPoint(x: side * 0.58, y: side * (y - 0.08)),
+                control2: CGPoint(x: side * 0.72, y: side * (y + 0.08))
+            )
+        }
+    }
+
 }
 
 #Preview {
