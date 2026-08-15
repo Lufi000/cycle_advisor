@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDisplayName</key>
+	<string>Bunlet</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Cycle Advisor needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.</string>
+	<string>Bunlet needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Cycle Advisor may save cycle-related health updates you choose to record so your cycle phase suggestions stay accurate and personalized.</string>
+	<string>Bunlet may save cycle-related health updates you choose to record so your cycle phase suggestions stay accurate and personalized.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Itim-Regular.ttf</string>

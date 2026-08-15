@@ -8,14 +8,14 @@
 
 | 字段 | 值 |
 |------|------|
-| **App 名称** | Cycle Life Advisor |
+| **App 名称** | Bunlet |
 | **副标题** | AI-Powered Cycle Wellness Guide |
 | **Bundle ID** | com.cycleadvisor.app |
 | **SKU** | cycleadvisor2024 |
 | **主要语言** | 简体中文 (zh-Hans) |
 | **类别 (Primary)** | Health & Fitness |
 | **类别 (Secondary)** | Lifestyle |
-| **内容版权** | Cycle Life Advisor |
+| **内容版权** | Bunlet |
 | **版本号** | 1.0 |
 | **构建号** | 1 |
 
@@ -32,7 +32,7 @@
 
 **描述 (Description, 4000字符)**
 ```
-Cycle Life Advisor 是一款基于 AI 的周期生活指南，帮助你根据月经周期的不同阶段，获取个性化的饮食、运动、情绪管理和睡眠建议。
+Bunlet 是一款基于 AI 的周期生活指南，帮助你根据月经周期的不同阶段，获取个性化的饮食、运动、情绪管理和睡眠建议。
 
 核心功能：
 
@@ -88,7 +88,7 @@ AI-powered suggestions for diet, exercise, mood, and sleep based on your cycle p
 
 **Description**
 ```
-Cycle Life Advisor is an AI-powered cycle wellness guide that delivers personalized diet, exercise, mood, and sleep suggestions based on your menstrual cycle phase.
+Bunlet is an AI-powered cycle wellness guide that delivers personalized diet, exercise, mood, and sleep suggestions based on your menstrual cycle phase.
 
 Key Features:
 
@@ -252,7 +252,7 @@ Raw HealthKit records remain on the user's device and are not uploaded to our se
 To test the app:
 1. Open Apple Health app → Browse → Cycle Tracking → Add Data
 2. Add a period start date (e.g., 7 days ago with "Flow" = Medium)
-3. Launch Cycle Life Advisor — it will read the period data and show your current phase
+3. Launch Bunlet — it will read the period data and show your current phase
 4. Switch to the AI Assistant tab to chat
 5. To test the paid subscription, open the Assistant tab AI Pro menu or Settings > Subscription, then purchase AI Pro Monthly with a sandbox Apple ID
 
@@ -334,7 +334,7 @@ The in-app subscription flow also shows the AI Pro Monthly subscription title, 1
 ### 隐私政策要点（需发布到上述 URL）：
 
 ```
-Privacy Policy — Cycle Life Advisor
+Privacy Policy — Bunlet
 
 Last Updated: [发布日期]
 
