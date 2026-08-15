@@ -197,7 +197,7 @@ struct WorkoutDashboardView: View {
     private func weeklyTitle(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
         guard weeklyCount > 0 else { return String(localized: "workout.title.recovery") }
         guard let activity else { return workoutMomentumLabel(count: weeklyCount, minutes: stats.weeklyTotalDurationMinutes ?? 0) }
-        return String(localized: workoutTitleKey(for: activity))
+        return NSLocalizedString(workoutTitleKey(for: activity), comment: "")
     }
 
     private func weeklySummary(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
@@ -207,10 +207,10 @@ struct WorkoutDashboardView: View {
         guard let activity else {
             return String(localized: "workout.summary.no_activity_type")
         }
-        return String(format: String(localized: workoutSummaryKey(for: activity)), localizedActivityName(for: activity))
+        return String(format: NSLocalizedString(workoutSummaryKey(for: activity), comment: ""), localizedActivityName(for: activity))
     }
 
-    private func workoutTitleKey(for activity: WorkoutStats.WorkoutActivity) -> String.LocalizationValue {
+    private func workoutTitleKey(for activity: WorkoutStats.WorkoutActivity) -> String {
         switch workoutActivityKind(for: activity) {
         case .climbing:
             return "workout.title.climbing"
@@ -239,7 +239,7 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    private func workoutSummaryKey(for activity: WorkoutStats.WorkoutActivity) -> String.LocalizationValue {
+    private func workoutSummaryKey(for activity: WorkoutStats.WorkoutActivity) -> String {
         switch workoutActivityKind(for: activity) {
         case .climbing:
             return "workout.summary.climbing_format"
