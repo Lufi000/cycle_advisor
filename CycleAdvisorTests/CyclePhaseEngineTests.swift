@@ -5,6 +5,30 @@ final class CyclePhaseEngineTests: XCTestCase {
 
     let engine = CyclePhaseEngine()
 
+    // MARK: - Assistant Language Tests
+
+    func testAssistantResponseLanguageDetectsEnglish() {
+        XCTAssertEqual(LLMService.responseLanguage(for: "Can I run today?"), .english)
+    }
+
+    func testAssistantResponseLanguageLetsShortEnglishGreetingFollowFallback() {
+        XCTAssertEqual(LLMService.responseLanguage(for: "hello", fallback: .simplifiedChinese), .simplifiedChinese)
+        XCTAssertEqual(LLMService.responseLanguage(for: "hello", fallback: .english), .english)
+    }
+
+    func testAssistantResponseLanguageDefaultsToChineseForChineseInput() {
+        XCTAssertEqual(LLMService.responseLanguage(for: "你好"), .simplifiedChinese)
+        XCTAssertEqual(LLMService.responseLanguage(for: "hello 你好"), .simplifiedChinese)
+    }
+
+    func testChatPromptPinsEnglishResponseLanguage() {
+        let prompt = LLMService.buildChatSystemPrompt(
+            context: MockData.lutealContext,
+            responseLanguage: .english
+        )
+        XCTAssertTrue(prompt.contains("回复语言必须使用：English"))
+    }
+
     // MARK: - Phase Duration Tests
 
     func testStandard28DayCycleDurations() {

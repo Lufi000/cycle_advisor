@@ -326,19 +326,21 @@ actor LLMService {
         context: CycleContext,
         userQuestion: String,
         assistantReply: String,
-        recentDialogue: String = ""
+        recentDialogue: String = "",
+        responseLanguage: ResponseLanguage = .simplifiedChinese
     ) async throws -> [String] {
         let request = LLMRequest(
             model: Self.utilityModelName,
             messages: [
-                LLMMessage(role: "system", content: Self.buildChatFollowUpQuestionsSystemPrompt()),
+                LLMMessage(role: "system", content: Self.buildChatFollowUpQuestionsSystemPrompt(responseLanguage: responseLanguage)),
                 LLMMessage(
                     role: "user",
                     content: Self.buildChatFollowUpUserPrompt(
                         context: context,
                         userQuestion: userQuestion,
                         assistantReply: assistantReply,
-                        recentDialogue: recentDialogue
+                        recentDialogue: recentDialogue,
+                        responseLanguage: responseLanguage
                     )
                 )
             ],
@@ -371,7 +373,89 @@ actor LLMService {
         return []
     }
 
-    // MARK: - Prompt Builders (nonisolated, always in Chinese)
+    // MARK: - Prompt Builders
+
+    enum ResponseLanguage: Equatable {
+        case simplifiedChinese
+        case english
+
+        var displayName: String {
+            switch self {
+            case .simplifiedChinese: return "简体中文"
+            case .english: return "English"
+            }
+        }
+
+        var followUpFallbackQuestions: [String] {
+            switch self {
+            case .simplifiedChinese:
+                return [
+                    "能给我一个今天就能执行的版本吗？",
+                    "如果作息被打乱，怎么调整更稳妥？",
+                    "有哪些常见误区我需要先避开？",
+                ]
+            case .english:
+                return [
+                    "Can you make this actionable for today?",
+                    "How should I adjust if my routine changes?",
+                    "What common mistakes should I avoid?",
+                ]
+            }
+        }
+    }
+
+    nonisolated static func preferredResponseLanguage(
+        appLanguage: LanguageManager.AppLanguage = LanguageManager.shared.current,
+        locale: Locale = .current
+    ) -> ResponseLanguage {
+        switch appLanguage {
+        case .english:
+            return .english
+        case .simplifiedChinese:
+            return .simplifiedChinese
+        case .system:
+            let identifier = locale.identifier.lowercased()
+            return identifier.hasPrefix("zh") ? .simplifiedChinese : .english
+        }
+    }
+
+    nonisolated static func responseLanguage(
+        for text: String,
+        fallback: ResponseLanguage = .simplifiedChinese
+    ) -> ResponseLanguage {
+        let normalized = text
+            .lowercased()
+            .components(separatedBy: CharacterSet.alphanumerics.inverted)
+            .filter { !$0.isEmpty }
+
+        if normalized.allSatisfy(["hello", "hi", "hey", "yo"].contains),
+           (1...2).contains(normalized.count) {
+            return fallback
+        }
+
+        var cjkCount = 0
+        var latinCount = 0
+
+        for scalar in text.unicodeScalars {
+            switch scalar.value {
+            case 0x4E00...0x9FFF, 0x3400...0x4DBF, 0xF900...0xFAFF:
+                cjkCount += 1
+            case 0x0041...0x005A, 0x0061...0x007A:
+                latinCount += 1
+            default:
+                continue
+            }
+        }
+
+        if cjkCount > 0 {
+            return .simplifiedChinese
+        }
+
+        if latinCount > 0 {
+            return .english
+        }
+        return fallback
+    }
 
     /// 提取用户当前状态的文本行（供多个 prompt builder 复用）
     nonisolated static func buildContextLines(context: CycleContext) -> [String] {
@@ -476,7 +560,11 @@ actor LLMService {
     }
 
     /// 对话助手的 System Prompt：注入周期上下文 + 用户档案，设定温暖体贴语气
-    nonisolated static func buildChatSystemPrompt(context: CycleContext, profile: UserProfile? = nil) -> String {
+    nonisolated static func buildChatSystemPrompt(
+        context: CycleContext,
+        profile: UserProfile? = nil,
+        responseLanguage: ResponseLanguage = .simplifiedChinese
+    ) -> String {
         let contextSummary = buildContextLines(context: context).joined(separator: "\n")
         let profileSummary = buildProfileSummary(profile: profile)
         let missingHint = buildMissingFieldsHint(profile: profile)
@@ -492,6 +580,7 @@ actor LLMService {
         - 若提供了「用户个人画像」：回答应结合用户的身体数据、运动偏好、历史周期规律等个人化信息
         - 遇到诊断/疾病相关问题：先一句话直接说明需要医生判断，再简短提供生活层面可参考的内容
         - 输出纯文本，可用加粗和换行，不输出 JSON 或 markdown 代码块
+        - 回复语言必须使用：\(responseLanguage.displayName)。即使系统提示、用户状态或用户画像是中文，也要用该语言回复；不要因为上下文是中文而切换语言
 
         画像使用要求：
         - 回答前优先看：当前周期阶段/当前症状 > 用户这次问题 > 用户个人画像 > 历史参考；不要把历史症状或旧版画像当作当前事实
@@ -524,15 +613,18 @@ actor LLMService {
     }
 
     /// 对话追问推荐：基于刚结束的问答与用户状态，避免与上文完全重复
-    nonisolated static func buildChatFollowUpQuestionsSystemPrompt() -> String {
+    nonisolated static func buildChatFollowUpQuestionsSystemPrompt(
+        responseLanguage: ResponseLanguage = .simplifiedChinese
+    ) -> String {
         """
         你是月经周期生活方式顾问的「追问推荐」模块，输出仅供用户点击参考，非医疗诊断。
 
-        必须先完整阅读【助手上一答】全文与【近期对话摘录】后，再生成恰好 3 个用户很可能接着问的中文问题。
+        必须先完整阅读【助手上一答】全文与【近期对话摘录】后，再生成恰好 3 个用户很可能接着问的问题。
         要求：
+        - 问题语言必须使用：\(responseLanguage.displayName)
         - 与上文话题自然衔接，可延伸细节、原理、执行步骤、替代方案、注意事项，或与周期/睡眠/情绪/饮食的关联
         - 3 个问题尽量覆盖不同角度，避免句式雷同或与用户原问题高度重复
-        - 口语化、简短（单条原则上不超过 28 字）
+        - 口语化、简短（中文单条原则上不超过 28 字；英文单条原则上不超过 60 characters）
         - 不出现「治疗」「诊断」「医嘱」等医疗措辞；不暗示替代就医
         - 不得编造用户当前状态摘要中没有出现的具体指标、周期信息或症状
 
@@ -544,7 +636,8 @@ actor LLMService {
         context: CycleContext,
         userQuestion: String,
         assistantReply: String,
-        recentDialogue: String
+        recentDialogue: String,
+        responseLanguage: ResponseLanguage = .simplifiedChinese
     ) -> String {
         let lines = buildContextLines(context: context).joined(separator: "\n")
         let cap = 3600
@@ -570,7 +663,7 @@ actor LLMService {
         【助手上一答】
         \(reply)
 
-        请只输出 JSON，不要其他说明。
+        请生成 \(responseLanguage.displayName) 问题。只输出 JSON，不要其他说明。
         """
     }
 

@@ -76,7 +76,13 @@ final class AssistantViewModel {
         guard !trimmed.isEmpty, !isStreaming else { return }
 
         let today = Calendar.current.startOfDay(for: Date())
-        let systemPrompt = LLMService.buildChatSystemPrompt(context: context, profile: UserProfileManager.shared.profile)
+        let preferredLanguage = LLMService.preferredResponseLanguage()
+        let responseLanguage = LLMService.responseLanguage(for: trimmed, fallback: preferredLanguage)
+        let systemPrompt = LLMService.buildChatSystemPrompt(
+            context: context,
+            profile: UserProfileManager.shared.profile,
+            responseLanguage: responseLanguage
+        )
         let previewHistory = Array(messages.suffix(Self.maxHistoryMessages))
             .compactMap { msg -> LLMMessage? in
                 guard !msg.content.isEmpty else { return nil }
@@ -159,7 +165,8 @@ final class AssistantViewModel {
                 if !reply.isEmpty {
                     let followUps = await fetchContextualFollowUpQuestions(
                         userQuestion: trimmed,
-                        assistantReply: messages[i].content
+                        assistantReply: messages[i].content,
+                        responseLanguage: responseLanguage
                     )
                     if !followUps.isEmpty {
                         var updated = messages[i]
@@ -198,18 +205,23 @@ final class AssistantViewModel {
     }
 
     /// 在助手回复完成后拉取追问，结合近期多轮语境，避免出现与当前回答脱节的建议。
-    private func fetchContextualFollowUpQuestions(userQuestion: String, assistantReply: String) async -> [String] {
+    private func fetchContextualFollowUpQuestions(
+        userQuestion: String,
+        assistantReply: String,
+        responseLanguage: LLMService.ResponseLanguage
+    ) async -> [String] {
         let excerpt = buildRecentDialogueExcerpt()
         do {
             let raw = try await LLMService.shared.generateChatFollowUpQuestions(
                 context: context,
                 userQuestion: userQuestion,
                 assistantReply: assistantReply,
-                recentDialogue: excerpt
+                recentDialogue: excerpt,
+                responseLanguage: responseLanguage
             )
-            return Self.normalizeToThreeQuestions(raw)
+            return Self.normalizeToThreeQuestions(raw, responseLanguage: responseLanguage)
         } catch {
-            return Self.normalizeToThreeQuestions([])
+            return Self.normalizeToThreeQuestions([], responseLanguage: responseLanguage)
         }
     }
 
@@ -235,7 +247,10 @@ final class AssistantViewModel {
     }
 
     /// 去重并补齐到 3 条，避免接口异常或返回不足时芯片区域为空。
-    private static func normalizeToThreeQuestions(_ raw: [String]) -> [String] {
+    private static func normalizeToThreeQuestions(
+        _ raw: [String],
+        responseLanguage: LLMService.ResponseLanguage = .simplifiedChinese
+    ) -> [String] {
         var seen = Set<String>()
         var out: [String] = []
         for q in raw {
@@ -245,11 +260,7 @@ final class AssistantViewModel {
             out.append(t)
             if out.count == 3 { break }
         }
-        let fallback = [
-            "能给我一个今天就能执行的版本吗？",
-            "如果作息被打乱，怎么调整更稳妥？",
-            "有哪些常见误区我需要先避开？",
-        ]
+        let fallback = responseLanguage.followUpFallbackQuestions
         var i = 0
         while out.count < 3, i < fallback.count {
             let f = fallback[i]
@@ -398,7 +409,13 @@ final class AssistantViewModel {
                 return LLMMessage(role: msg.role.rawValue, content: msg.content)
             }
 
-        let systemPrompt = LLMService.buildChatSystemPrompt(context: context, profile: UserProfileManager.shared.profile)
+        let preferredLanguage = LLMService.preferredResponseLanguage()
+        let responseLanguage = LLMService.responseLanguage(for: userQuestion, fallback: preferredLanguage)
+        let systemPrompt = LLMService.buildChatSystemPrompt(
+            context: context,
+            profile: UserProfileManager.shared.profile,
+            responseLanguage: responseLanguage
+        )
         guard let reservationID = await reserveChatCredits(history: apiHistory, systemPrompt: systemPrompt) else {
             if let idx = messages.firstIndex(where: { $0.id == assistantId }) {
                 messages[idx].isStreaming = false
@@ -452,7 +469,8 @@ final class AssistantViewModel {
             if !reply.isEmpty {
                 let followUps = await fetchContextualFollowUpQuestions(
                     userQuestion: userQuestion,
-                    assistantReply: messages[i].content
+                    assistantReply: messages[i].content,
+                    responseLanguage: responseLanguage
                 )
                 if !followUps.isEmpty {
                     var updated = messages[i]
