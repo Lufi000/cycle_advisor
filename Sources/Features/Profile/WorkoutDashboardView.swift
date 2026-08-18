@@ -288,7 +288,7 @@ struct WorkoutDashboardView: View {
         let activityMinutes = Int((activity?.totalDurationMinutes ?? 0).rounded())
         let language = LLMService.preferredResponseLanguage().displayName
         return [
-            "v1",
+            "v2",
             language,
             context.phase.rawValue,
             "\(context.dayInPhase)",

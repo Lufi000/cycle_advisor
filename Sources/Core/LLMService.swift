@@ -614,7 +614,7 @@ actor LLMService {
         responseLanguage: ResponseLanguage = .simplifiedChinese
     ) -> String {
         """
-        你是周期生活应用里的运动周报文案模块。请根据用户的周期阶段、健康数据和运动记录，生成一段显示在运动称号标题下方的短小结。
+        你是周期生活应用里的运动周报文案模块。请根据用户的健康数据和运动记录，生成一段显示在运动称号标题下方的短小结。
 
         要求：
         - 回复语言必须使用：\(responseLanguage.displayName)
@@ -622,6 +622,8 @@ actor LLMService {
         - summary 只写 1 句，中文 35-55 字；英文 18-28 words
         - 语气温柔、具体、有画面感，不评判、不催促、不制造焦虑
         - 可以结合主要运动类型，但不要每种运动都套同一句模板
+        - 周期状态只作为内部参考，用来把强度和语气放轻重；summary 里不要直接写出周期阶段
+        - 禁止出现这些阶段词：经期、月经期、卵泡期、排卵期、黄体期、menstrual、period、follicular、ovulation、luteal
         - 不使用「治疗」「诊断」「医嘱」等医疗措辞
         - 不夸大运动与周期/症状的因果关系
         - 不要提到“AI”“数据”“HealthKit”“标题下方”
@@ -641,7 +643,7 @@ actor LLMService {
         let activityDuration = featuredActivity.totalDurationMinutes.map { "约 \(Int($0.rounded())) 分钟" } ?? "未记录时长"
 
         return """
-        【用户当前状态】
+        【内部参考：用户当前状态，不要在输出中点名周期阶段】
         \(contextSummary)
         \(profileSummary)
 
