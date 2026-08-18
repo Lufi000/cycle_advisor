@@ -308,14 +308,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		G100000E /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				VR000003 /* Itim-Regular.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		G100000D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +315,14 @@
 				B1000031 /* SubscriptionView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		G100000E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				VR000003 /* Itim-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		G2000001 /* Assistant */ = {
@@ -459,7 +459,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 2650;
+				LastUpgradeCheck = 2660;
 			};
 			buildConfigurationList = L1000001 /* Build configuration list for PBXProject "CycleAdvisor" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -772,7 +772,7 @@
 				DEVELOPMENT_TEAM = 3488U99HV8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Bunlet";
+				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -800,7 +800,7 @@
 				DEVELOPMENT_TEAM = 3488U99HV8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Bunlet";
+				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
