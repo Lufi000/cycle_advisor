@@ -3,17 +3,13 @@ import SwiftUI
 struct WorkoutDashboardView: View {
     private var profileManager = UserProfileManager.shared
     let context: CycleContext
+    private let statsOverride: WorkoutStats?
     @State private var generatedWeeklySummary: String?
     @State private var activeSummaryID: String?
     @State private var weeklySummaryGenerationFailed = false
 
     private var stats: WorkoutStats {
-        let storedStats = profileManager.profile.workoutStats
-        #if DEBUG
-        return storedStats.topActivities.isEmpty ? MockData.climbingWorkoutStats : storedStats
-        #else
-        return storedStats
-        #endif
+        statsOverride ?? profileManager.profile.workoutStats
     }
     private var healthMetrics: HealthMetrics { context.healthMetrics }
     private var hasActivityMetrics: Bool {
@@ -22,8 +18,9 @@ struct WorkoutDashboardView: View {
             || healthMetrics.activeCalories != nil
     }
 
-    init(context: CycleContext) {
+    init(context: CycleContext, statsOverride: WorkoutStats? = nil) {
         self.context = context
+        self.statsOverride = statsOverride
     }
 
     var body: some View {
@@ -56,9 +53,8 @@ struct WorkoutDashboardView: View {
 
     private var emptyState: some View {
         VStack(spacing: 12) {
-            Image(systemName: "figure.run.circle")
-                .font(.system(size: 46))
-                .foregroundStyle(Theme.phaseFollicular)
+            workoutPosterArt(for: .yoga)
+                .frame(maxWidth: 220, alignment: .center)
             Text(String(localized: "workout.empty.title"))
                 .font(.system(size: Theme.cardTitleSize, weight: .semibold))
                 .foregroundStyle(Theme.textPrimary)
@@ -89,6 +85,9 @@ struct WorkoutDashboardView: View {
                     .foregroundStyle(Theme.textSecondary)
                     .lineSpacing(Theme.lineSpacing)
             }
+
+            workoutPosterArt(for: activityOnlyArtKind)
+                .frame(maxWidth: 313, alignment: .leading)
 
             LazyVGrid(columns: [
                 GridItem(.flexible(), spacing: 8),
@@ -201,6 +200,16 @@ struct WorkoutDashboardView: View {
         case .luteal:
             return String(localized: "workout.activity_only.summary.luteal")
         }
+    }
+
+    private var activityOnlyArtKind: WorkoutActivityKind {
+        if let exercise = healthMetrics.exerciseMinutes, exercise >= 30 {
+            return .running
+        }
+        if let steps = healthMetrics.steps, steps >= 6000 {
+            return .walking
+        }
+        return .other
     }
 
     private func weeklyTitle(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
@@ -366,10 +375,14 @@ struct WorkoutDashboardView: View {
     }
 
     private func workoutPosterImage(for activity: WorkoutStats.WorkoutActivity?) -> some View {
-        WorkoutPosterArtView(kind: activity.map(workoutActivityKind(for:)) ?? .other)
-        .aspectRatio(1, contentMode: .fit)
-        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-        .accessibilityHidden(true)
+        workoutPosterArt(for: activity.map(workoutActivityKind(for:)) ?? .other)
+    }
+
+    private func workoutPosterArt(for kind: WorkoutActivityKind) -> some View {
+        WorkoutPosterArtView(kind: kind)
+            .aspectRatio(1, contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .accessibilityHidden(true)
     }
 
     private func workoutStatsStrip(totalMinutes: Double, weeklyCount: Int) -> some View {
@@ -731,11 +744,17 @@ private struct WorkoutPosterArtView: View {
         ZStack {
             posterPath(side: side, color: Color(red: 116/255, green: 156/255, blue: 93/255))
                 .trim(from: 0.04, to: 0.95)
-                .stroke(style: StrokeStyle(lineWidth: side * 0.055, lineCap: .round))
-                .opacity(0.85)
-            footprint(side: side, x: 0.36, y: 0.34, rotation: -16, color: Color(red: 252/255, green: 111/255, blue: 120/255))
-            footprint(side: side, x: 0.58, y: 0.54, rotation: 14, color: Color(red: 107/255, green: 130/255, blue: 218/255))
-            footprint(side: side, x: 0.42, y: 0.74, rotation: -10, color: Color(red: 245/255, green: 215/255, blue: 39/255))
+                .stroke(style: StrokeStyle(lineWidth: side * 0.045, lineCap: .round))
+                .opacity(0.62)
+
+            footprint(side: side, x: 0.30, y: 0.35, rotation: -18, color: Color(red: 252/255, green: 111/255, blue: 120/255))
+            footprint(side: side, x: 0.65, y: 0.61, rotation: 16, color: Color(red: 107/255, green: 130/255, blue: 218/255))
+            footprint(side: side, x: 0.43, y: 0.76, rotation: -12, color: Color(red: 245/255, green: 215/255, blue: 39/255))
+
+            Image(systemName: "figure.walk")
+                .font(.system(size: side * 0.32, weight: .medium))
+                .foregroundStyle(Color(red: 63/255, green: 83/255, blue: 69/255))
+                .position(x: side * 0.50, y: side * 0.49)
         }
     }
 
@@ -957,5 +976,8 @@ private struct WorkoutPosterArtView: View {
 }
 
 #Preview {
-    WorkoutDashboardView(context: MockData.lutealContext)
+    WorkoutDashboardView(
+        context: MockData.lutealContext,
+        statsOverride: MockData.climbingWorkoutStats
+    )
 }
