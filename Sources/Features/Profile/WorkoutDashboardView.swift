@@ -73,7 +73,7 @@ struct WorkoutDashboardView: View {
         VStack(alignment: .leading, spacing: 14) {
             sectionHeader(icon: "figure.walk", title: String(localized: "workout.activity_only.section"))
 
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .leading, spacing: 12) {
                 Text(activityOnlyTitle)
                     .font(.system(size: 24, weight: .semibold, design: .rounded))
                     .foregroundStyle(Theme.textPrimary)
@@ -131,6 +131,10 @@ struct WorkoutDashboardView: View {
         let featuredActivity = displayActivities.first
         let title = weeklyTitle(for: featuredActivity, weeklyCount: weeklyCount)
         let summaryID = weeklySummaryID(for: featuredActivity, weeklyCount: weeklyCount, totalMinutes: totalMinutes)
+        let isLoadingSummary = weeklyCount > 0
+            && featuredActivity != nil
+            && generatedWeeklySummary == nil
+            && !weeklySummaryGenerationFailed
 
         return VStack {
             VStack(alignment: .leading, spacing: 26) {
@@ -144,7 +148,7 @@ struct WorkoutDashboardView: View {
                     weeklySummaryText(for: featuredActivity, weeklyCount: weeklyCount)
                 }
 
-                workoutPosterImage(for: featuredActivity)
+                workoutPosterImage(for: featuredActivity, isLoading: isLoadingSummary)
 
                 workoutStatsStrip(totalMinutes: totalMinutes, weeklyCount: weeklyCount)
 
@@ -241,8 +245,7 @@ struct WorkoutDashboardView: View {
             Color.clear
                 .frame(height: 44)
         } else {
-            ProgressView()
-                .tint(workoutPosterMuted)
+            Color.clear
                 .frame(height: 44, alignment: .leading)
         }
     }
@@ -368,14 +371,30 @@ struct WorkoutDashboardView: View {
             Image(systemName: icon)
                 .font(.system(size: 14))
                 .foregroundStyle(Theme.accent)
-            Text(title)
-                .font(.system(size: Theme.cardTitleSize, weight: .semibold))
-                .foregroundStyle(Theme.textPrimary)
+        Text(title)
+            .font(.system(size: Theme.cardTitleSize, weight: .semibold))
+            .foregroundStyle(Theme.accent)
+    }
+}
+
+    @ViewBuilder
+    private func workoutPosterImage(for activity: WorkoutStats.WorkoutActivity?, isLoading: Bool) -> some View {
+        if isLoading {
+            workoutPosterLoadingPlaceholder
+        } else {
+            workoutPosterArt(for: activity.map(workoutActivityKind(for:)) ?? .other)
         }
     }
 
-    private func workoutPosterImage(for activity: WorkoutStats.WorkoutActivity?) -> some View {
-        workoutPosterArt(for: activity.map(workoutActivityKind(for:)) ?? .other)
+    private var workoutPosterLoadingPlaceholder: some View {
+        ZStack {
+            Theme.peachBlush
+                .grainTexture(intensity: .subtle, seed: 533)
+            TypingIndicatorView()
+        }
+        .aspectRatio(1, contentMode: .fit)
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .accessibilityHidden(true)
     }
 
     private func workoutPosterArt(for kind: WorkoutActivityKind) -> some View {

@@ -255,30 +255,6 @@ private struct ThinkingPulse: View {
     }
 }
 
-// MARK: - Typing Indicator
-
-private struct TypingIndicatorView: View {
-    @State private var phase = 0
-
-    var body: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<3) { i in
-                Circle()
-                    .fill(Theme.textSecondary)
-                    .frame(width: 6, height: 6)
-                    .scaleEffect(phase == i ? 1.3 : 0.8)
-                    .animation(
-                        .easeInOut(duration: 0.4).repeatForever().delay(Double(i) * 0.13),
-                        value: phase
-                    )
-            }
-        }
-        .onAppear {
-            withAnimation { phase = (phase + 1) % 3 }
-        }
-    }
-}
-
 #Preview {
     VStack(spacing: 12) {
         ChatBubbleView(message: ChatMessage(role: .user, content: "今天适合运动吗？"))

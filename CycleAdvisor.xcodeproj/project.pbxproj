@@ -23,6 +23,7 @@
 		A100000E /* GrainOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012 /* GrainOverlay.swift */; };
 		A100000F /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
 		A1000010 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000014 /* HomeViewModel.swift */; };
+		A1000015 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000015 /* TypingIndicatorView.swift */; };
 		A1000020 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000020 /* LLMService.swift */; };
 		A1000021 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000021 /* Secrets.swift */; };
 		A1000024 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
@@ -123,6 +124,7 @@
 		B1000012 /* GrainOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrainOverlay.swift; sourceTree = "<group>"; };
 		B1000013 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		B1000014 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B1000015 /* TypingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
 		B1000020 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		B1000021 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		B1000030 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				B100000A /* MockData.swift */,
 				B100000B /* Theme.swift */,
 				B1000012 /* GrainOverlay.swift */,
+				B1000015 /* TypingIndicatorView.swift */,
 				B1000040 /* LanguageManager.swift */,
 				B2000008 /* MarkdownTextView.swift */,
 			);
@@ -524,6 +527,7 @@
 				A100000E /* GrainOverlay.swift in Sources */,
 				A100000F /* HealthKitManager.swift in Sources */,
 				A1000010 /* HomeViewModel.swift in Sources */,
+				A1000015 /* TypingIndicatorView.swift in Sources */,
 				A1000020 /* LLMService.swift in Sources */,
 				A1000021 /* Secrets.swift in Sources */,
 				A1000030 /* SettingsView.swift in Sources */,
