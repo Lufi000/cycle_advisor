@@ -24,6 +24,11 @@
 "workout.metric.active_calories" = "活动热量";
 "workout.metric.weekly_total_duration" = "本周运动总时长";
 "workout.metric.workout_count" = "次运动";
+"workout.share.label" = "分享运动卡片";
+"workout.share.save_title" = "保存运动卡片";
+"workout.share.saved" = "已保存到你的相册。";
+"workout.share.save_failed" = "保存失败，请重试。";
+"workout.share.photo_access_denied" = "相册权限未开启，请在设置中允许访问相册后再保存。";
 "workout.title.recovery" = "恢复模式进行中";
 "workout.title.activity_ace_format" = "%@小能手";
 "workout.title.climbing" = "岩壁解谜家";

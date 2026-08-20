@@ -1,4 +1,6 @@
 import SwiftUI
+import UIKit
+import Photos
 
 struct WorkoutDashboardView: View {
     private var profileManager = UserProfileManager.shared
@@ -7,6 +9,7 @@ struct WorkoutDashboardView: View {
     @State private var generatedWeeklySummary: String?
     @State private var activeSummaryID: String?
     @State private var weeklySummaryGenerationFailed = false
+    @State private var saveFeedbackMessage: String?
 
     private var stats: WorkoutStats {
         statsOverride ?? profileManager.profile.workoutStats
@@ -48,6 +51,17 @@ struct WorkoutDashboardView: View {
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
+            .alert(
+                String(localized: "workout.share.save_title"),
+                isPresented: Binding(
+                    get: { saveFeedbackMessage != nil },
+                    set: { if !$0 { saveFeedbackMessage = nil } }
+                )
+            ) {
+                Button(String(localized: "common.done"), role: .cancel) {}
+            } message: {
+                Text(saveFeedbackMessage ?? "")
+            }
         }
     }
 
@@ -71,8 +85,19 @@ struct WorkoutDashboardView: View {
 
     private var activityOnlySection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            sectionHeader(icon: "figure.walk", title: String(localized: "workout.activity_only.section"))
+            HStack(alignment: .center, spacing: 12) {
+                sectionHeader(icon: "figure.walk", title: String(localized: "workout.activity_only.section"))
+                Spacer(minLength: 0)
+                workoutSaveButton { saveActivityOnlyCard() }
+            }
 
+            activityOnlyShareContent()
+        }
+        .grainCardStyle(seed: 531)
+    }
+
+    private func activityOnlyShareContent() -> some View {
+        VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 12) {
                 Text(activityOnlyTitle)
                     .font(.system(size: 24, weight: .semibold, design: .rounded))
@@ -93,68 +118,56 @@ struct WorkoutDashboardView: View {
                 GridItem(.flexible(), spacing: 8),
                 GridItem(.flexible(), spacing: 8),
             ], spacing: 8) {
-                if let exercise = healthMetrics.formattedExerciseDuration {
-                    workoutMetricPill(
-                        icon: "figure.run",
-                        label: String(localized: "workout.metric.exercise_minutes"),
-                        value: exercise,
-                        tint: Theme.phaseFollicular
-                    )
-                }
-                if let steps = healthMetrics.formattedSteps {
-                    workoutMetricPill(
-                        icon: "figure.walk",
-                        label: String(localized: "workout.metric.steps"),
-                        value: steps,
-                        tint: Theme.phaseOvulation
-                    )
-                }
-                if let activeCalories = healthMetrics.activeCalories {
-                    workoutMetricPill(
-                        icon: "flame",
-                        label: String(localized: "workout.metric.active_calories"),
-                        value: String(format: "%.0f kcal", activeCalories),
-                        tint: Theme.phaseLuteal
-                    )
-                }
+                activityOnlyMetricPills
             }
         }
-        .grainCardStyle(seed: 531)
+    }
+
+    @ViewBuilder
+    private var activityOnlyMetricPills: some View {
+        if let exercise = healthMetrics.formattedExerciseDuration {
+            workoutMetricPill(
+                icon: "figure.run",
+                label: String(localized: "workout.metric.exercise_minutes"),
+                value: exercise,
+                tint: Theme.phaseFollicular
+            )
+        }
+        if let steps = healthMetrics.formattedSteps {
+            workoutMetricPill(
+                icon: "figure.walk",
+                label: String(localized: "workout.metric.steps"),
+                value: steps,
+                tint: Theme.phaseOvulation
+            )
+        }
+        if let activeCalories = healthMetrics.activeCalories {
+            workoutMetricPill(
+                icon: "flame",
+                label: String(localized: "workout.metric.active_calories"),
+                value: String(format: "%.0f kcal", activeCalories),
+                tint: Theme.phaseLuteal
+            )
+        }
     }
 
     private var weeklyRhythmSection: some View {
-        let weeklyCount = stats.weeklyWorkoutCount ?? 0
-        let totalMinutes = stats.weeklyTotalDurationMinutes ?? 0
-        let weeklyActivities = sortedWorkoutActivities(stats.weeklyActivities ?? [])
-        let topActivities = sortedWorkoutActivities(stats.topActivities)
-        let displayActivities = weeklyActivities.isEmpty ? topActivities : weeklyActivities
-        let featuredActivity = displayActivities.first
-        let title = weeklyTitle(for: featuredActivity, weeklyCount: weeklyCount)
-        let summaryID = weeklySummaryID(for: featuredActivity, weeklyCount: weeklyCount, totalMinutes: totalMinutes)
-        let isLoadingSummary = weeklyCount > 0
-            && featuredActivity != nil
+        let data = workoutCardData
+        let summaryID = weeklySummaryID(for: data.featuredActivity, weeklyCount: data.weeklyCount, totalMinutes: data.totalMinutes)
+        let isLoadingSummary = data.weeklyCount > 0
+            && data.featuredActivity != nil
             && generatedWeeklySummary == nil
             && !weeklySummaryGenerationFailed
 
         return VStack {
-            VStack(alignment: .leading, spacing: 26) {
-                VStack(alignment: .leading, spacing: 20) {
-                    Text(title)
-                        .font(Theme.itim(size: 36))
-                        .foregroundStyle(workoutPosterInk)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.72)
-
-                    weeklySummaryText(for: featuredActivity, weeklyCount: weeklyCount)
-                }
-
-                workoutPosterImage(for: featuredActivity, isLoading: isLoadingSummary)
-
-                workoutStatsStrip(totalMinutes: totalMinutes, weeklyCount: weeklyCount)
-
-                workoutCategoryRows(activities: displayActivities, totalMinutes: totalMinutes)
-            }
-            .frame(maxWidth: 313)
+            workoutCardContent(
+                featuredActivity: data.featuredActivity,
+                weeklyCount: data.weeklyCount,
+                totalMinutes: data.totalMinutes,
+                displayActivities: data.displayActivities,
+                isLoadingSummary: isLoadingSummary,
+                showsShareButton: true
+            )
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 38)
@@ -164,11 +177,61 @@ struct WorkoutDashboardView: View {
         .task(id: summaryID) {
             await loadGeneratedWeeklySummary(
                 id: summaryID,
-                activity: featuredActivity,
-                weeklyCount: weeklyCount,
-                totalMinutes: totalMinutes
+                activity: data.featuredActivity,
+                weeklyCount: data.weeklyCount,
+                totalMinutes: data.totalMinutes
             )
         }
+    }
+
+    private var workoutCardData: (
+        weeklyCount: Int,
+        totalMinutes: Double,
+        displayActivities: [WorkoutStats.WorkoutActivity],
+        featuredActivity: WorkoutStats.WorkoutActivity?
+    ) {
+        let weeklyCount = stats.weeklyWorkoutCount ?? 0
+        let totalMinutes = stats.weeklyTotalDurationMinutes ?? 0
+        let weeklyActivities = sortedWorkoutActivities(stats.weeklyActivities ?? [])
+        let topActivities = sortedWorkoutActivities(stats.topActivities)
+        let displayActivities = weeklyActivities.isEmpty ? topActivities : weeklyActivities
+        let featuredActivity = displayActivities.first
+        return (weeklyCount, totalMinutes, displayActivities, featuredActivity)
+    }
+
+    private func workoutCardContent(
+        featuredActivity: WorkoutStats.WorkoutActivity?,
+        weeklyCount: Int,
+        totalMinutes: Double,
+        displayActivities: [WorkoutStats.WorkoutActivity],
+        isLoadingSummary: Bool,
+        showsShareButton: Bool = false
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 26) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text(weeklyTitle(for: featuredActivity, weeklyCount: weeklyCount))
+                        .font(Theme.itim(size: 36))
+                        .foregroundStyle(workoutPosterInk)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.72)
+
+                    weeklySummaryText(for: featuredActivity, weeklyCount: weeklyCount)
+                }
+
+                if showsShareButton {
+                    Spacer(minLength: 0)
+                    workoutSaveButton { saveWorkoutCard() }
+                }
+            }
+
+            workoutPosterImage(for: featuredActivity, isLoading: isLoadingSummary)
+
+            workoutStatsStrip(totalMinutes: totalMinutes, weeklyCount: weeklyCount)
+
+            workoutCategoryRows(activities: displayActivities, totalMinutes: totalMinutes)
+        }
+        .frame(maxWidth: 313)
     }
 
     private var workoutPosterInk: Color {
@@ -181,6 +244,104 @@ struct WorkoutDashboardView: View {
 
     private var workoutPosterCardBackground: Color {
         Theme.cardBackgroundSolid
+    }
+
+    private func workoutSaveButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: "square.and.arrow.down")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(Theme.accent)
+                .frame(width: 34, height: 34)
+                .background(Theme.peachBlush.opacity(0.55))
+                .clipShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "workout.share.label"))
+    }
+
+    @MainActor
+    private func saveWorkoutCard() {
+        let data = workoutCardData
+        guard let image = renderWorkoutCardImage(
+            featuredActivity: data.featuredActivity,
+            weeklyCount: data.weeklyCount,
+            totalMinutes: data.totalMinutes,
+            displayActivities: data.displayActivities
+        ) else {
+            saveFeedbackMessage = String(localized: "workout.share.save_failed")
+            return
+        }
+        saveImageToPhotoLibrary(image)
+    }
+
+    @MainActor
+    private func renderWorkoutCardImage(
+        featuredActivity: WorkoutStats.WorkoutActivity?,
+        weeklyCount: Int,
+        totalMinutes: Double,
+        displayActivities: [WorkoutStats.WorkoutActivity]
+    ) -> UIImage? {
+        let content = workoutCardContent(
+            featuredActivity: featuredActivity,
+            weeklyCount: weeklyCount,
+            totalMinutes: totalMinutes,
+            displayActivities: displayActivities,
+            isLoadingSummary: false
+        )
+        .frame(width: 313)
+        .padding(.vertical, 38)
+        .padding(.horizontal, 24)
+        .background(workoutPosterCardBackground)
+
+        let renderer = ImageRenderer(content: content)
+        renderer.scale = 3
+        return renderer.uiImage
+    }
+
+    @MainActor
+    private func saveActivityOnlyCard() {
+        guard let image = renderActivityOnlyCardImage() else {
+            saveFeedbackMessage = String(localized: "workout.share.save_failed")
+            return
+        }
+        saveImageToPhotoLibrary(image)
+    }
+
+    @MainActor
+    private func saveImageToPhotoLibrary(_ image: UIImage) {
+        PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized, .limited:
+                    PHPhotoLibrary.shared().performChanges {
+                        PHAssetChangeRequest.creationRequestForAsset(from: image)
+                    } completionHandler: { success, error in
+                        DispatchQueue.main.async {
+                            if success {
+                                saveFeedbackMessage = String(localized: "workout.share.saved")
+                            } else {
+                                saveFeedbackMessage = error?.localizedDescription
+                                    ?? String(localized: "workout.share.save_failed")
+                            }
+                        }
+                    }
+                default:
+                    saveFeedbackMessage = String(localized: "workout.share.photo_access_denied")
+                }
+            }
+        }
+    }
+
+    @MainActor
+    private func renderActivityOnlyCardImage() -> UIImage? {
+        let content = activityOnlyShareContent()
+            .frame(width: 313, alignment: .leading)
+            .padding(Theme.cardPadding)
+            .background(workoutPosterCardBackground)
+
+        let renderer = ImageRenderer(content: content)
+        renderer.scale = 3
+        return renderer.uiImage
     }
 
     private var activityOnlyTitle: String {

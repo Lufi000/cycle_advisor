@@ -8,6 +8,8 @@
 	<string>Bunlet needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Bunlet may save cycle-related health updates you choose to record so your cycle phase suggestions stay accurate and personalized.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save your workout card as an image to your photo library so you can share it.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Itim-Regular.ttf</string>

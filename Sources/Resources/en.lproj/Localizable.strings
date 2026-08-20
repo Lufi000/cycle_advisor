@@ -24,6 +24,11 @@
 "workout.metric.active_calories" = "Active Calories";
 "workout.metric.weekly_total_duration" = "Weekly movement time";
 "workout.metric.workout_count" = "workouts";
+"workout.share.label" = "Share workout card";
+"workout.share.save_title" = "Save Workout Card";
+"workout.share.saved" = "Saved to your photo library.";
+"workout.share.save_failed" = "Saving failed. Please try again.";
+"workout.share.photo_access_denied" = "Photo access is off. Enable it in Settings to save the card.";
 "workout.title.recovery" = "Recovery Mode";
 "workout.title.activity_ace_format" = "%@ Ace";
 "workout.title.climbing" = "Wall Puzzle Solver";
