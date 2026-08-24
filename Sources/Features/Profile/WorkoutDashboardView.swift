@@ -621,7 +621,7 @@ struct WorkoutDashboardView: View {
 
             VStack(alignment: .leading, spacing: 7) {
                 HStack(alignment: .firstTextBaseline) {
-                    Text(localizedActivityName(for: activity))
+                    Text(activity.name)
                         .font(Theme.itim(size: 22))
                         .foregroundStyle(Theme.textPrimary)
                         .lineLimit(1)
@@ -660,7 +660,7 @@ struct WorkoutDashboardView: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(String(format: String(localized: "workout.category.accessibility_format"), localizedActivityName(for: activity), activity.count, formatDurationCompact(minutes)))
+        .accessibilityLabel(String(format: String(localized: "workout.category.accessibility_format"), activity.name, activity.count, formatDurationCompact(minutes)))
     }
 
     private func sortedWorkoutActivities(_ activities: [WorkoutStats.WorkoutActivity]) -> [WorkoutStats.WorkoutActivity] {
@@ -703,29 +703,6 @@ struct WorkoutDashboardView: View {
             return "heart"
         case .other:
             return "figure.mixed.cardio"
-        }
-    }
-
-    private func localizedActivityName(for activity: WorkoutStats.WorkoutActivity) -> String {
-        switch workoutActivityKind(for: activity) {
-        case .climbing:
-            return String(localized: "workout.activity.climbing")
-        case .walking:
-            return String(localized: "workout.activity.walking")
-        case .running:
-            return String(localized: "workout.activity.running")
-        case .yoga:
-            return String(localized: "workout.activity.yoga")
-        case .cycling:
-            return String(localized: "workout.activity.cycling")
-        case .swimming:
-            return String(localized: "workout.activity.swimming")
-        case .strength:
-            return String(localized: "workout.activity.traditional_strength_training")
-        case .flexibility:
-            return String(localized: "workout.activity.flexibility")
-        case .dance, .ballSports, .cardio, .other:
-            return activity.name
         }
     }
 

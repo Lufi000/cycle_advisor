@@ -28,6 +28,12 @@ final class HomeViewModel {
     private var isLoadingQuestions  = false
     private let appGroupID          = "group.com.cycleadvisor.shared"
     private let widgetContextKey    = "widget.context"
+    private let widgetAnchorDateKey = "widget.anchor.date"
+    private let widgetAnchorCycleLengthKey = "widget.anchor.cycleLength"
+    /// 最近一次经期开始日期与平均周期长度，随 Widget 快照保存，
+    /// 供 Widget 按当前日期重新推算周期阶段（与 App 内计算逻辑一致）。
+    private var lastPeriodStart: Date?
+    private var lastCycleLength: Int?
 
     /// - Parameter force: `true` 时忽略「已成功加载」门禁，用于用户主动刷新健康数据。
     @MainActor
@@ -94,6 +100,8 @@ final class HomeViewModel {
         let symptoms = await healthKit.fetchMenstrualSymptoms(since: periodStart)
 
         if let periodStart {
+            lastPeriodStart = periodStart
+            lastCycleLength = cycleLength
             let base = engine.determinePhase(lastPeriodStart: periodStart, cycleLength: cycleLength)
             context = CycleContext(
                 phase:          base.phase,
@@ -107,6 +115,8 @@ final class HomeViewModel {
         } else {
             // 还没有经期数据（首次使用）— 保留 mock 阶段，但填入真实健康指标
             usingMockData = true
+            lastPeriodStart = nil
+            lastCycleLength = nil
             context = CycleContext(
                 phase:          context.phase,
                 dayInPhase:     context.dayInPhase,
@@ -147,6 +157,13 @@ final class HomeViewModel {
         guard let contextData = try? encoder.encode(context) else { return }
 
         defaults.set(contextData, forKey: widgetContextKey)
+        if let lastPeriodStart {
+            defaults.set(lastPeriodStart.timeIntervalSince1970, forKey: widgetAnchorDateKey)
+            defaults.set(lastCycleLength ?? context.avgCycleLength, forKey: widgetAnchorCycleLengthKey)
+        } else {
+            defaults.removeObject(forKey: widgetAnchorDateKey)
+            defaults.removeObject(forKey: widgetAnchorCycleLengthKey)
+        }
         WidgetCenter.shared.reloadAllTimelines()
     }
 
