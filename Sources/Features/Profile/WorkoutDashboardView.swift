@@ -1030,10 +1030,16 @@ private struct WorkoutPosterArtView: View {
             return "WorkoutPosterTennis"
         case "basketball":
             return "WorkoutPosterBasketball"
+        case "badminton":
+            return "WorkoutPosterBadminton"
+        case "pickleball":
+            return "WorkoutPosterPickleball"
         case "hiking":
             return "WorkoutPosterHiking"
         case "mind_and_body":
             return "WorkoutPosterMeditation"
+        case "surfing_sports":
+            return "WorkoutPosterSurfing"
         default:
             break
         }
@@ -1051,6 +1057,10 @@ private struct WorkoutPosterArtView: View {
             return "WorkoutPosterYoga"
         case .strength:
             return "WorkoutPosterStrength"
+        case .cycling:
+            return "WorkoutPosterCycling"
+        case .swimming:
+            return "WorkoutPosterSwimming"
         default:
             return nil
         }
