@@ -39,6 +39,15 @@ enum MockData {
         menstrualSymptoms: lutealSymptoms
     )
 
+    /// 没有任何健康数据与运动记录的上下文，用于预览「无运动记录」空状态。
+    static let noHealthContext = CycleContext(
+        phase: .follicular,
+        dayInPhase: 3,
+        cycleDay: 8,
+        avgCycleLength: 28,
+        healthMetrics: .empty
+    )
+
     // MARK: - Health Metrics
 
     static let sampleMetrics = HealthMetrics(
@@ -123,6 +132,24 @@ enum MockData {
         lastUpdated: Date()
     )
 
+    static let tennisWorkoutStats = WorkoutStats(
+        topActivities: [
+            .init(key: "tennis", name: String(localized: "workout.activity.tennis"), count: 6),
+            .init(key: "running", name: String(localized: "workout.activity.running"), count: 3),
+            .init(key: "walking", name: String(localized: "workout.activity.walking"), count: 2),
+        ],
+        weeklyActivities: [
+            .init(key: "tennis", name: String(localized: "workout.activity.tennis"), count: 3, totalDurationMinutes: 150),
+            .init(key: "running", name: String(localized: "workout.activity.running"), count: 1, totalDurationMinutes: 30),
+        ],
+        weeklyWorkoutCount: 4,
+        weeklyTotalDurationMinutes: 180,
+        weeklyAvgDurationMinutes: 45,
+        weeklyFrequency: 4,
+        avgDurationMinutes: 42,
+        lastUpdated: Date()
+    )
+
     static let sampleProfile = UserProfile(
         bodyInfo: BodyInfo(
             dateOfBirth: Calendar.current.date(byAdding: .year, value: -28, to: Date()),
@@ -150,7 +177,7 @@ enum MockData {
             cyclesRecorded: 6,
             lastAccumulationDate: Date()
         ),
-        workoutStats: climbingWorkoutStats,
+        workoutStats: tennisWorkoutStats,
         lifestyle: Lifestyle(
             sleepPattern: "通常 23:00-7:00",
             sleepPatternObservedAt: Date(),

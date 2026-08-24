@@ -9,8 +9,11 @@
 "common.done" = "Done";
 
 /* Workout */
-"workout.empty.title" = "This week’s body rhythm is still unfolding";
-"workout.empty.body" = "After workout records build up, this space will show your weekly movement recap and common activities.";
+"workout.empty.title" = "Rest is part of the rhythm";
+"workout.empty.body" = "No workout records yet — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
+"workout.empty.suggestion.breathe" = "Breathe & Meditate";
+"workout.empty.suggestion.walk" = "Park Walk";
+"workout.empty.suggestion.stretch" = "Gentle Stretch";
 "workout.activity_only.section" = "Today’s Activity Rhythm";
 "workout.activity_only.title.active" = "Energy Is Rising";
 "workout.activity_only.title.walker" = "Walking Stamina Keeper";

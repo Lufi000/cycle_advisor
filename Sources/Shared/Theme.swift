@@ -30,6 +30,12 @@ enum Theme {
     /// 卡片背景（不透明，用于颗粒纹理叠加）— #FFF4EB
     static let cardBackgroundSolid = cream
 
+    /// 运动配图加载占位底色 — #FFE4D5
+    static let posterLoadingBackground = Color(red: 255/255, green: 228/255, blue: 213/255)
+
+    /// 运动配图加载点点色 — #E8C7BC
+    static let posterLoadingDot = Color(red: 232/255, green: 199/255, blue: 188/255)
+
     // MARK: - 强调色
 
     /// 主强调色 — #FF9354

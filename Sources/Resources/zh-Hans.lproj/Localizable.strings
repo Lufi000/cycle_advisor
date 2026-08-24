@@ -9,8 +9,11 @@
 "common.done" = "完成";
 
 /* Workout */
-"workout.empty.title" = "这周的身体节奏还在展开";
-"workout.empty.body" = "授权并积累专项运动记录后，这里会显示本周运动小结和常见运动。";
+"workout.empty.title" = "休息，也是节奏的一部分";
+"workout.empty.body" = "这周还没有运动记录，没关系。去公园坐一坐、深呼吸，或者慢慢走一圈——轻一点开始，也很好。";
+"workout.empty.suggestion.breathe" = "呼吸冥想";
+"workout.empty.suggestion.walk" = "公园散步";
+"workout.empty.suggestion.stretch" = "拉伸放松";
 "workout.activity_only.section" = "今天的活动节奏";
 "workout.activity_only.title.active" = "活力上扬中";
 "workout.activity_only.title.walker" = "散步续航家";

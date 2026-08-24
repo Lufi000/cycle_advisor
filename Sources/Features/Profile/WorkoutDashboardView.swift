@@ -66,53 +66,70 @@ struct WorkoutDashboardView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: 12) {
-            workoutPosterArt(for: .yoga)
-                .frame(maxWidth: 220, alignment: .center)
-            Text(String(localized: "workout.empty.title"))
-                .font(.system(size: Theme.cardTitleSize, weight: .semibold))
-                .foregroundStyle(Theme.textPrimary)
-            Text(String(localized: "workout.empty.body"))
-                .font(.system(size: Theme.bodySize))
-                .foregroundStyle(Theme.textSecondary)
-                .multilineTextAlignment(.center)
-                .lineSpacing(Theme.lineSpacing)
+        VStack {
+            emptyStateContent()
         }
         .frame(maxWidth: .infinity)
-        .padding(32)
-        .grainCardStyle(seed: 531)
+        .padding(.vertical, 38)
+        .padding(.horizontal, 24)
+        .background(workoutPosterCardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
+
+    private func emptyStateContent(contentWidth: CGFloat = 264) -> some View {
+        VStack(alignment: .leading, spacing: 26) {
+            HStack(alignment: .top, spacing: 12) {
+                Text(String(localized: "workout.empty.title"))
+                    .font(Theme.itim(size: 36))
+                    .foregroundStyle(Theme.textPrimary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.72)
+
+                Spacer(minLength: 0)
+                workoutSaveButton { saveEmptyStateCard() }
+            }
+
+            Text(String(localized: "workout.empty.body"))
+                .font(Theme.itim(size: 18))
+                .foregroundStyle(workoutPosterMuted)
+                .lineSpacing(5)
+                .fixedSize(horizontal: false, vertical: true)
+
+            workoutParkArt()
+
+            workoutStatsStrip(totalMinutes: 0, weeklyCount: 0)
+        }
+        .frame(maxWidth: contentWidth)
     }
 
     private var activityOnlySection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .center, spacing: 12) {
-                sectionHeader(icon: "figure.walk", title: String(localized: "workout.activity_only.section"))
-                Spacer(minLength: 0)
+        activityOnlyShareContent(posterMaxWidth: 240)
+            .padding(Theme.cardPadding)
+            .grainCardStyle(seed: 531)
+            .overlay(alignment: .topTrailing) {
                 workoutSaveButton { saveActivityOnlyCard() }
+                    .padding(10)
             }
-
-            activityOnlyShareContent()
-        }
-        .grainCardStyle(seed: 531)
     }
 
-    private func activityOnlyShareContent() -> some View {
-        VStack(alignment: .leading, spacing: 14) {
-            VStack(alignment: .leading, spacing: 12) {
+    private func activityOnlyShareContent(posterMaxWidth: CGFloat = 313) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(activityOnlyTitle)
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    .font(.system(size: 36, weight: .semibold, design: .rounded))
                     .foregroundStyle(Theme.textPrimary)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .minimumScaleFactor(0.72)
+                    .padding(.trailing, 44)
 
                 Text(activityOnlySummary)
-                    .font(.system(size: Theme.bodySize))
+                    .font(.system(size: 12))
                     .foregroundStyle(Theme.textSecondary)
                     .lineSpacing(Theme.lineSpacing)
             }
 
             workoutPosterArt(for: activityOnlyArtKind)
-                .frame(maxWidth: 313, alignment: .leading)
+                .frame(maxWidth: posterMaxWidth, alignment: .leading)
 
             LazyVGrid(columns: [
                 GridItem(.flexible(), spacing: 8),
@@ -154,10 +171,6 @@ struct WorkoutDashboardView: View {
     private var weeklyRhythmSection: some View {
         let data = workoutCardData
         let summaryID = weeklySummaryID(for: data.featuredActivity, weeklyCount: data.weeklyCount, totalMinutes: data.totalMinutes)
-        let isLoadingSummary = data.weeklyCount > 0
-            && data.featuredActivity != nil
-            && generatedWeeklySummary == nil
-            && !weeklySummaryGenerationFailed
 
         return VStack {
             workoutCardContent(
@@ -165,8 +178,8 @@ struct WorkoutDashboardView: View {
                 weeklyCount: data.weeklyCount,
                 totalMinutes: data.totalMinutes,
                 displayActivities: data.displayActivities,
-                isLoadingSummary: isLoadingSummary,
-                showsShareButton: true
+                showsShareButton: true,
+                contentWidth: 264
             )
         }
         .frame(maxWidth: .infinity)
@@ -204,34 +217,35 @@ struct WorkoutDashboardView: View {
         weeklyCount: Int,
         totalMinutes: Double,
         displayActivities: [WorkoutStats.WorkoutActivity],
-        isLoadingSummary: Bool,
-        showsShareButton: Bool = false
+        showsShareButton: Bool = false,
+        contentWidth: CGFloat = 313
     ) -> some View {
         VStack(alignment: .leading, spacing: 26) {
-            HStack(alignment: .top, spacing: 12) {
-                VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 20) {
+                HStack(alignment: .top, spacing: 12) {
                     Text(weeklyTitle(for: featuredActivity, weeklyCount: weeklyCount))
                         .font(Theme.itim(size: 36))
                         .foregroundStyle(workoutPosterInk)
-                        .lineLimit(1)
+                        .lineLimit(2)
                         .minimumScaleFactor(0.72)
 
-                    weeklySummaryText(for: featuredActivity, weeklyCount: weeklyCount)
+                    if showsShareButton {
+                        Spacer(minLength: 0)
+                        workoutSaveButton { saveWorkoutCard() }
+                    }
                 }
 
-                if showsShareButton {
-                    Spacer(minLength: 0)
-                    workoutSaveButton { saveWorkoutCard() }
-                }
+                weeklySummaryText(for: featuredActivity, weeklyCount: weeklyCount)
+                    .frame(maxWidth: contentWidth, alignment: .leading)
             }
 
-            workoutPosterImage(for: featuredActivity, isLoading: isLoadingSummary)
+            workoutPosterImage(for: featuredActivity)
 
             workoutStatsStrip(totalMinutes: totalMinutes, weeklyCount: weeklyCount)
 
             workoutCategoryRows(activities: displayActivities, totalMinutes: totalMinutes)
         }
-        .frame(maxWidth: 313)
+        .frame(maxWidth: contentWidth)
     }
 
     private var workoutPosterInk: Color {
@@ -285,8 +299,7 @@ struct WorkoutDashboardView: View {
             featuredActivity: featuredActivity,
             weeklyCount: weeklyCount,
             totalMinutes: totalMinutes,
-            displayActivities: displayActivities,
-            isLoadingSummary: false
+            displayActivities: displayActivities
         )
         .frame(width: 313)
         .padding(.vertical, 38)
@@ -301,6 +314,15 @@ struct WorkoutDashboardView: View {
     @MainActor
     private func saveActivityOnlyCard() {
         guard let image = renderActivityOnlyCardImage() else {
+            saveFeedbackMessage = String(localized: "workout.share.save_failed")
+            return
+        }
+        saveImageToPhotoLibrary(image)
+    }
+
+    @MainActor
+    private func saveEmptyStateCard() {
+        guard let image = renderEmptyStateCardImage() else {
             saveFeedbackMessage = String(localized: "workout.share.save_failed")
             return
         }
@@ -336,6 +358,17 @@ struct WorkoutDashboardView: View {
     private func renderActivityOnlyCardImage() -> UIImage? {
         let content = activityOnlyShareContent()
             .frame(width: 313, alignment: .leading)
+            .padding(Theme.cardPadding)
+            .background(workoutPosterCardBackground)
+
+        let renderer = ImageRenderer(content: content)
+        renderer.scale = 3
+        return renderer.uiImage
+    }
+
+    private func renderEmptyStateCardImage() -> UIImage? {
+        let content = emptyStateContent(contentWidth: 343)
+            .frame(width: 343, alignment: .leading)
             .padding(Theme.cardPadding)
             .background(workoutPosterCardBackground)
 
@@ -392,22 +425,16 @@ struct WorkoutDashboardView: View {
 
     @ViewBuilder
     private func weeklySummaryText(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> some View {
-        if weeklyCount <= 0 || activity == nil {
-            Text(weeklySummaryFallback(for: activity, weeklyCount: weeklyCount))
-                .font(Theme.itim(size: 18))
-                .foregroundStyle(workoutPosterMuted)
-                .lineSpacing(5)
-        } else if let generatedWeeklySummary {
+        if let generatedWeeklySummary {
             Text(generatedWeeklySummary)
                 .font(Theme.itim(size: 18))
                 .foregroundStyle(workoutPosterMuted)
                 .lineSpacing(5)
-        } else if weeklySummaryGenerationFailed {
-            Color.clear
-                .frame(height: 44)
         } else {
-            Color.clear
-                .frame(height: 44, alignment: .leading)
+            Text(weeklySummaryFallback(for: activity, weeklyCount: weeklyCount))
+                .font(Theme.itim(size: 18))
+                .foregroundStyle(workoutPosterMuted)
+                .lineSpacing(5)
         }
     }
 
@@ -527,39 +554,29 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    private func sectionHeader(icon: String, title: String) -> some View {
-        HStack(spacing: 6) {
-            Image(systemName: icon)
-                .font(.system(size: 14))
-                .foregroundStyle(Theme.accent)
-        Text(title)
-            .font(.system(size: Theme.cardTitleSize, weight: .semibold))
-            .foregroundStyle(Theme.accent)
-    }
-}
-
-    @ViewBuilder
-    private func workoutPosterImage(for activity: WorkoutStats.WorkoutActivity?, isLoading: Bool) -> some View {
-        if isLoading {
-            workoutPosterLoadingPlaceholder
-        } else {
-            workoutPosterArt(for: activity.map(workoutActivityKind(for:)) ?? .other)
-        }
+    private func workoutPosterImage(for activity: WorkoutStats.WorkoutActivity?) -> some View {
+        workoutPosterArt(for: activity)
     }
 
-    private var workoutPosterLoadingPlaceholder: some View {
-        ZStack {
-            Theme.peachBlush
-                .grainTexture(intensity: .subtle, seed: 533)
-            TypingIndicatorView()
-        }
+    private func workoutPosterArt(for activity: WorkoutStats.WorkoutActivity?) -> some View {
+        WorkoutPosterArtView(
+            kind: activity.map(workoutActivityKind(for:)) ?? .other,
+            key: activity?.key
+        )
         .aspectRatio(1, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         .accessibilityHidden(true)
     }
 
     private func workoutPosterArt(for kind: WorkoutActivityKind) -> some View {
-        WorkoutPosterArtView(kind: kind)
+        WorkoutPosterArtView(kind: kind, key: nil)
+            .aspectRatio(1, contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .accessibilityHidden(true)
+    }
+
+    private func workoutParkArt() -> some View {
+        WorkoutPosterArtView(kind: .other, assetName: "WorkoutPosterPark")
             .aspectRatio(1, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
             .accessibilityHidden(true)
@@ -591,7 +608,8 @@ struct WorkoutDashboardView: View {
             Text(label)
                 .font(Theme.itim(size: 14))
                 .foregroundStyle(Theme.textSecondary.opacity(0.62))
-                .lineLimit(1)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity, alignment: frameAlignment)
     }
@@ -754,30 +772,30 @@ struct WorkoutDashboardView: View {
     private func workoutMetricPill(icon: String, label: String, value: String, tint: Color) -> some View {
         HStack(spacing: 8) {
             Image(systemName: icon)
-                .font(.system(size: 13, weight: .medium))
+                .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(tint)
-                .frame(width: 24, height: 24)
+                .frame(width: 20, height: 20)
                 .background(tint.opacity(0.12))
                 .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: 1) {
                 Text(value)
-                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundStyle(Theme.textPrimary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.75)
                 Text(label)
-                    .font(.system(size: 10))
+                    .font(.system(size: 9))
                     .foregroundStyle(Theme.textSecondary)
                     .lineLimit(1)
             }
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 6)
         .background(Theme.cardBackgroundSolid.opacity(0.78))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 
     private func formatDurationCompact(_ minutes: Double) -> String {
@@ -812,39 +830,84 @@ fileprivate enum WorkoutActivityKind {
 
 private struct WorkoutPosterArtView: View {
     let kind: WorkoutActivityKind
+    let key: String?
+    let assetName: String?
+
+    init(kind: WorkoutActivityKind, key: String? = nil, assetName: String? = nil) {
+        self.kind = kind
+        self.key = key
+        self.assetName = assetName
+    }
 
     var body: some View {
         GeometryReader { proxy in
             let side = min(proxy.size.width, proxy.size.height)
-            ZStack {
-                Theme.peachBlush
-                    .grainTexture(intensity: .subtle, seed: 533)
+            if let assetName {
+                Image(assetName)
+                    .resizable()
+                    .scaledToFill()
+            } else if let assetName = Self.posterAssetName(kind: kind, key: key) {
+                Image(assetName)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                ZStack {
+                    Theme.peachBlush
+                        .grainTexture(intensity: .subtle, seed: 533)
 
-                switch kind {
-                case .climbing:
-                    climbingArt(side: side)
-                case .walking:
-                    walkingArt(side: side)
-                case .running:
-                    runningArt(side: side)
-                case .yoga, .flexibility:
-                    yogaArt(side: side)
-                case .cycling:
-                    cyclingArt(side: side)
-                case .swimming:
-                    swimmingArt(side: side)
-                case .strength:
-                    strengthArt(side: side)
-                case .dance:
-                    danceArt(side: side)
-                case .ballSports:
-                    ballSportsArt(side: side)
-                case .cardio:
-                    cardioArt(side: side)
-                case .other:
-                    mixedArt(side: side)
+                    switch kind {
+                    case .climbing:
+                        climbingArt(side: side)
+                    case .walking:
+                        walkingArt(side: side)
+                    case .running:
+                        runningArt(side: side)
+                    case .yoga, .flexibility:
+                        yogaArt(side: side)
+                    case .cycling:
+                        cyclingArt(side: side)
+                    case .swimming:
+                        swimmingArt(side: side)
+                    case .strength:
+                        strengthArt(side: side)
+                    case .dance:
+                        danceArt(side: side)
+                    case .ballSports:
+                        ballSportsArt(side: side)
+                    case .cardio:
+                        cardioArt(side: side)
+                    case .other:
+                        mixedArt(side: side)
+                    }
                 }
             }
+        }
+    }
+
+    /// 优先按具体运动 key 匹配对应配图，其次按运动大类匹配；没有的就用自绘插画兜底。
+    private static func posterAssetName(kind: WorkoutActivityKind, key: String?) -> String? {
+        switch key?.lowercased() {
+        case "tennis", "table_tennis":
+            return "WorkoutPosterTennis"
+        case "basketball":
+            return "WorkoutPosterBasketball"
+        case "hiking":
+            return "WorkoutPosterHiking"
+        default:
+            break
+        }
+
+        switch kind {
+        case .climbing:
+            return "WorkoutPosterBouldering"
+        case .walking:
+            return "WorkoutPosterWalk"
+        case .running:
+            return "WorkoutPosterRunning"
+        case .ballSports:
+            return "WorkoutPosterTennis"
+        default:
+            return nil
         }
     }
 
@@ -1135,6 +1198,13 @@ private struct WorkoutPosterArtView: View {
 #Preview {
     WorkoutDashboardView(
         context: MockData.lutealContext,
-        statsOverride: MockData.climbingWorkoutStats
+        statsOverride: MockData.tennisWorkoutStats
+    )
+}
+
+#Preview("无运动记录") {
+    WorkoutDashboardView(
+        context: MockData.noHealthContext,
+        statsOverride: WorkoutStats.empty
     )
 }
