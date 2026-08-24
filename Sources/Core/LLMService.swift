@@ -616,7 +616,7 @@ actor LLMService {
         responseLanguage: ResponseLanguage = .simplifiedChinese
     ) -> String {
         """
-        你是周期生活应用里的运动周报文案模块。请根据用户的健康数据和运动记录，生成一段显示在运动称号标题下方的短小结。
+        你是周期生活应用里的运动小结文案模块。请根据用户的健康数据和运动记录，生成一段显示在运动称号标题下方的短小结。
 
         要求：
         - 回复语言必须使用：\(responseLanguage.displayName)
@@ -624,6 +624,8 @@ actor LLMService {
         - summary 只写 1 句，中文 35-55 字；英文 18-28 words
         - 语气温柔、具体、有画面感，不评判、不催促、不制造焦虑
         - 可以结合主要运动类型，但不要每种运动都套同一句模板
+        - 提到运动时长时，超过 1 小时请用「小时」表达（如“约 10 小时”），不要写成几百分钟的原始数字
+        - 严格使用输入中的运动周期（本周/本月/今年 或对应英文）来组织文案；文案中提到时间范围时只能使用该周期，不要写成「这周」或其他周期
         - 周期状态只作为内部参考，用来把强度和语气放轻重；summary 里不要直接写出周期阶段
         - 禁止出现这些阶段词：经期、月经期、卵泡期、排卵期、黄体期、menstrual、period、follicular、ovulation、luteal
         - 不使用「治疗」「诊断」「医嘱」等医疗措辞
@@ -643,20 +645,23 @@ actor LLMService {
     ) -> String {
         let contextSummary = buildContextLines(context: context).joined(separator: "\n")
         let profileSummary = buildProfileSummary(profile: profile)
-        let activityDuration = featuredActivity.totalDurationMinutes.map { "约 \(Int($0.rounded())) 分钟" } ?? "未记录时长"
+        let activityDuration = featuredActivity.totalDurationMinutes.map { Self.formatWorkoutDuration($0, language: responseLanguage) } ?? "未记录时长"
 
         let sectionHeader: String
         let countLine: String
         let durationLine: String
+        let periodInstruction: String
         switch responseLanguage {
         case .simplifiedChinese:
             sectionHeader = "【\(periodLabel)运动】"
             countLine = "\(periodLabel)运动总次数：\(count)"
-            durationLine = "\(periodLabel)运动总时长：约 \(Int(totalDurationMinutes.rounded())) 分钟"
+            durationLine = "\(periodLabel)运动总时长：\(Self.formatWorkoutDuration(totalDurationMinutes))"
+            periodInstruction = "这是\(periodLabel)的运动小结：文案中若提到时间范围，请使用「\(periodLabel)」，不要写成其他周期（例如「这周」）。"
         case .english:
             sectionHeader = "【\(periodLabel) workouts】"
             countLine = "Total workouts in \(periodLabel): \(count)"
-            durationLine = "Total duration in \(periodLabel): about \(Int(totalDurationMinutes.rounded())) minutes"
+            durationLine = "Total duration in \(periodLabel): \(Self.formatWorkoutDuration(totalDurationMinutes, language: .english))"
+            periodInstruction = "This is the \(periodLabel) workout summary. If you mention a time span, use '\(periodLabel)' only — do not write 'this week' or any other period."
         }
 
         return """
@@ -670,9 +675,30 @@ actor LLMService {
         主运动时长：\(activityDuration)
         \(countLine)
         \(durationLine)
+        \(periodInstruction)
 
         请生成 \(responseLanguage.displayName) 的 summary。只输出 JSON，不要其他说明。
         """
+    }
+
+    /// 把分钟数格式化成文案里更自然的时长：超过 1 小时用「小时」表达。
+    nonisolated static func formatWorkoutDuration(
+        _ minutes: Double,
+        language: ResponseLanguage = .simplifiedChinese
+    ) -> String {
+        let total = max(0, Int(minutes.rounded()))
+        let hours = total / 60
+        let mins = total % 60
+        switch language {
+        case .simplifiedChinese:
+            if hours > 0, mins > 0 { return "约 \(hours) 小时 \(mins) 分钟" }
+            if hours > 0 { return "约 \(hours) 小时" }
+            return "约 \(mins) 分钟"
+        case .english:
+            if hours > 0, mins > 0 { return "about \(hours) hours \(mins) minutes" }
+            if hours > 0 { return "about \(hours) hours" }
+            return "about \(mins) minutes"
+        }
     }
 
     /// 对话助手的 System Prompt：注入周期上下文 + 用户档案，设定温暖体贴语气
@@ -834,12 +860,12 @@ actor LLMService {
                 let activities = (workouts.weeklyActivities ?? [])
                     .map { activity -> String in
                         if let duration = activity.totalDurationMinutes, duration > 0 {
-                            return "\(activity.name) \(activity.count)次/约\(Int(duration))分钟"
+                            return "\(activity.name) \(activity.count)次/\(Self.formatWorkoutDuration(duration))"
                         }
                         return "\(activity.name) \(activity.count)次"
                     }
                     .joined(separator: "、")
-                let total = workouts.weeklyTotalDurationMinutes.map { "，总时长约 \(Int($0)) 分钟" } ?? ""
+                let total = workouts.weeklyTotalDurationMinutes.map { "，总时长\(Self.formatWorkoutDuration($0))" } ?? ""
                 let desc = activities.isEmpty ? "\(weeklyCount) 次" : activities
                 lines.append("过去7天运动：\(desc)\(total)")
             } else {

@@ -87,30 +87,28 @@ struct WorkoutDashboardView: View {
     }
 
     private var periodPicker: some View {
-        HStack(spacing: 8) {
-            ForEach(WorkoutPeriod.allCases) { period in
-                Button {
-                    selectedPeriod = period
-                } label: {
-                    Text(period.displayName)
-                        .font(.system(size: 15, weight: .semibold, design: .rounded))
-                        .foregroundStyle(selectedPeriod == period ? Color.white : Theme.textSecondary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 9)
-                        .background {
-                            if selectedPeriod == period {
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(Theme.accent)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(WorkoutPeriod.allCases) { period in
+                    Button {
+                        selectedPeriod = period
+                    } label: {
+                        Text(period.displayName)
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(selectedPeriod == period ? Color.white : Theme.textSecondary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background {
+                                Capsule()
+                                    .fill(selectedPeriod == period ? Theme.accent : Theme.textSecondary.opacity(0.08))
                             }
-                        }
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(selectedPeriod == period ? .isSelected : [])
                 }
-                .buttonStyle(.plain)
-                .accessibilityAddTraits(selectedPeriod == period ? .isSelected : [])
             }
+            .padding(.vertical, 1)
         }
-        .padding(5)
-        .background(Theme.cardBackgroundSolid.opacity(0.85))
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
     /// 顶部固定栏：周期切换 Tab + 当前周期的具体日期范围小字。
@@ -138,17 +136,24 @@ struct WorkoutDashboardView: View {
     private func periodRangeText(for period: WorkoutPeriod) -> String {
         let calendar = Calendar.current
         let now = Date()
-        let daysBack: Int
+        let start: Date
         switch period {
         case .week:
-            daysBack = 6
+            var mondayCalendar = calendar
+            mondayCalendar.firstWeekday = 2
+            start = mondayCalendar.dateInterval(of: .weekOfYear, for: now)?.start ?? calendar.startOfDay(for: now)
         case .month:
-            daysBack = 29
+            start = calendar.dateInterval(of: .month, for: now)?.start ?? calendar.startOfDay(for: now)
         case .year:
-            daysBack = 363
+            start = calendar.dateInterval(of: .year, for: now)?.start ?? calendar.startOfDay(for: now)
+        case .recentWeek:
+            start = calendar.date(byAdding: .day, value: -6, to: now) ?? now
+        case .recentMonth:
+            start = calendar.date(byAdding: .day, value: -29, to: now) ?? now
+        case .recentYear:
+            start = calendar.date(byAdding: .day, value: -363, to: now) ?? now
         }
-        let start = calendar.date(byAdding: .day, value: -daysBack, to: now) ?? now
-        let includeYear = period == .year
+        let includeYear = period == .year || period == .recentYear
         return "\(shortDate(start, includeYear: includeYear)) – \(shortDate(now, includeYear: includeYear))"
     }
 
@@ -244,14 +249,26 @@ struct WorkoutDashboardView: View {
         let totalMinutes: Double
         switch period {
         case .week:
+            activities = sortedWorkoutActivities(stats.calendarWeekActivities ?? [])
+            count = stats.calendarWeekWorkoutCount ?? 0
+            totalMinutes = stats.calendarWeekTotalDurationMinutes ?? 0
+        case .month:
+            activities = sortedWorkoutActivities(stats.calendarMonthActivities ?? [])
+            count = stats.calendarMonthWorkoutCount ?? 0
+            totalMinutes = stats.calendarMonthTotalDurationMinutes ?? 0
+        case .year:
+            activities = sortedWorkoutActivities(stats.calendarYearActivities ?? [])
+            count = stats.calendarYearWorkoutCount ?? 0
+            totalMinutes = stats.calendarYearTotalDurationMinutes ?? 0
+        case .recentWeek:
             activities = sortedWorkoutActivities(stats.weeklyActivities ?? [])
             count = stats.weeklyWorkoutCount ?? 0
             totalMinutes = stats.weeklyTotalDurationMinutes ?? 0
-        case .month:
+        case .recentMonth:
             activities = sortedWorkoutActivities(stats.monthlyActivities ?? [])
             count = stats.monthlyWorkoutCount ?? 0
             totalMinutes = stats.monthlyTotalDurationMinutes ?? 0
-        case .year:
+        case .recentYear:
             activities = sortedWorkoutActivities(stats.yearlyActivities ?? [])
             count = stats.yearlyWorkoutCount ?? 0
             totalMinutes = stats.yearlyTotalDurationMinutes ?? 0
@@ -296,6 +313,7 @@ struct WorkoutDashboardView: View {
         contentWidth: CGFloat = 313
     ) -> some View {
         let showsActivityMetrics = displayActivities.isEmpty && hasActivityMetrics
+        let summaryID = periodSummaryID(period: period, for: featuredActivity, count: count, totalMinutes: totalMinutes)
 
         return VStack(alignment: .leading, spacing: 26) {
             VStack(alignment: .leading, spacing: 20) {
@@ -312,7 +330,7 @@ struct WorkoutDashboardView: View {
                     }
                 }
 
-                periodSummaryText(for: featuredActivity, count: count, period: period)
+                periodSummaryText(for: featuredActivity, count: count, period: period, summaryID: summaryID)
                     .frame(maxWidth: contentWidth, alignment: .leading)
             }
 
@@ -445,18 +463,38 @@ struct WorkoutDashboardView: View {
                 return String(localized: "workout.summary.no_workouts_month")
             case .year:
                 return String(localized: "workout.summary.no_workouts_year")
+            case .recentWeek:
+                return String(localized: "workout.summary.no_workouts_recent_week")
+            case .recentMonth:
+                return String(localized: "workout.summary.no_workouts_recent_month")
+            case .recentYear:
+                return String(localized: "workout.summary.no_workouts_recent_year")
             }
         }
-        return String(localized: "workout.summary.no_activity_type")
+        switch period {
+        case .week:
+            return String(localized: "workout.summary.no_activity_type")
+        case .month:
+            return String(localized: "workout.summary.no_activity_type_month")
+        case .year:
+            return String(localized: "workout.summary.no_activity_type_year")
+        case .recentWeek:
+            return String(localized: "workout.summary.no_activity_type_recent_week")
+        case .recentMonth:
+            return String(localized: "workout.summary.no_activity_type_recent_month")
+        case .recentYear:
+            return String(localized: "workout.summary.no_activity_type_recent_year")
+        }
     }
 
     @ViewBuilder
     private func periodSummaryText(
         for activity: WorkoutStats.WorkoutActivity?,
         count: Int,
-        period: WorkoutPeriod
+        period: WorkoutPeriod,
+        summaryID: String
     ) -> some View {
-        if let generatedWeeklySummary {
+        if activeSummaryID == summaryID, let generatedWeeklySummary {
             Text(generatedWeeklySummary)
                 .font(Theme.itim(size: 18))
                 .foregroundStyle(workoutPosterMuted)
@@ -522,7 +560,7 @@ struct WorkoutDashboardView: View {
         let activityMinutes = Int((activity?.totalDurationMinutes ?? 0).rounded())
         let language = LLMService.preferredResponseLanguage().displayName
         return [
-            "v2",
+            "v5",
             language,
             period.rawValue,
             context.phase.rawValue,
@@ -668,6 +706,12 @@ struct WorkoutDashboardView: View {
             return String(localized: "workout.metric.monthly_total_duration")
         case .year:
             return String(localized: "workout.metric.yearly_total_duration")
+        case .recentWeek:
+            return String(localized: "workout.metric.recent_week_total_duration")
+        case .recentMonth:
+            return String(localized: "workout.metric.recent_month_total_duration")
+        case .recentYear:
+            return String(localized: "workout.metric.recent_year_total_duration")
         }
     }
 
@@ -907,6 +951,9 @@ fileprivate enum WorkoutPeriod: String, CaseIterable, Identifiable {
     case week
     case month
     case year
+    case recentWeek
+    case recentMonth
+    case recentYear
 
     var id: String { rawValue }
 
@@ -918,10 +965,16 @@ fileprivate enum WorkoutPeriod: String, CaseIterable, Identifiable {
             return String(localized: "workout.period.month")
         case .year:
             return String(localized: "workout.period.year")
+        case .recentWeek:
+            return String(localized: "workout.period.recent_week")
+        case .recentMonth:
+            return String(localized: "workout.period.recent_month")
+        case .recentYear:
+            return String(localized: "workout.period.recent_year")
         }
     }
 
-    /// AI 摘要文案里使用的周期称谓，如「本周」「本月」「今年」。
+    /// AI 摘要文案里使用的周期称谓，如「本周」「本月」「今年」「近一周」。
     var summaryPeriodLabel: String {
         switch self {
         case .week:
@@ -930,6 +983,12 @@ fileprivate enum WorkoutPeriod: String, CaseIterable, Identifiable {
             return String(localized: "workout.period_label.month")
         case .year:
             return String(localized: "workout.period_label.year")
+        case .recentWeek:
+            return String(localized: "workout.period_label.recent_week")
+        case .recentMonth:
+            return String(localized: "workout.period_label.recent_month")
+        case .recentYear:
+            return String(localized: "workout.period_label.recent_year")
         }
     }
 }

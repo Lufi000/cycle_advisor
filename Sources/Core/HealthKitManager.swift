@@ -539,7 +539,18 @@ final class HealthKitManager {
         let now = Date()
         let yearStart = calendar.date(byAdding: .day, value: -364, to: now)!
 
-        let workouts = await fetchWorkouts(start: yearStart, end: now)
+        // 自然周期：本周从周一起算，本月从 1 号起算，今年从 1 月 1 日起算。
+        var mondayCalendar = calendar
+        mondayCalendar.firstWeekday = 2
+        let calendarWeekStart = mondayCalendar.dateInterval(of: .weekOfYear, for: now)?.start
+            ?? calendar.startOfDay(for: now)
+        let calendarMonthStart = calendar.dateInterval(of: .month, for: now)?.start
+            ?? calendar.startOfDay(for: now)
+        let calendarYearStart = calendar.dateInterval(of: .year, for: now)?.start
+            ?? calendar.startOfDay(for: now)
+
+        let fetchStart = min(yearStart, calendarYearStart)
+        let workouts = await fetchWorkouts(start: fetchStart, end: now)
         guard !workouts.isEmpty else { return .empty }
 
         let monthStart = calendar.date(byAdding: .day, value: -30, to: now)!
@@ -547,10 +558,17 @@ final class HealthKitManager {
 
         let weekWorkouts = workouts.filter { $0.startDate >= weekStart }
         let monthWorkouts = workouts.filter { $0.startDate >= monthStart }
+        let yearWorkouts = workouts.filter { $0.startDate >= yearStart }
+        let calendarWeekWorkouts = workouts.filter { $0.startDate >= calendarWeekStart }
+        let calendarMonthWorkouts = workouts.filter { $0.startDate >= calendarMonthStart }
+        let calendarYearWorkouts = workouts.filter { $0.startDate >= calendarYearStart }
 
         let weekly = Self.summarizeWorkouts(weekWorkouts, includeDuration: true)
         let monthly = Self.summarizeWorkouts(monthWorkouts, includeDuration: true)
-        let yearly = Self.summarizeWorkouts(workouts, includeDuration: true)
+        let yearly = Self.summarizeWorkouts(yearWorkouts, includeDuration: true)
+        let calendarWeekly = Self.summarizeWorkouts(calendarWeekWorkouts, includeDuration: true)
+        let calendarMonthly = Self.summarizeWorkouts(calendarMonthWorkouts, includeDuration: true)
+        let calendarYearly = Self.summarizeWorkouts(calendarYearWorkouts, includeDuration: true)
 
         // 最近 30 天高频运动类型（无单次时长，仅用于基线展示）
         let topActivities = monthly.activities.map {
@@ -580,6 +598,18 @@ final class HealthKitManager {
             yearlyWorkoutCount: yearly.count,
             yearlyTotalDurationMinutes: yearly.totalDuration / 60.0,
             yearlyAvgDurationMinutes: yearly.count > 0 ? yearly.totalDuration / Double(yearly.count) / 60.0 : nil,
+            calendarWeekActivities: calendarWeekly.activities,
+            calendarWeekWorkoutCount: calendarWeekly.count,
+            calendarWeekTotalDurationMinutes: calendarWeekly.totalDuration / 60.0,
+            calendarWeekAvgDurationMinutes: calendarWeekly.count > 0 ? calendarWeekly.totalDuration / Double(calendarWeekly.count) / 60.0 : nil,
+            calendarMonthActivities: calendarMonthly.activities,
+            calendarMonthWorkoutCount: calendarMonthly.count,
+            calendarMonthTotalDurationMinutes: calendarMonthly.totalDuration / 60.0,
+            calendarMonthAvgDurationMinutes: calendarMonthly.count > 0 ? calendarMonthly.totalDuration / Double(calendarMonthly.count) / 60.0 : nil,
+            calendarYearActivities: calendarYearly.activities,
+            calendarYearWorkoutCount: calendarYearly.count,
+            calendarYearTotalDurationMinutes: calendarYearly.totalDuration / 60.0,
+            calendarYearAvgDurationMinutes: calendarYearly.count > 0 ? calendarYearly.totalDuration / Double(calendarYearly.count) / 60.0 : nil,
             weeklyFrequency: weeklyFreq,
             avgDurationMinutes: avgDuration,
             lastUpdated: now

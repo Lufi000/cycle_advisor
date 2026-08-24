@@ -176,6 +176,28 @@ enum MockData {
         yearlyWorkoutCount: 155,
         yearlyTotalDurationMinutes: 6300,
         yearlyAvgDurationMinutes: 41,
+        calendarWeekActivities: [
+            .init(key: "tennis", name: String(localized: "workout.activity.tennis"), count: 3, totalDurationMinutes: 150),
+            .init(key: "running", name: String(localized: "workout.activity.running"), count: 1, totalDurationMinutes: 30),
+        ],
+        calendarWeekWorkoutCount: 4,
+        calendarWeekTotalDurationMinutes: 180,
+        calendarWeekAvgDurationMinutes: 45,
+        calendarMonthActivities: [
+            .init(key: "tennis", name: String(localized: "workout.activity.tennis"), count: 12, totalDurationMinutes: 620),
+            .init(key: "running", name: String(localized: "workout.activity.running"), count: 5, totalDurationMinutes: 140),
+        ],
+        calendarMonthWorkoutCount: 17,
+        calendarMonthTotalDurationMinutes: 760,
+        calendarMonthAvgDurationMinutes: 45,
+        calendarYearActivities: [
+            .init(key: "tennis", name: String(localized: "workout.activity.tennis"), count: 90, totalDurationMinutes: 4600),
+            .init(key: "running", name: String(localized: "workout.activity.running"), count: 40, totalDurationMinutes: 1100),
+            .init(key: "walking", name: String(localized: "workout.activity.walking"), count: 25, totalDurationMinutes: 600),
+        ],
+        calendarYearWorkoutCount: 155,
+        calendarYearTotalDurationMinutes: 6300,
+        calendarYearAvgDurationMinutes: 41,
         weeklyFrequency: 4,
         avgDurationMinutes: 42,
         lastUpdated: Date()
