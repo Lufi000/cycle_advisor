@@ -2,11 +2,27 @@ import Combine
 import SwiftUI
 import UIKit
 
-/// 聊天列表滚动偏移量，用于感知用户「向上滑动」的手势方向。
+/// iOS 17 降级路径：读取聊天列表滚动偏移量（minY），用于感知「向上滚动」。
 private struct ChatScrollOffsetKey: PreferenceKey {
     static var defaultValue: CGFloat = 0
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
+    }
+}
+
+/// iOS 18+ 的官方滚动几何回调；iOS 17 走 GeometryReader + PreferenceKey 降级路径。
+private extension View {
+    @ViewBuilder
+    func onScrollContentOffsetChange(_ action: @escaping (CGFloat) -> Void) -> some View {
+        if #available(iOS 18.0, *) {
+            self.onScrollGeometryChange(for: CGFloat.self) { geometry in
+                geometry.contentOffset.y
+            } action: { _, newValue in
+                action(newValue)
+            }
+        } else {
+            self
+        }
     }
 }
 
@@ -23,6 +39,8 @@ struct AssistantView: View {
     @State private var showingChatHistory = false
     @State private var lastScrollOffset: CGFloat?
     @State private var isProgrammaticScrolling = false
+    /// 累计向上滚动的位移，避免慢速拖动时单次位移过小导致无法触发折叠。
+    @State private var upwardScrollAccumulator: CGFloat = 0
 
     /// 剩余免费对话 ≤ 此阈值时给出"快用完"提示。
     private static let lowQuotaWarningThreshold = 2
@@ -52,6 +70,17 @@ struct AssistantView: View {
                 } else {
                     ScrollViewReader { proxy in
                         ScrollView {
+                            // iOS 17 降级：经典零高度 GeometryReader 直读偏移。
+                            // 不要放回 background：在部分系统版本上滚动时 preference 不会刷新。
+                            if #unavailable(iOS 18.0) {
+                                GeometryReader { geo in
+                                    Color.clear.preference(
+                                        key: ChatScrollOffsetKey.self,
+                                        value: geo.frame(in: .named(Self.chatScrollCoordinateSpace)).minY
+                                    )
+                                }
+                                .frame(height: 0)
+                            }
                             LazyVStack(spacing: 24) {
                                 dateSeparators
                                 Color.clear
@@ -61,20 +90,15 @@ struct AssistantView: View {
                             .padding(.horizontal, 0)
                             .padding(.top, 24)
                             .padding(.bottom, 8)
-                            .background(
-                                GeometryReader { geo in
-                                    Color.clear.preference(
-                                        key: ChatScrollOffsetKey.self,
-                                        value: geo.frame(in: .named(Self.chatScrollCoordinateSpace)).minY
-                                    )
-                                }
-                            )
                         }
                         // 上滑时收起键盘
                         .scrollDismissesKeyboard(.interactively)
                         .coordinateSpace(name: Self.chatScrollCoordinateSpace)
                         .onPreferenceChange(ChatScrollOffsetKey.self) { offset in
                             handleScrollOffset(offset)
+                        }
+                        .onScrollContentOffsetChange { offset in
+                            handleScrollGeometry(offset)
                         }
                         .onAppear {
                             timeTick = Date()
@@ -345,13 +369,32 @@ struct AssistantView: View {
         }
     }
 
-    /// 用户在聊天列表里向上滑动（内容向上移动）时，自动收起顶部健康 Header。
+    /// 用户向对话上方（历史消息方向）滚动时，自动收起顶部健康 Header。
+    /// 两条路径把「向上滚动的距离」归一化后交给 handleScrollUpMagnitude：
+    /// - iOS 17：GeometryReader 的 minY 增大（内容向下移动，delta > 0）；
+    /// - iOS 18+：contentOffset.y 减小（delta < 0）。
     private func handleScrollOffset(_ offset: CGFloat) {
         defer { lastScrollOffset = offset }
-        guard !isProgrammaticScrolling else { return }
         guard let lastScrollOffset else { return }
-        let delta = offset - lastScrollOffset
-        guard delta < -4, !isHeaderCollapsed else { return }
+        handleScrollUpMagnitude(offset - lastScrollOffset)
+    }
+
+    private func handleScrollGeometry(_ contentOffsetY: CGFloat) {
+        defer { lastScrollOffset = contentOffsetY }
+        guard let lastScrollOffset else { return }
+        handleScrollUpMagnitude(lastScrollOffset - contentOffsetY)
+    }
+
+    /// 累计「向上滚动」的位移，超过阈值后收起 Header；向下滚动时清零。
+    private func handleScrollUpMagnitude(_ magnitude: CGFloat) {
+        guard !isProgrammaticScrolling, !isHeaderCollapsed else { return }
+        guard magnitude > 0 else {
+            upwardScrollAccumulator = 0
+            return
+        }
+        upwardScrollAccumulator += magnitude
+        guard upwardScrollAccumulator > 12 else { return }
+        upwardScrollAccumulator = 0
         withAnimation(.easeInOut(duration: 0.22)) {
             isHeaderCollapsed = true
         }
