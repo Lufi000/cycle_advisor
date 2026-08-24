@@ -6,6 +6,7 @@ struct WorkoutDashboardView: View {
     private var profileManager = UserProfileManager.shared
     let context: CycleContext
     private let statsOverride: WorkoutStats?
+    @State private var selectedPeriod: WorkoutPeriod = .week
     @State private var generatedWeeklySummary: String?
     @State private var activeSummaryID: String?
     @State private var weeklySummaryGenerationFailed = false
@@ -20,6 +21,12 @@ struct WorkoutDashboardView: View {
             || healthMetrics.steps != nil
             || healthMetrics.activeCalories != nil
     }
+    private var hasWorkoutData: Bool {
+        !stats.topActivities.isEmpty
+            || (stats.weeklyWorkoutCount ?? 0) > 0
+            || (stats.monthlyWorkoutCount ?? 0) > 0
+            || (stats.yearlyWorkoutCount ?? 0) > 0
+    }
 
     init(context: CycleContext, statsOverride: WorkoutStats? = nil) {
         self.context = context
@@ -33,21 +40,23 @@ struct WorkoutDashboardView: View {
                     .grainTexture(intensity: .subtle, seed: 530)
                     .ignoresSafeArea()
 
-                ScrollView {
-                    VStack(spacing: 12) {
-                        if stats.topActivities.isEmpty {
-                            if hasActivityMetrics {
-                                activityOnlySection
+                VStack(spacing: 0) {
+                    if hasWorkoutData {
+                        periodHeader
+                    }
+
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            if hasWorkoutData {
+                                periodRhythmSection
                             } else {
                                 emptyState
                             }
-                        } else {
-                            weeklyRhythmSection
                         }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 12)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 24)
-                    .padding(.bottom, 20)
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
@@ -66,59 +75,94 @@ struct WorkoutDashboardView: View {
     }
 
     private var emptyState: some View {
-        VStack {
-            workoutCardContent(
-                featuredActivity: nil,
-                weeklyCount: 0,
-                totalMinutes: 0,
-                displayActivities: [],
-                showsShareButton: true,
-                contentWidth: 264
-            )
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 38)
-        .padding(.horizontal, 24)
-        .background(workoutPosterCardBackground)
+        workoutCardShell(
+            period: selectedPeriod,
+            featuredActivity: nil,
+            count: 0,
+            totalMinutes: 0,
+            displayActivities: [],
+            showsShareButton: true
+        )
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
-    private var activityOnlySection: some View {
-        activityOnlyShareContent(posterMaxWidth: 240)
-            .padding(Theme.cardPadding)
-            .grainCardStyle(seed: 531)
-            .overlay(alignment: .topTrailing) {
-                workoutSaveButton { saveActivityOnlyCard() }
-                    .padding(10)
-            }
-    }
-
-    private func activityOnlyShareContent(posterMaxWidth: CGFloat = 313) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(activityOnlyTitle)
-                    .font(.system(size: 36, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Theme.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.72)
-                    .padding(.trailing, 44)
-
-                Text(activityOnlySummary)
-                    .font(.system(size: 12))
-                    .foregroundStyle(Theme.textSecondary)
-                    .lineSpacing(Theme.lineSpacing)
-            }
-
-            workoutPosterArt(for: activityOnlyArtKind)
-                .frame(maxWidth: posterMaxWidth, alignment: .leading)
-
-            LazyVGrid(columns: [
-                GridItem(.flexible(), spacing: 8),
-                GridItem(.flexible(), spacing: 8),
-            ], spacing: 8) {
-                activityOnlyMetricPills
+    private var periodPicker: some View {
+        HStack(spacing: 8) {
+            ForEach(WorkoutPeriod.allCases) { period in
+                Button {
+                    selectedPeriod = period
+                } label: {
+                    Text(period.displayName)
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .foregroundStyle(selectedPeriod == period ? Color.white : Theme.textSecondary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 9)
+                        .background {
+                            if selectedPeriod == period {
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .fill(Theme.accent)
+                            }
+                        }
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(selectedPeriod == period ? .isSelected : [])
             }
         }
+        .padding(5)
+        .background(Theme.cardBackgroundSolid.opacity(0.85))
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    /// 顶部固定栏：周期切换 Tab + 当前周期的具体日期范围小字。
+    private var periodHeader: some View {
+        VStack(spacing: 6) {
+            periodPicker
+
+            Text(periodRangeText(for: selectedPeriod))
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundStyle(Theme.textSecondary.opacity(0.72))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 12)
+        .padding(.bottom, 8)
+        .background {
+            Theme.warmShell
+                .grainTexture(intensity: .subtle, seed: 530)
+                .ignoresSafeArea(edges: .bottom)
+        }
+    }
+
+    /// 当前周期的具体日期范围，如「8月18日 – 8月24日」。
+    private func periodRangeText(for period: WorkoutPeriod) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+        let daysBack: Int
+        switch period {
+        case .week:
+            daysBack = 6
+        case .month:
+            daysBack = 29
+        case .year:
+            daysBack = 363
+        }
+        let start = calendar.date(byAdding: .day, value: -daysBack, to: now) ?? now
+        return "\(shortDate(start)) – \(shortDate(now))"
+    }
+
+    private func shortDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        switch LanguageManager.shared.current {
+        case .english:
+            formatter.locale = Locale(identifier: "en_US")
+        case .simplifiedChinese:
+            formatter.locale = Locale(identifier: "zh_CN")
+        case .system:
+            formatter.locale = .current
+        }
+        formatter.setLocalizedDateFormatFromTemplate("MMMd")
+        return formatter.string(from: date)
     }
 
     @ViewBuilder
@@ -149,62 +193,117 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    private var weeklyRhythmSection: some View {
-        let data = workoutCardData
-        let summaryID = weeklySummaryID(for: data.featuredActivity, weeklyCount: data.weeklyCount, totalMinutes: data.totalMinutes)
+    /// 无运动记录但已有活动数据时，把步数/运动分钟/活动热量放进统一卡片底部。
+    private var activityMetricPillsGrid: some View {
+        LazyVGrid(columns: [
+            GridItem(.flexible(), spacing: 8),
+            GridItem(.flexible(), spacing: 8),
+        ], spacing: 8) {
+            activityOnlyMetricPills
+        }
+    }
 
-        return VStack {
+    private var periodRhythmSection: some View {
+        let data = periodCardData(for: selectedPeriod)
+        let summaryID = periodSummaryID(
+            period: selectedPeriod,
+            for: data.featuredActivity,
+            count: data.count,
+            totalMinutes: data.totalMinutes
+        )
+
+        return workoutCardShell(
+            period: selectedPeriod,
+            featuredActivity: data.featuredActivity,
+            count: data.count,
+            totalMinutes: data.totalMinutes,
+            displayActivities: data.displayActivities,
+            showsShareButton: true
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .task(id: summaryID) {
+            await loadGeneratedPeriodSummary(
+                id: summaryID,
+                period: selectedPeriod,
+                activity: data.featuredActivity,
+                count: data.count,
+                totalMinutes: data.totalMinutes
+            )
+        }
+    }
+
+    private func periodCardData(for period: WorkoutPeriod) -> (
+        count: Int,
+        totalMinutes: Double,
+        displayActivities: [WorkoutStats.WorkoutActivity],
+        featuredActivity: WorkoutStats.WorkoutActivity?
+    ) {
+        let activities: [WorkoutStats.WorkoutActivity]
+        let count: Int
+        let totalMinutes: Double
+        switch period {
+        case .week:
+            activities = sortedWorkoutActivities(stats.weeklyActivities ?? [])
+            count = stats.weeklyWorkoutCount ?? 0
+            totalMinutes = stats.weeklyTotalDurationMinutes ?? 0
+        case .month:
+            activities = sortedWorkoutActivities(stats.monthlyActivities ?? [])
+            count = stats.monthlyWorkoutCount ?? 0
+            totalMinutes = stats.monthlyTotalDurationMinutes ?? 0
+        case .year:
+            activities = sortedWorkoutActivities(stats.yearlyActivities ?? [])
+            count = stats.yearlyWorkoutCount ?? 0
+            totalMinutes = stats.yearlyTotalDurationMinutes ?? 0
+        }
+        return (count, totalMinutes, activities, activities.first)
+    }
+
+    /// 运动卡片的统一外壳：与屏幕上展示的尺寸保持一致，导出时也复用同一套布局。
+    private func workoutCardShell(
+        period: WorkoutPeriod,
+        featuredActivity: WorkoutStats.WorkoutActivity?,
+        count: Int,
+        totalMinutes: Double,
+        displayActivities: [WorkoutStats.WorkoutActivity],
+        showsShareButton: Bool = false,
+        contentWidth: CGFloat = 264
+    ) -> some View {
+        VStack {
             workoutCardContent(
-                featuredActivity: data.featuredActivity,
-                weeklyCount: data.weeklyCount,
-                totalMinutes: data.totalMinutes,
-                displayActivities: data.displayActivities,
-                showsShareButton: true,
-                contentWidth: 264
+                period: period,
+                featuredActivity: featuredActivity,
+                count: count,
+                totalMinutes: totalMinutes,
+                displayActivities: displayActivities,
+                showsShareButton: showsShareButton,
+                contentWidth: contentWidth
             )
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 38)
         .padding(.horizontal, 24)
         .background(workoutPosterCardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .task(id: summaryID) {
-            await loadGeneratedWeeklySummary(
-                id: summaryID,
-                activity: data.featuredActivity,
-                weeklyCount: data.weeklyCount,
-                totalMinutes: data.totalMinutes
-            )
-        }
-    }
-
-    private var workoutCardData: (
-        weeklyCount: Int,
-        totalMinutes: Double,
-        displayActivities: [WorkoutStats.WorkoutActivity],
-        featuredActivity: WorkoutStats.WorkoutActivity?
-    ) {
-        let weeklyCount = stats.weeklyWorkoutCount ?? 0
-        let totalMinutes = stats.weeklyTotalDurationMinutes ?? 0
-        let weeklyActivities = sortedWorkoutActivities(stats.weeklyActivities ?? [])
-        let topActivities = sortedWorkoutActivities(stats.topActivities)
-        let displayActivities = weeklyActivities.isEmpty ? topActivities : weeklyActivities
-        let featuredActivity = displayActivities.first
-        return (weeklyCount, totalMinutes, displayActivities, featuredActivity)
     }
 
     private func workoutCardContent(
+        period: WorkoutPeriod,
         featuredActivity: WorkoutStats.WorkoutActivity?,
-        weeklyCount: Int,
+        count: Int,
         totalMinutes: Double,
         displayActivities: [WorkoutStats.WorkoutActivity],
         showsShareButton: Bool = false,
         contentWidth: CGFloat = 313
     ) -> some View {
-        VStack(alignment: .leading, spacing: 26) {
+        let showsActivityMetrics = displayActivities.isEmpty && hasActivityMetrics
+
+        return VStack(alignment: .leading, spacing: 26) {
             VStack(alignment: .leading, spacing: 20) {
                 HStack(alignment: .top, spacing: 12) {
-                    Text(weeklyTitle(for: featuredActivity, weeklyCount: weeklyCount))
+                    Text(
+                        showsActivityMetrics
+                            ? activityOnlyTitle
+                            : periodTitle(for: featuredActivity, count: count, minutes: totalMinutes)
+                    )
                         .font(Theme.itim(size: 36))
                         .foregroundStyle(workoutPosterInk)
                         .lineLimit(2)
@@ -216,15 +315,30 @@ struct WorkoutDashboardView: View {
                     }
                 }
 
-                weeklySummaryText(for: featuredActivity, weeklyCount: weeklyCount)
-                    .frame(maxWidth: contentWidth, alignment: .leading)
+                if showsActivityMetrics {
+                    Text(activityOnlySummary)
+                        .font(Theme.itim(size: 18))
+                        .foregroundStyle(workoutPosterMuted)
+                        .lineSpacing(5)
+                } else {
+                    periodSummaryText(for: featuredActivity, count: count, period: period)
+                        .frame(maxWidth: contentWidth, alignment: .leading)
+                }
             }
 
-            workoutPosterImage(for: featuredActivity)
+            if displayActivities.isEmpty {
+                workoutParkArt()
+            } else {
+                workoutPosterImage(for: featuredActivity)
+            }
 
-            workoutStatsStrip(totalMinutes: totalMinutes, weeklyCount: weeklyCount)
+            workoutStatsStrip(totalMinutes: totalMinutes, count: count, period: period)
 
-            workoutCategoryRows(activities: displayActivities, totalMinutes: totalMinutes)
+            if showsActivityMetrics {
+                activityMetricPillsGrid
+            } else {
+                workoutCategoryRows(activities: displayActivities, totalMinutes: totalMinutes)
+            }
         }
         .frame(maxWidth: contentWidth)
     }
@@ -256,10 +370,11 @@ struct WorkoutDashboardView: View {
 
     @MainActor
     private func saveWorkoutCard() {
-        let data = workoutCardData
+        let data = periodCardData(for: selectedPeriod)
         guard let image = renderWorkoutCardImage(
+            period: selectedPeriod,
             featuredActivity: data.featuredActivity,
-            weeklyCount: data.weeklyCount,
+            count: data.count,
             totalMinutes: data.totalMinutes,
             displayActivities: data.displayActivities
         ) else {
@@ -271,34 +386,24 @@ struct WorkoutDashboardView: View {
 
     @MainActor
     private func renderWorkoutCardImage(
+        period: WorkoutPeriod,
         featuredActivity: WorkoutStats.WorkoutActivity?,
-        weeklyCount: Int,
+        count: Int,
         totalMinutes: Double,
         displayActivities: [WorkoutStats.WorkoutActivity]
     ) -> UIImage? {
-        let content = workoutCardContent(
+        let content = workoutCardShell(
+            period: period,
             featuredActivity: featuredActivity,
-            weeklyCount: weeklyCount,
+            count: count,
             totalMinutes: totalMinutes,
             displayActivities: displayActivities
         )
-        .frame(width: 313)
-        .padding(.vertical, 38)
-        .padding(.horizontal, 24)
-        .background(workoutPosterCardBackground)
+        .frame(width: exportedCardWidth)
 
         let renderer = ImageRenderer(content: content)
         renderer.scale = 3
         return renderer.uiImage
-    }
-
-    @MainActor
-    private func saveActivityOnlyCard() {
-        guard let image = renderActivityOnlyCardImage() else {
-            saveFeedbackMessage = String(localized: "workout.share.save_failed")
-            return
-        }
-        saveImageToPhotoLibrary(image)
     }
 
     @MainActor
@@ -326,16 +431,9 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    @MainActor
-    private func renderActivityOnlyCardImage() -> UIImage? {
-        let content = activityOnlyShareContent()
-            .frame(width: 313, alignment: .leading)
-            .padding(Theme.cardPadding)
-            .background(workoutPosterCardBackground)
-
-        let renderer = ImageRenderer(content: content)
-        renderer.scale = 3
-        return renderer.uiImage
+    /// 与屏幕上运动卡片一致的可视宽度：ScrollView 左右各 16pt 内边距。
+    private var exportedCardWidth: CGFloat {
+        max(0, UIScreen.main.bounds.width - 32)
     }
 
     private var activityOnlyTitle: String {
@@ -361,38 +459,43 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    private var activityOnlyArtKind: WorkoutActivityKind {
-        if let exercise = healthMetrics.exerciseMinutes, exercise >= 30 {
-            return .running
-        }
-        if let steps = healthMetrics.steps, steps >= 6000 {
-            return .walking
-        }
-        return .other
-    }
-
-    private func weeklyTitle(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
-        guard weeklyCount > 0 else { return String(localized: "workout.title.recovery") }
-        guard let activity else { return workoutMomentumLabel(count: weeklyCount, minutes: stats.weeklyTotalDurationMinutes ?? 0) }
+    private func periodTitle(for activity: WorkoutStats.WorkoutActivity?, count: Int, minutes: Double) -> String {
+        guard count > 0 else { return String(localized: "workout.title.recovery") }
+        guard let activity else { return workoutMomentumLabel(count: count, minutes: minutes) }
         return NSLocalizedString(workoutTitleKey(for: activity), comment: "")
     }
 
-    private func weeklySummaryFallback(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> String {
-        guard weeklyCount > 0 else {
-            return String(localized: "workout.summary.no_workouts")
+    private func periodSummaryFallback(
+        for activity: WorkoutStats.WorkoutActivity?,
+        count: Int,
+        period: WorkoutPeriod
+    ) -> String {
+        guard count > 0 else {
+            switch period {
+            case .week:
+                return String(localized: "workout.summary.no_workouts")
+            case .month:
+                return String(localized: "workout.summary.no_workouts_month")
+            case .year:
+                return String(localized: "workout.summary.no_workouts_year")
+            }
         }
         return String(localized: "workout.summary.no_activity_type")
     }
 
     @ViewBuilder
-    private func weeklySummaryText(for activity: WorkoutStats.WorkoutActivity?, weeklyCount: Int) -> some View {
+    private func periodSummaryText(
+        for activity: WorkoutStats.WorkoutActivity?,
+        count: Int,
+        period: WorkoutPeriod
+    ) -> some View {
         if let generatedWeeklySummary {
             Text(generatedWeeklySummary)
                 .font(Theme.itim(size: 18))
                 .foregroundStyle(workoutPosterMuted)
                 .lineSpacing(5)
         } else {
-            Text(weeklySummaryFallback(for: activity, weeklyCount: weeklyCount))
+            Text(periodSummaryFallback(for: activity, count: count, period: period))
                 .font(Theme.itim(size: 18))
                 .foregroundStyle(workoutPosterMuted)
                 .lineSpacing(5)
@@ -400,13 +503,14 @@ struct WorkoutDashboardView: View {
     }
 
     @MainActor
-    private func loadGeneratedWeeklySummary(
+    private func loadGeneratedPeriodSummary(
         id: String,
+        period: WorkoutPeriod,
         activity: WorkoutStats.WorkoutActivity?,
-        weeklyCount: Int,
+        count: Int,
         totalMinutes: Double
     ) async {
-        guard weeklyCount > 0, let activity else {
+        guard count > 0, let activity else {
             generatedWeeklySummary = nil
             activeSummaryID = id
             return
@@ -425,8 +529,9 @@ struct WorkoutDashboardView: View {
                 context: context,
                 profile: profileManager.profile,
                 featuredActivity: activity,
-                weeklyCount: weeklyCount,
-                weeklyTotalDurationMinutes: totalMinutes,
+                count: count,
+                totalDurationMinutes: totalMinutes,
+                periodLabel: period.summaryPeriodLabel,
                 responseLanguage: LLMService.preferredResponseLanguage()
             )
             guard activeSummaryID == id else { return }
@@ -439,9 +544,10 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    private func weeklySummaryID(
+    private func periodSummaryID(
+        period: WorkoutPeriod,
         for activity: WorkoutStats.WorkoutActivity?,
-        weeklyCount: Int,
+        count: Int,
         totalMinutes: Double
     ) -> String {
         let activityKey = activity?.key ?? "none"
@@ -451,12 +557,13 @@ struct WorkoutDashboardView: View {
         return [
             "v2",
             language,
+            period.rawValue,
             context.phase.rawValue,
             "\(context.dayInPhase)",
             activityKey,
             "\(activityCount)",
             "\(activityMinutes)",
-            "\(weeklyCount)",
+            "\(count)",
             "\(Int(totalMinutes.rounded()))"
         ].joined(separator: "|")
     }
@@ -470,7 +577,7 @@ struct WorkoutDashboardView: View {
     }
 
     private func workoutSummaryCacheKey(for id: String) -> String {
-        "workout.weekly.ai_summary.\(id)"
+        "workout.period.ai_summary.\(id)"
     }
 
     private func workoutTitleKey(for activity: WorkoutStats.WorkoutActivity) -> String {
@@ -494,11 +601,35 @@ struct WorkoutDashboardView: View {
         case .dance:
             return "workout.title.dance"
         case .ballSports:
-            return "workout.title.ball_sports"
+            return ballSportsTitleKey(for: activity.key)
         case .cardio:
             return "workout.title.cardio"
         case .other:
             return "workout.title.steady_rhythm"
+        }
+    }
+
+    /// 球类运动按具体项目给出更贴切的称号；未单独列出的球类回退到通用“球场”称号。
+    private func ballSportsTitleKey(for activityKey: String) -> String {
+        switch activityKey.lowercased() {
+        case "tennis":
+            return "workout.title.tennis"
+        case "basketball":
+            return "workout.title.basketball"
+        case "badminton":
+            return "workout.title.badminton"
+        case "soccer":
+            return "workout.title.soccer"
+        case "volleyball":
+            return "workout.title.volleyball"
+        case "table_tennis":
+            return "workout.title.table_tennis"
+        case "golf":
+            return "workout.title.golf"
+        case "baseball", "softball":
+            return "workout.title.baseball"
+        default:
+            return "workout.title.ball_sports"
         }
     }
 
@@ -536,18 +667,41 @@ struct WorkoutDashboardView: View {
             .accessibilityHidden(true)
     }
 
-    private func workoutStatsStrip(totalMinutes: Double, weeklyCount: Int) -> some View {
+    /// 无运动记录时的公园休息插画：坐在公园里放空，节奏的一部分。
+    private func workoutParkArt() -> some View {
+        WorkoutPosterArtView(kind: .other, assetName: "WorkoutPosterPark")
+            .aspectRatio(1, contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .accessibilityHidden(true)
+    }
+
+    private func workoutStatsStrip(totalMinutes: Double, count: Int, period: WorkoutPeriod) -> some View {
         HStack(spacing: 0) {
-            workoutPosterStat(value: formatDurationCompact(totalMinutes), label: String(localized: "workout.metric.weekly_total_duration"), isTrailing: false)
+            workoutPosterStat(
+                value: formatDurationCompact(totalMinutes),
+                label: totalDurationLabel(for: period),
+                isTrailing: false
+            )
 
             Rectangle()
                 .fill(Theme.textSecondary.opacity(0.20))
                 .frame(width: 2, height: 50)
                 .padding(.horizontal, 28)
 
-            workoutPosterStat(value: "\(weeklyCount)", label: String(localized: "workout.metric.workout_count"), isTrailing: true)
+            workoutPosterStat(value: "\(count)", label: String(localized: "workout.metric.workout_count"), isTrailing: true)
         }
         .padding(.top, 2)
+    }
+
+    private func totalDurationLabel(for period: WorkoutPeriod) -> String {
+        switch period {
+        case .week:
+            return String(localized: "workout.metric.weekly_total_duration")
+        case .month:
+            return String(localized: "workout.metric.monthly_total_duration")
+        case .year:
+            return String(localized: "workout.metric.yearly_total_duration")
+        }
     }
 
     private func workoutPosterStat(value: String, label: String, isTrailing: Bool) -> some View {
@@ -780,6 +934,37 @@ fileprivate enum WorkoutActivityKind {
     case ballSports
     case cardio
     case other
+}
+
+fileprivate enum WorkoutPeriod: String, CaseIterable, Identifiable {
+    case week
+    case month
+    case year
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .week:
+            return String(localized: "workout.period.week")
+        case .month:
+            return String(localized: "workout.period.month")
+        case .year:
+            return String(localized: "workout.period.year")
+        }
+    }
+
+    /// AI 摘要文案里使用的周期称谓，如「本周」「本月」「今年」。
+    var summaryPeriodLabel: String {
+        switch self {
+        case .week:
+            return String(localized: "workout.period_label.week")
+        case .month:
+            return String(localized: "workout.period_label.month")
+        case .year:
+            return String(localized: "workout.period_label.year")
+        }
+    }
 }
 
 private struct WorkoutPosterArtView: View {

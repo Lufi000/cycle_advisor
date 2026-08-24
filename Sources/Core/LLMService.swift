@@ -362,8 +362,9 @@ actor LLMService {
         context: CycleContext,
         profile: UserProfile?,
         featuredActivity: WorkoutStats.WorkoutActivity,
-        weeklyCount: Int,
-        weeklyTotalDurationMinutes: Double,
+        count: Int,
+        totalDurationMinutes: Double,
+        periodLabel: String,
         responseLanguage: ResponseLanguage = .simplifiedChinese
     ) async throws -> String {
         let request = LLMRequest(
@@ -376,8 +377,9 @@ actor LLMService {
                         context: context,
                         profile: profile,
                         featuredActivity: featuredActivity,
-                        weeklyCount: weeklyCount,
-                        weeklyTotalDurationMinutes: weeklyTotalDurationMinutes,
+                        count: count,
+                        totalDurationMinutes: totalDurationMinutes,
+                        periodLabel: periodLabel,
                         responseLanguage: responseLanguage
                     )
                 )
@@ -634,25 +636,40 @@ actor LLMService {
         context: CycleContext,
         profile: UserProfile?,
         featuredActivity: WorkoutStats.WorkoutActivity,
-        weeklyCount: Int,
-        weeklyTotalDurationMinutes: Double,
+        count: Int,
+        totalDurationMinutes: Double,
+        periodLabel: String,
         responseLanguage: ResponseLanguage = .simplifiedChinese
     ) -> String {
         let contextSummary = buildContextLines(context: context).joined(separator: "\n")
         let profileSummary = buildProfileSummary(profile: profile)
         let activityDuration = featuredActivity.totalDurationMinutes.map { "约 \(Int($0.rounded())) 分钟" } ?? "未记录时长"
 
+        let sectionHeader: String
+        let countLine: String
+        let durationLine: String
+        switch responseLanguage {
+        case .simplifiedChinese:
+            sectionHeader = "【\(periodLabel)运动】"
+            countLine = "\(periodLabel)运动总次数：\(count)"
+            durationLine = "\(periodLabel)运动总时长：约 \(Int(totalDurationMinutes.rounded())) 分钟"
+        case .english:
+            sectionHeader = "【\(periodLabel) workouts】"
+            countLine = "Total workouts in \(periodLabel): \(count)"
+            durationLine = "Total duration in \(periodLabel): about \(Int(totalDurationMinutes.rounded())) minutes"
+        }
+
         return """
         【内部参考：用户当前状态，不要在输出中点名周期阶段】
         \(contextSummary)
         \(profileSummary)
 
-        【本周运动】
+        \(sectionHeader)
         主运动：\(featuredActivity.name)
         主运动次数：\(featuredActivity.count)
         主运动时长：\(activityDuration)
-        本周运动总次数：\(weeklyCount)
-        本周运动总时长：约 \(Int(weeklyTotalDurationMinutes.rounded())) 分钟
+        \(countLine)
+        \(durationLine)
 
         请生成 \(responseLanguage.displayName) 的 summary。只输出 JSON，不要其他说明。
         """

@@ -537,13 +537,59 @@ final class HealthKitManager {
     func fetchWorkoutStats() async -> WorkoutStats {
         let calendar = Calendar.current
         let now = Date()
-        let start = calendar.date(byAdding: .day, value: -30, to: now)!
-        let weekStart = calendar.date(byAdding: .day, value: -7, to: now)!
+        let yearStart = calendar.date(byAdding: .day, value: -364, to: now)!
 
-        let workouts = await fetchWorkouts(start: start, end: now)
+        let workouts = await fetchWorkouts(start: yearStart, end: now)
         guard !workouts.isEmpty else { return .empty }
 
-        // 统计运动类型
+        let monthStart = calendar.date(byAdding: .day, value: -30, to: now)!
+        let weekStart = calendar.date(byAdding: .day, value: -7, to: now)!
+
+        let weekWorkouts = workouts.filter { $0.startDate >= weekStart }
+        let monthWorkouts = workouts.filter { $0.startDate >= monthStart }
+
+        let weekly = Self.summarizeWorkouts(weekWorkouts, includeDuration: true)
+        let monthly = Self.summarizeWorkouts(monthWorkouts, includeDuration: true)
+        let yearly = Self.summarizeWorkouts(workouts, includeDuration: true)
+
+        // 最近 30 天高频运动类型（无单次时长，仅用于基线展示）
+        let topActivities = monthly.activities.map {
+            WorkoutStats.WorkoutActivity(
+                key: $0.key,
+                rawValue: $0.rawValue,
+                name: $0.name,
+                count: $0.count,
+                totalDurationMinutes: nil
+            )
+        }
+        let weeks = max(1.0, Double(calendar.dateComponents([.day], from: monthStart, to: now).day ?? 30) / 7.0)
+        let weeklyFreq = Double(monthWorkouts.count) / weeks
+        let avgDuration = monthWorkouts.isEmpty ? 0 : monthly.totalDuration / Double(monthWorkouts.count) / 60.0
+
+        return WorkoutStats(
+            topActivities: Array(topActivities),
+            weeklyActivities: weekly.activities,
+            weeklyWorkoutCount: weekly.count,
+            weeklyTotalDurationMinutes: weekly.totalDuration / 60.0,
+            weeklyAvgDurationMinutes: weekly.count > 0 ? weekly.totalDuration / Double(weekly.count) / 60.0 : nil,
+            monthlyActivities: monthly.activities,
+            monthlyWorkoutCount: monthly.count,
+            monthlyTotalDurationMinutes: monthly.totalDuration / 60.0,
+            monthlyAvgDurationMinutes: monthly.count > 0 ? monthly.totalDuration / Double(monthly.count) / 60.0 : nil,
+            yearlyActivities: yearly.activities,
+            yearlyWorkoutCount: yearly.count,
+            yearlyTotalDurationMinutes: yearly.totalDuration / 60.0,
+            yearlyAvgDurationMinutes: yearly.count > 0 ? yearly.totalDuration / Double(yearly.count) / 60.0 : nil,
+            weeklyFrequency: weeklyFreq,
+            avgDurationMinutes: avgDuration,
+            lastUpdated: now
+        )
+    }
+
+    private static func summarizeWorkouts(
+        _ workouts: [HKWorkout],
+        includeDuration: Bool
+    ) -> (activities: [WorkoutStats.WorkoutActivity], count: Int, totalDuration: TimeInterval) {
         var activitySummaries: [String: WorkoutActivitySummary] = [:]
         var totalDuration: TimeInterval = 0
 
@@ -551,48 +597,17 @@ final class HealthKitManager {
             let descriptor = Self.workoutDescriptor(for: workout.workoutActivityType)
             var summary = activitySummaries[descriptor.key] ?? WorkoutActivitySummary(descriptor: descriptor)
             summary.count += 1
+            summary.totalDuration += workout.duration
             activitySummaries[descriptor.key] = summary
             totalDuration += workout.duration
         }
 
-        let topActivities = activitySummaries.values
+        let activities = activitySummaries.values
             .sorted(by: Self.compareWorkoutActivitySummaries)
             .prefix(5)
-            .map { $0.workoutActivity() }
+            .map { $0.workoutActivity(includeDuration: includeDuration) }
 
-        let weeklyWorkouts = workouts.filter { $0.startDate >= weekStart }
-        var weeklyActivitySummaries: [String: WorkoutActivitySummary] = [:]
-        var weeklyTotalDuration: TimeInterval = 0
-
-        for workout in weeklyWorkouts {
-            let descriptor = Self.workoutDescriptor(for: workout.workoutActivityType)
-            var summary = weeklyActivitySummaries[descriptor.key] ?? WorkoutActivitySummary(descriptor: descriptor)
-            summary.count += 1
-            summary.totalDuration += workout.duration
-            weeklyActivitySummaries[descriptor.key] = summary
-            weeklyTotalDuration += workout.duration
-        }
-
-        let weeklyActivities = weeklyActivitySummaries.values
-            .sorted(by: Self.compareWorkoutActivitySummaries)
-            .prefix(5)
-            .map { $0.workoutActivity(includeDuration: true) }
-
-        let weeks = max(1.0, Double(calendar.dateComponents([.day], from: start, to: now).day ?? 30) / 7.0)
-        let weeklyFreq = Double(workouts.count) / weeks
-        let avgDuration = totalDuration / Double(workouts.count) / 60.0
-        let weeklyAvgDuration = weeklyWorkouts.isEmpty ? nil : weeklyTotalDuration / Double(weeklyWorkouts.count) / 60.0
-
-        return WorkoutStats(
-            topActivities: Array(topActivities),
-            weeklyActivities: Array(weeklyActivities),
-            weeklyWorkoutCount: weeklyWorkouts.count,
-            weeklyTotalDurationMinutes: weeklyTotalDuration / 60.0,
-            weeklyAvgDurationMinutes: weeklyAvgDuration,
-            weeklyFrequency: weeklyFreq,
-            avgDurationMinutes: avgDuration,
-            lastUpdated: now
-        )
+        return (Array(activities), workouts.count, totalDuration)
     }
 
     private func fetchWorkouts(start: Date, end: Date) async -> [HKWorkout] {

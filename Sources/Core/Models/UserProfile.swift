@@ -139,6 +139,22 @@ struct WorkoutStats: Codable, Equatable {
     var weeklyTotalDurationMinutes: Double?
     /// 过去 7 天平均每次运动时长（分钟）
     var weeklyAvgDurationMinutes: Double?
+    /// 过去 30 天高频运动类型
+    var monthlyActivities: [WorkoutActivity]? = nil
+    /// 过去 30 天运动次数
+    var monthlyWorkoutCount: Int? = nil
+    /// 过去 30 天运动总时长（分钟）
+    var monthlyTotalDurationMinutes: Double? = nil
+    /// 过去 30 天平均每次运动时长（分钟）
+    var monthlyAvgDurationMinutes: Double? = nil
+    /// 过去 365 天高频运动类型
+    var yearlyActivities: [WorkoutActivity]? = nil
+    /// 过去 365 天运动次数
+    var yearlyWorkoutCount: Int? = nil
+    /// 过去 365 天运动总时长（分钟）
+    var yearlyTotalDurationMinutes: Double? = nil
+    /// 过去 365 天平均每次运动时长（分钟）
+    var yearlyAvgDurationMinutes: Double? = nil
     /// 每周平均运动次数
     var weeklyFrequency: Double
     /// 平均每次运动时长（分钟）
@@ -151,6 +167,14 @@ struct WorkoutStats: Codable, Equatable {
         weeklyWorkoutCount: nil,
         weeklyTotalDurationMinutes: nil,
         weeklyAvgDurationMinutes: nil,
+        monthlyActivities: nil,
+        monthlyWorkoutCount: nil,
+        monthlyTotalDurationMinutes: nil,
+        monthlyAvgDurationMinutes: nil,
+        yearlyActivities: nil,
+        yearlyWorkoutCount: nil,
+        yearlyTotalDurationMinutes: nil,
+        yearlyAvgDurationMinutes: nil,
         weeklyFrequency: 0,
         avgDurationMinutes: 0,
         lastUpdated: nil
