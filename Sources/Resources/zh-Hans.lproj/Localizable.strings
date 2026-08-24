@@ -183,6 +183,8 @@
 "assistant.header.exercise" = "锻炼";
 "assistant.header.steps" = "步数";
 "assistant.header.hrv" = "HRV";
+"assistant.header.collapse_a11y" = "收起今日概览";
+"assistant.header.expand_a11y" = "展开今日概览";
 
 /* Units (formatted health metrics) */
 "unit.duration.hour_minute %lld %lld" = "%1$lld小时%2$lld分";

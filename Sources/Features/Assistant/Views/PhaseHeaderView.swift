@@ -1,21 +1,57 @@
 import SwiftUI
 
-/// 助手页顶部固定 Header，展示关键健康指标
+/// 助手页顶部 Header，展示关键健康指标。
+/// 支持折叠：聊天时可以把“今日概览”和指标标签收成一条细状态条，留出更多沉浸式聊天空间。
 struct PhaseHeaderView: View {
     let context: CycleContext
     let displayName: String
 
+    /// 折叠偏好持久化，用户选择后下次进入助手页仍然生效。
+    @AppStorage("assistant.header.isCollapsed") private var isCollapsed = false
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(displayName)
-                Text(String(localized: "assistant.header.summary_title"))
+        Group {
+            if isCollapsed {
+                collapsedHeader
+            } else {
+                expandedHeader
             }
-            .font(Theme.itim(size: 22))
-            .foregroundStyle(Theme.textPrimary)
-            .lineLimit(1)
-            .minimumScaleFactor(0.78)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .background(
+            Theme.background
+                .ignoresSafeArea(edges: .top)
+        )
+    }
+
+    // MARK: - 展开态：标题 + 指标标签
+
+    private var expandedHeader: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .center, spacing: 12) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(displayName)
+                    Text(String(localized: "assistant.header.summary_title"))
+                }
+                .font(Theme.itim(size: 22))
+                .foregroundStyle(Theme.textPrimary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.78)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Button {
+                    withAnimation(.easeInOut(duration: 0.22)) {
+                        isCollapsed = true
+                    }
+                } label: {
+                    Image(systemName: "chevron.up")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Theme.textSecondary)
+                        .frame(width: 30, height: 30)
+                        .background(Color.white.opacity(0.56))
+                        .clipShape(Circle())
+                }
+                .accessibilityLabel(String(localized: "assistant.header.collapse_a11y"))
+            }
 
             HStack(spacing: 10) {
                 if let hrv = context.healthMetrics.hrvCurrent {
@@ -39,10 +75,39 @@ struct PhaseHeaderView: View {
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .padding(.bottom, 14)
-        .background(
-            Theme.background
-                .ignoresSafeArea(edges: .top)
-        )
+        .transition(.opacity.combined(with: .move(edge: .top)))
+    }
+
+    // MARK: - 折叠态：单行状态条
+
+    private var collapsedHeader: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.22)) {
+                isCollapsed = false
+            }
+        } label: {
+            HStack(spacing: 8) {
+                Text(context.phase.emoji)
+                Text(displayName)
+                    .lineLimit(1)
+                Text(context.phase.displayName)
+                    .foregroundStyle(Theme.textSecondary)
+                    .lineLimit(1)
+                Spacer(minLength: 8)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Theme.textSecondary)
+            }
+            .font(Theme.itim(size: 18))
+            .foregroundStyle(Theme.textPrimary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "assistant.header.expand_a11y"))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .transition(.opacity.combined(with: .move(edge: .top)))
     }
 
     @ViewBuilder

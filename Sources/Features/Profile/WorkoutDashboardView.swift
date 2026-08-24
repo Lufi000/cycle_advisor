@@ -67,39 +67,20 @@ struct WorkoutDashboardView: View {
 
     private var emptyState: some View {
         VStack {
-            emptyStateContent()
+            workoutCardContent(
+                featuredActivity: nil,
+                weeklyCount: 0,
+                totalMinutes: 0,
+                displayActivities: [],
+                showsShareButton: true,
+                contentWidth: 264
+            )
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 38)
         .padding(.horizontal, 24)
         .background(workoutPosterCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-    }
-
-    private func emptyStateContent(contentWidth: CGFloat = 264) -> some View {
-        VStack(alignment: .leading, spacing: 26) {
-            HStack(alignment: .top, spacing: 12) {
-                Text(String(localized: "workout.empty.title"))
-                    .font(Theme.itim(size: 36))
-                    .foregroundStyle(Theme.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.72)
-
-                Spacer(minLength: 0)
-                workoutSaveButton { saveEmptyStateCard() }
-            }
-
-            Text(String(localized: "workout.empty.body"))
-                .font(Theme.itim(size: 18))
-                .foregroundStyle(workoutPosterMuted)
-                .lineSpacing(5)
-                .fixedSize(horizontal: false, vertical: true)
-
-            workoutParkArt()
-
-            workoutStatsStrip(totalMinutes: 0, weeklyCount: 0)
-        }
-        .frame(maxWidth: contentWidth)
     }
 
     private var activityOnlySection: some View {
@@ -321,15 +302,6 @@ struct WorkoutDashboardView: View {
     }
 
     @MainActor
-    private func saveEmptyStateCard() {
-        guard let image = renderEmptyStateCardImage() else {
-            saveFeedbackMessage = String(localized: "workout.share.save_failed")
-            return
-        }
-        saveImageToPhotoLibrary(image)
-    }
-
-    @MainActor
     private func saveImageToPhotoLibrary(_ image: UIImage) {
         PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
             DispatchQueue.main.async {
@@ -358,17 +330,6 @@ struct WorkoutDashboardView: View {
     private func renderActivityOnlyCardImage() -> UIImage? {
         let content = activityOnlyShareContent()
             .frame(width: 313, alignment: .leading)
-            .padding(Theme.cardPadding)
-            .background(workoutPosterCardBackground)
-
-        let renderer = ImageRenderer(content: content)
-        renderer.scale = 3
-        return renderer.uiImage
-    }
-
-    private func renderEmptyStateCardImage() -> UIImage? {
-        let content = emptyStateContent(contentWidth: 343)
-            .frame(width: 343, alignment: .leading)
             .padding(Theme.cardPadding)
             .background(workoutPosterCardBackground)
 
@@ -570,13 +531,6 @@ struct WorkoutDashboardView: View {
 
     private func workoutPosterArt(for kind: WorkoutActivityKind) -> some View {
         WorkoutPosterArtView(kind: kind, key: nil)
-            .aspectRatio(1, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-            .accessibilityHidden(true)
-    }
-
-    private func workoutParkArt() -> some View {
-        WorkoutPosterArtView(kind: .other, assetName: "WorkoutPosterPark")
             .aspectRatio(1, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
             .accessibilityHidden(true)
@@ -893,6 +847,8 @@ private struct WorkoutPosterArtView: View {
             return "WorkoutPosterBasketball"
         case "hiking":
             return "WorkoutPosterHiking"
+        case "mind_and_body":
+            return "WorkoutPosterMeditation"
         default:
             break
         }
@@ -906,6 +862,10 @@ private struct WorkoutPosterArtView: View {
             return "WorkoutPosterRunning"
         case .ballSports:
             return "WorkoutPosterTennis"
+        case .yoga:
+            return "WorkoutPosterYoga"
+        case .strength:
+            return "WorkoutPosterStrength"
         default:
             return nil
         }

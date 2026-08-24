@@ -183,6 +183,8 @@
 "assistant.header.exercise" = "Exercise";
 "assistant.header.steps" = "Steps";
 "assistant.header.hrv" = "HRV";
+"assistant.header.collapse_a11y" = "Collapse daily snapshot";
+"assistant.header.expand_a11y" = "Expand daily snapshot";
 
 /* Units (formatted health metrics) */
 "unit.duration.hour_minute %lld %lld" = "%1$lldh%2$lldm";
