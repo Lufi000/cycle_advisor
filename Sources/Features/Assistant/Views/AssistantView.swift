@@ -2,15 +2,27 @@ import Combine
 import SwiftUI
 import UIKit
 
+/// 聊天列表滚动偏移量，用于感知用户「向上滑动」的手势方向。
+private struct ChatScrollOffsetKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+}
+
 struct AssistantView: View {
     @Bindable var viewModel: AssistantViewModel
     @Binding var selectedTab: Int
     @AppStorage("displayName") private var displayName = "Lufi"
+    /// 顶部健康 Header 折叠偏好，持久化保存；折叠状态由滚动手势与手动按钮共同控制。
+    @AppStorage("assistant.header.isCollapsed") private var isHeaderCollapsed = false
     private let billing = BillingManager.shared
     @State private var pendingForceScrollToBottom = false
     @State private var timeTick = Date()
     @State private var dismissedLowQuotaWarning = false
     @State private var showingChatHistory = false
+    @State private var lastScrollOffset: CGFloat?
+    @State private var isProgrammaticScrolling = false
 
     /// 剩余免费对话 ≤ 此阈值时给出"快用完"提示。
     private static let lowQuotaWarningThreshold = 2
@@ -18,11 +30,17 @@ struct AssistantView: View {
     /// 新消息发出后延迟显示时间，避免气泡区过于拥挤。
     private static let messageCaptionFadeInDelay: TimeInterval = 180
 
+    private static let chatScrollCoordinateSpace = "assistantChatScroll"
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 // 顶部固定健康 Header
-                PhaseHeaderView(context: viewModel.context, displayName: sanitizedDisplayName)
+                PhaseHeaderView(
+                    context: viewModel.context,
+                    displayName: sanitizedDisplayName,
+                    isCollapsed: $isHeaderCollapsed
+                )
                 lowQuotaWarningBar
 
                 // 首屏不滚动；有对话后才进入聊天滚动列表
@@ -43,9 +61,21 @@ struct AssistantView: View {
                             .padding(.horizontal, 0)
                             .padding(.top, 24)
                             .padding(.bottom, 8)
+                            .background(
+                                GeometryReader { geo in
+                                    Color.clear.preference(
+                                        key: ChatScrollOffsetKey.self,
+                                        value: geo.frame(in: .named(Self.chatScrollCoordinateSpace)).minY
+                                    )
+                                }
+                            )
                         }
                         // 上滑时收起键盘
                         .scrollDismissesKeyboard(.interactively)
+                        .coordinateSpace(name: Self.chatScrollCoordinateSpace)
+                        .onPreferenceChange(ChatScrollOffsetKey.self) { offset in
+                            handleScrollOffset(offset)
+                        }
                         .onAppear {
                             timeTick = Date()
                             DispatchQueue.main.async {
@@ -302,12 +332,28 @@ struct AssistantView: View {
     }
 
     private func scrollToBottom(proxy: ScrollViewProxy, animated: Bool = true) {
+        isProgrammaticScrolling = true
         if animated {
             withAnimation(.easeOut(duration: 0.2)) {
                 proxy.scrollTo("chat-bottom-anchor", anchor: .bottom)
             }
         } else {
             proxy.scrollTo("chat-bottom-anchor", anchor: .bottom)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            isProgrammaticScrolling = false
+        }
+    }
+
+    /// 用户在聊天列表里向上滑动（内容向上移动）时，自动收起顶部健康 Header。
+    private func handleScrollOffset(_ offset: CGFloat) {
+        defer { lastScrollOffset = offset }
+        guard !isProgrammaticScrolling else { return }
+        guard let lastScrollOffset else { return }
+        let delta = offset - lastScrollOffset
+        guard delta < -4, !isHeaderCollapsed else { return }
+        withAnimation(.easeInOut(duration: 0.22)) {
+            isHeaderCollapsed = true
         }
     }
 

@@ -285,6 +285,14 @@ struct HomeView: View {
                     trend: context.healthMetrics.activityTrend,
                     color: Theme.phaseLuteal
                 )
+                healthMetricCard(
+                    metric: .sleep,
+                    icon: "moon.fill",
+                    label: String(localized: "home.health_metrics.sleep"),
+                    value: context.healthMetrics.formattedSleepDuration ?? "--",
+                    trend: context.healthMetrics.sleepTrend,
+                    color: Theme.phaseMenstrual
+                )
             }
         }
         .grainCardStyle(seed: 1)
@@ -331,6 +339,7 @@ private enum HealthMetricKind {
     case daylight
     case exercise
     case steps
+    case sleep
 
     var title: String {
         switch self {
@@ -338,6 +347,7 @@ private enum HealthMetricKind {
         case .daylight: return String(localized: "home.health_metrics.daylight")
         case .exercise: return String(localized: "home.health_metrics.exercise")
         case .steps: return String(localized: "home.health_metrics.steps")
+        case .sleep: return String(localized: "home.health_metrics.sleep")
         }
     }
 
@@ -347,6 +357,7 @@ private enum HealthMetricKind {
         case .daylight: return "sun.max.fill"
         case .exercise: return "figure.run"
         case .steps: return "figure.walk"
+        case .sleep: return "moon.fill"
         }
     }
 
@@ -356,6 +367,7 @@ private enum HealthMetricKind {
         case .daylight: return String(localized: "health.metric.daylight.meaning")
         case .exercise: return String(localized: "health.metric.exercise.meaning")
         case .steps: return String(localized: "health.metric.steps.meaning")
+        case .sleep: return String(localized: "health.metric.sleep.meaning")
         }
     }
 
@@ -365,6 +377,7 @@ private enum HealthMetricKind {
         case .daylight: return String(localized: "health.metric.daylight.source")
         case .exercise: return String(localized: "health.metric.exercise.source")
         case .steps: return String(localized: "health.metric.steps.source")
+        case .sleep: return String(localized: "health.metric.sleep.source")
         }
     }
 }

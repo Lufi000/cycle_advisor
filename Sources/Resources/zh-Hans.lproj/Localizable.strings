@@ -183,6 +183,7 @@
 "assistant.header.exercise" = "锻炼";
 "assistant.header.steps" = "步数";
 "assistant.header.hrv" = "HRV";
+"assistant.header.sleep" = "睡眠";
 "assistant.header.collapse_a11y" = "收起今日概览";
 "assistant.header.expand_a11y" = "展开今日概览";
 
@@ -212,6 +213,7 @@
 "home.health_metrics.daylight" = "日照";
 "home.health_metrics.exercise" = "运动";
 "home.health_metrics.steps" = "步数";
+"home.health_metrics.sleep" = "睡眠";
 "home.health_metrics.refresh_a11y" = "刷新健康数据";
 "health.metric.meaning.title" = "这是什么意思";
 "health.metric.source.title" = "数据来源";
@@ -223,6 +225,8 @@
 "health.metric.exercise.source" = "来自 Apple 健康中的 Exercise Minutes（锻炼分钟）数据，由 Apple Watch、健身记录或兼容 App 写入。";
 "health.metric.steps.meaning" = "步数表示今天累计记录的行走步数，可用于观察日常活动量。它不是运动强度的完整衡量，但适合看趋势。";
 "health.metric.steps.source" = "来自 Apple 健康中的步数数据，由 iPhone、Apple Watch 或兼容设备记录。";
+"health.metric.sleep.meaning" = "睡眠时长表示最近一次睡眠记录中处于睡眠状态的总时间。稳定的睡眠与周期节奏、情绪和恢复密切相关；单晚数据只适合参考，不代表诊断。";
+"health.metric.sleep.source" = "来自 Apple 健康中的睡眠分析（Sleep Analysis）数据，通常由 Apple Watch 或兼容的睡眠监测设备记录。";
 "home.cycle_detail.current_badge" = "当前阶段";
 "home.cycle_detail.duration_format" = "约 %d 天";
 

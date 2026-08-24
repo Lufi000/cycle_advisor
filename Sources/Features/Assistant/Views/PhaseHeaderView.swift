@@ -5,9 +5,7 @@ import SwiftUI
 struct PhaseHeaderView: View {
     let context: CycleContext
     let displayName: String
-
-    /// 折叠偏好持久化，用户选择后下次进入助手页仍然生效。
-    @AppStorage("assistant.header.isCollapsed") private var isCollapsed = false
+    @Binding var isCollapsed: Bool
 
     var body: some View {
         Group {
@@ -63,6 +61,9 @@ struct PhaseHeaderView: View {
                 if let exercise = context.healthMetrics.formattedExerciseDuration {
                     metricChip(label: String(localized: "assistant.header.exercise"), value: exercise)
                 }
+                if let sleep = context.healthMetrics.formattedSleepDuration {
+                    metricChip(label: String(localized: "assistant.header.sleep"), value: sleep)
+                }
             }
 
             if let steps = context.healthMetrics.formattedSteps {
@@ -87,10 +88,9 @@ struct PhaseHeaderView: View {
             }
         } label: {
             HStack(spacing: 8) {
-                Text(context.phase.emoji)
                 Text(displayName)
                     .lineLimit(1)
-                Text(context.phase.displayName)
+                Text(String(localized: "assistant.header.summary_title"))
                     .foregroundStyle(Theme.textSecondary)
                     .lineLimit(1)
                 Spacer(minLength: 8)
@@ -147,5 +147,6 @@ struct PhaseHeaderView: View {
 }
 
 #Preview {
-    PhaseHeaderView(context: MockData.lutealContext, displayName: "Lufi")
+    @Previewable @State var collapsed = false
+    PhaseHeaderView(context: MockData.lutealContext, displayName: "Lufi", isCollapsed: $collapsed)
 }

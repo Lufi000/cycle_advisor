@@ -162,6 +162,22 @@ struct HealthMetrics: Codable, Equatable {
         return "\(hours)小时\(minutes)分钟"
     }
 
+    /// 格式化睡眠时长。首页健康卡与助手页标签统一以本地化文案展示。
+    var formattedSleepDuration: String? {
+        guard let sleepHours else { return nil }
+        if sleepHours <= 0 { return String(localized: "unit.duration.minute_zero") }
+        let totalMinutes = Int((sleepHours * 60.0).rounded())
+        let hours = totalMinutes / 60
+        let minutes = totalMinutes % 60
+        if hours <= 0 {
+            return String(format: String(localized: "unit.duration.minute %lld"), Int64(minutes))
+        }
+        if minutes <= 0 {
+            return String(format: String(localized: "unit.duration.hour %lld"), Int64(hours))
+        }
+        return String(format: String(localized: "unit.duration.hour_minute %lld %lld"), Int64(hours), Int64(minutes))
+    }
+
     /// 格式化饮水量。prompt 使用中文，不经 UI 本地化。
     var formattedWaterIntakeForPrompt: String? {
         guard let waterMilliliters else { return nil }

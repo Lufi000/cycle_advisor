@@ -183,6 +183,7 @@
 "assistant.header.exercise" = "Exercise";
 "assistant.header.steps" = "Steps";
 "assistant.header.hrv" = "HRV";
+"assistant.header.sleep" = "Sleep";
 "assistant.header.collapse_a11y" = "Collapse daily snapshot";
 "assistant.header.expand_a11y" = "Expand daily snapshot";
 
@@ -212,6 +213,7 @@
 "home.health_metrics.daylight" = "Daylight";
 "home.health_metrics.exercise" = "Exercise";
 "home.health_metrics.steps" = "Steps";
+"home.health_metrics.sleep" = "Sleep";
 "home.health_metrics.refresh_a11y" = "Refresh health data";
 "health.metric.meaning.title" = "What it means";
 "health.metric.source.title" = "Data source";
@@ -223,6 +225,8 @@
 "health.metric.exercise.source" = "From Exercise Minutes in Apple Health, written by Apple Watch, workouts, or compatible apps.";
 "health.metric.steps.meaning" = "Steps are the total walking steps recorded today. They are useful for everyday activity trends, though they do not fully describe exercise intensity.";
 "health.metric.steps.source" = "From Steps in Apple Health, recorded by iPhone, Apple Watch, or compatible devices.";
+"health.metric.sleep.meaning" = "Sleep duration is the total time asleep from your most recent sleep session. Consistent sleep is closely tied to cycle rhythm, mood, and recovery; a single night is only a reference, not a diagnosis.";
+"health.metric.sleep.source" = "From Sleep Analysis in Apple Health, usually recorded by Apple Watch or compatible sleep-tracking devices.";
 "home.cycle_detail.current_badge" = "Current";
 "home.cycle_detail.duration_format" = "~%d days";
 
