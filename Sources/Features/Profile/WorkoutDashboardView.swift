@@ -691,9 +691,14 @@ struct WorkoutDashboardView: View {
             Rectangle()
                 .fill(Theme.textSecondary.opacity(0.20))
                 .frame(width: 2, height: 50)
-                .padding(.horizontal, 28)
+                .padding(.horizontal, 14)
 
-            workoutPosterStat(value: "\(count)", label: String(localized: "workout.metric.workout_count"), isTrailing: true)
+            workoutPosterStat(
+                value: "\(count)",
+                label: String(localized: "workout.metric.workout_count"),
+                isTrailing: true,
+                fixedWidth: 58
+            )
         }
         .padding(.top, 2)
     }
@@ -715,22 +720,39 @@ struct WorkoutDashboardView: View {
         }
     }
 
-    private func workoutPosterStat(value: String, label: String, isTrailing: Bool) -> some View {
+    @ViewBuilder
+    private func workoutPosterStat(
+        value: String,
+        label: String,
+        isTrailing: Bool,
+        fixedWidth: CGFloat? = nil
+    ) -> some View {
         let horizontalAlignment: HorizontalAlignment = isTrailing ? .trailing : .leading
         let frameAlignment: Alignment = isTrailing ? .trailing : .leading
-        return VStack(alignment: horizontalAlignment, spacing: 3) {
-            Text(value)
-                .font(Theme.itim(size: 34))
-                .foregroundStyle(Theme.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.72)
+        let content = VStack(alignment: horizontalAlignment, spacing: 3) {
+            ViewThatFits(in: .horizontal) {
+                Text(value)
+                    .font(Theme.itim(size: 34))
+                    .lineLimit(1)
+                Text(value)
+                    .font(Theme.itim(size: 28))
+                    .lineLimit(1)
+                Text(value)
+                    .font(Theme.itim(size: 22))
+                    .lineLimit(1)
+            }
+            .foregroundStyle(Theme.textPrimary)
             Text(label)
                 .font(Theme.itim(size: 14))
                 .foregroundStyle(Theme.textSecondary.opacity(0.62))
                 .lineLimit(2)
                 .minimumScaleFactor(0.85)
         }
-        .frame(maxWidth: .infinity, alignment: frameAlignment)
+        if let fixedWidth {
+            content.frame(width: fixedWidth, alignment: frameAlignment)
+        } else {
+            content.frame(maxWidth: .infinity, alignment: frameAlignment)
+        }
     }
 
     private func workoutCategoryRows(activities: [WorkoutStats.WorkoutActivity], totalMinutes: Double) -> some View {
@@ -783,16 +805,23 @@ struct WorkoutDashboardView: View {
                     .padding(.top, 5)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(formatDurationCompact(minutes))
-                            .font(Theme.itim(size: 20))
-                            .foregroundStyle(Theme.textPrimary)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.78)
+                        ViewThatFits(in: .horizontal) {
+                            Text(formatDurationCompact(minutes))
+                                .font(Theme.itim(size: 20))
+                                .lineLimit(1)
+                            Text(formatDurationCompact(minutes))
+                                .font(Theme.itim(size: 17))
+                                .lineLimit(1)
+                            Text(formatDurationCompact(minutes))
+                                .font(Theme.itim(size: 14))
+                                .lineLimit(1)
+                        }
+                        .foregroundStyle(Theme.textPrimary)
                         Text(String(localized: "workout.category.total"))
                             .font(Theme.itim(size: 14))
                             .foregroundStyle(Theme.textSecondary.opacity(0.55))
                     }
-                    .frame(width: 66, alignment: .leading)
+                    .frame(width: 92, alignment: .leading)
                 }
             }
         }
@@ -922,7 +951,7 @@ struct WorkoutDashboardView: View {
         let hours = roundedMinutes / 60
         let mins = roundedMinutes % 60
         if hours > 0, mins > 0 {
-            return "\(hours)h\(mins)min"
+            return "\(hours)h \(mins)min"
         }
         if hours > 0 {
             return "\(hours)h"
