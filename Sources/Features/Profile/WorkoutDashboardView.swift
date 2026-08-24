@@ -54,7 +54,7 @@ struct WorkoutDashboardView: View {
                             }
                         }
                         .padding(.horizontal, 16)
-                        .padding(.top, 12)
+                        .padding(.top, hasWorkoutData ? 12 : 24)
                         .padding(.bottom, 20)
                     }
                 }
@@ -148,10 +148,11 @@ struct WorkoutDashboardView: View {
             daysBack = 363
         }
         let start = calendar.date(byAdding: .day, value: -daysBack, to: now) ?? now
-        return "\(shortDate(start)) – \(shortDate(now))"
+        let includeYear = period == .year
+        return "\(shortDate(start, includeYear: includeYear)) – \(shortDate(now, includeYear: includeYear))"
     }
 
-    private func shortDate(_ date: Date) -> String {
+    private func shortDate(_ date: Date, includeYear: Bool = false) -> String {
         let formatter = DateFormatter()
         switch LanguageManager.shared.current {
         case .english:
@@ -161,7 +162,7 @@ struct WorkoutDashboardView: View {
         case .system:
             formatter.locale = .current
         }
-        formatter.setLocalizedDateFormatFromTemplate("MMMd")
+        formatter.setLocalizedDateFormatFromTemplate(includeYear ? "yMMMd" : "MMMd")
         return formatter.string(from: date)
     }
 
@@ -299,11 +300,7 @@ struct WorkoutDashboardView: View {
         return VStack(alignment: .leading, spacing: 26) {
             VStack(alignment: .leading, spacing: 20) {
                 HStack(alignment: .top, spacing: 12) {
-                    Text(
-                        showsActivityMetrics
-                            ? activityOnlyTitle
-                            : periodTitle(for: featuredActivity, count: count, minutes: totalMinutes)
-                    )
+                    Text(periodTitle(for: featuredActivity, count: count, minutes: totalMinutes))
                         .font(Theme.itim(size: 36))
                         .foregroundStyle(workoutPosterInk)
                         .lineLimit(2)
@@ -315,15 +312,8 @@ struct WorkoutDashboardView: View {
                     }
                 }
 
-                if showsActivityMetrics {
-                    Text(activityOnlySummary)
-                        .font(Theme.itim(size: 18))
-                        .foregroundStyle(workoutPosterMuted)
-                        .lineSpacing(5)
-                } else {
-                    periodSummaryText(for: featuredActivity, count: count, period: period)
-                        .frame(maxWidth: contentWidth, alignment: .leading)
-                }
+                periodSummaryText(for: featuredActivity, count: count, period: period)
+                    .frame(maxWidth: contentWidth, alignment: .leading)
             }
 
             if displayActivities.isEmpty {
@@ -434,29 +424,6 @@ struct WorkoutDashboardView: View {
     /// 与屏幕上运动卡片一致的可视宽度：ScrollView 左右各 16pt 内边距。
     private var exportedCardWidth: CGFloat {
         max(0, UIScreen.main.bounds.width - 32)
-    }
-
-    private var activityOnlyTitle: String {
-        if let exercise = healthMetrics.exerciseMinutes, exercise >= 30 {
-            return String(localized: "workout.activity_only.title.active")
-        }
-        if let steps = healthMetrics.steps, steps >= 6000 {
-            return String(localized: "workout.activity_only.title.walker")
-        }
-        return String(localized: "workout.activity_only.title.light")
-    }
-
-    private var activityOnlySummary: String {
-        switch context.phase {
-        case .menstrual:
-            return String(localized: "workout.activity_only.summary.menstrual")
-        case .follicular:
-            return String(localized: "workout.activity_only.summary.follicular")
-        case .ovulation:
-            return String(localized: "workout.activity_only.summary.ovulation")
-        case .luteal:
-            return String(localized: "workout.activity_only.summary.luteal")
-        }
     }
 
     private func periodTitle(for activity: WorkoutStats.WorkoutActivity?, count: Int, minutes: Double) -> String {

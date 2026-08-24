@@ -14,14 +14,6 @@
 "workout.empty.suggestion.breathe" = "Breathe & Meditate";
 "workout.empty.suggestion.walk" = "Park Walk";
 "workout.empty.suggestion.stretch" = "Gentle Stretch";
-"workout.activity_only.section" = "Today’s Activity Rhythm";
-"workout.activity_only.title.active" = "Energy Is Rising";
-"workout.activity_only.title.walker" = "Walking Stamina Keeper";
-"workout.activity_only.title.light" = "Light Movement Mode";
-"workout.activity_only.summary.menstrual" = "There are already small traces of movement today. Keeping it gentle counts.";
-"workout.activity_only.summary.follicular" = "Your activity rhythm is starting to open up today.";
-"workout.activity_only.summary.ovulation" = "Your body has a little outward-moving energy today.";
-"workout.activity_only.summary.luteal" = "Keep today’s movement comfortable and easy.";
 "workout.metric.exercise_minutes" = "Exercise Min";
 "workout.metric.steps" = "Steps";
 "workout.metric.active_calories" = "Active Calories";
@@ -40,7 +32,7 @@
 "workout.share.saved" = "Saved to your photo library.";
 "workout.share.save_failed" = "Saving failed. Please try again.";
 "workout.share.photo_access_denied" = "Photo access is off. Enable it in Settings to save the card.";
-"workout.title.recovery" = "Recovery Mode";
+"workout.title.recovery" = "Rest is part of the rhythm";
 "workout.title.activity_ace_format" = "%@ Ace";
 "workout.title.climbing" = "Wall Puzzle Solver";
 "workout.title.walking" = "Walking Stamina Keeper";
@@ -64,9 +56,9 @@
 "workout.title.light_activity" = "Light Movement";
 "workout.title.rhythm_building" = "Rhythm Building";
 "workout.title.steady_rhythm" = "Steady Movement Rhythm";
-"workout.summary.no_workouts" = "No workout records yet this week. Your body rhythm is just beginning to unfold; an easy walk or stretch is a good place to start.";
-"workout.summary.no_workouts_month" = "No workout records yet this month. Your body rhythm is just beginning to unfold; an easy walk or stretch is a good place to start.";
-"workout.summary.no_workouts_year" = "No workout records yet this year. Your body rhythm is just beginning to unfold; an easy walk or stretch is a good place to start.";
+"workout.summary.no_workouts" = "No workout records yet — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
+"workout.summary.no_workouts_month" = "No workout records yet this month — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
+"workout.summary.no_workouts_year" = "No workout records yet this year — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
 "workout.summary.no_activity_type" = "This week, you’ve started writing rhythm with your body. Every workout is a small practice in realigning attention, energy, and yourself.";
 "workout.category.count_format" = "%d x";
 "workout.category.total" = "Total";

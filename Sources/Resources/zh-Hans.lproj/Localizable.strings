@@ -14,14 +14,6 @@
 "workout.empty.suggestion.breathe" = "呼吸冥想";
 "workout.empty.suggestion.walk" = "公园散步";
 "workout.empty.suggestion.stretch" = "拉伸放松";
-"workout.activity_only.section" = "今天的活动节奏";
-"workout.activity_only.title.active" = "活力上扬中";
-"workout.activity_only.title.walker" = "散步续航家";
-"workout.activity_only.title.light" = "轻活动进行中";
-"workout.activity_only.summary.menstrual" = "今天已经有一点活动痕迹，轻一点也很好。";
-"workout.activity_only.summary.follicular" = "今天的活动节奏正在慢慢打开。";
-"workout.activity_only.summary.ovulation" = "今天的身体有一些向外活动的能量。";
-"workout.activity_only.summary.luteal" = "今天先保持舒服的活动节奏就好。";
 "workout.metric.exercise_minutes" = "运动分钟";
 "workout.metric.steps" = "步数";
 "workout.metric.active_calories" = "活动热量";
@@ -40,7 +32,7 @@
 "workout.share.saved" = "已保存到你的相册。";
 "workout.share.save_failed" = "保存失败，请重试。";
 "workout.share.photo_access_denied" = "相册权限未开启，请在设置中允许访问相册后再保存。";
-"workout.title.recovery" = "恢复模式进行中";
+"workout.title.recovery" = "休息，也是节奏的一部分";
 "workout.title.activity_ace_format" = "%@小能手";
 "workout.title.climbing" = "岩壁解谜家";
 "workout.title.walking" = "散步续航家";
@@ -64,9 +56,9 @@
 "workout.title.light_activity" = "轻量活动中";
 "workout.title.rhythm_building" = "节奏正在建立";
 "workout.title.steady_rhythm" = "运动节奏稳定";
-"workout.summary.no_workouts" = "这周到目前为止还没有运动记录。身体节奏刚开始展开，可以从散步或拉伸这样轻松的活动开始。";
-"workout.summary.no_workouts_month" = "本月到目前为止还没有运动记录。身体节奏刚开始展开，可以从散步或拉伸这样轻松的活动开始。";
-"workout.summary.no_workouts_year" = "今年到目前为止还没有运动记录。身体节奏刚开始展开，可以从散步或拉伸这样轻松的活动开始。";
+"workout.summary.no_workouts" = "这周还没有运动记录，没关系。去公园坐一坐、深呼吸，或者慢慢走一圈——轻一点开始，也很好。";
+"workout.summary.no_workouts_month" = "本月还没有运动记录，没关系。去公园坐一坐、深呼吸，或者慢慢走一圈——轻一点开始，也很好。";
+"workout.summary.no_workouts_year" = "今年还没有运动记录，没关系。去公园坐一坐、深呼吸，或者慢慢走一圈——轻一点开始，也很好。";
 "workout.summary.no_activity_type" = "这周的你已经开始用身体写下节奏。每一次运动，都是一次把注意力、能量和自己重新对齐的小型练习。";
 "workout.category.count_format" = "%d 次";
 "workout.category.total" = "总计";
