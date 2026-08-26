@@ -96,7 +96,7 @@
 "settings.section.language" = "Language";
 "settings.section.medical_sources" = "Medical Sources";
 "settings.profile.display_name" = "Display name";
-"settings.profile.display_name.hint" = "Shown in the greeting on your home screen.";
+"settings.profile.display_name.hint" = "Shown in greetings; leave empty to omit your name.";
 "onboarding.display_name.title" = "What should I call you?";
 "onboarding.display_name.subtitle" = "This name is only used for greetings inside the app.";
 "onboarding.display_name.skip" = "Maybe later";
@@ -187,6 +187,10 @@
 "assistant.intro.body" = "Ask questions about your cycle, lifestyle, and wellness — I’ll give suggestions based on your current phase.";
 "assistant.greeting %@ %@ %lld %@" = "Hi, %1$@. It’s good to see you. You’re on %2$@ day %3$lld %4$@\nLet’s take it gently and care for today’s body first.";
 "assistant.greeting.predicted %@ %@ %lld %@" = "Hi, %1$@. It’s good to see you. You’re estimated to be on %2$@ day %3$lld %4$@\nLet’s take it gently and care for today’s body first.";
+"assistant.greeting.no_name %@ %lld %@" = "It’s good to see you. You’re on %1$@ day %2$lld %3$@\nLet’s take it gently and care for today’s body first.";
+"assistant.greeting.predicted.no_name %@ %lld %@" = "It’s good to see you. You’re estimated to be on %1$@ day %2$lld %3$@\nLet’s take it gently and care for today’s body first.";
+"assistant.greeting.bubble %@" = "Hi, %@! It’s good to see you.";
+"assistant.greeting.bubble.no_name" = "Hi! It’s good to see you.";
 "assistant.suggested_questions_label" = "You might want to ask:";
 "assistant.followup_label" = "You can also ask:";
 "assistant.thinking.in_progress" = "Thinking…";
@@ -208,6 +212,7 @@
 "assistant.header.day_format %@ %lld" = "%1$@ · Day %2$lld";
 "assistant.header.summary_title" = "Daily snapshot";
 "assistant.header.exercise" = "Exercise";
+"assistant.header.daylight" = "Sunlight";
 "assistant.header.steps" = "Steps";
 "assistant.header.hrv" = "HRV";
 "assistant.header.sleep" = "Sleep";
@@ -232,6 +237,7 @@
 /* Home */
 "home.navigation.title" = "Bloom";
 "home.greeting %@" = "Hello, %@";
+"home.greeting.no_name" = "Hello";
 "home.cycle_stage.current" = "Current phase";
 "home.cycle_stage.explore" = "Phase guide";
 "home.cycle_stage.a11y %lld %@" = "Cycle day %1$lld, %2$@";

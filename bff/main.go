@@ -8,6 +8,9 @@ import (
 	"strings"
 )
 
+// version is stamped at build time via -ldflags "-X main.version=<commit>" (see deploy.sh).
+var version = "dev"
+
 func main() {
 	apiKey := os.Getenv("DEEPSEEK_API_KEY")
 	if apiKey == "" {
@@ -42,8 +45,9 @@ func main() {
 	for _, l := range tokens {
 		labels = append(labels, l)
 	}
-	log.Printf("BFF proxy listening on %s (apps: %s, allow_unauthenticated=%t, unauth_rate_per_minute=%d)",
+	log.Printf("BFF proxy listening on %s (version=%s, apps: %s, allow_unauthenticated=%t, unauth_rate_per_minute=%d)",
 		addr,
+		version,
 		strings.Join(labels, ", "),
 		proxy.AllowUnauthenticated,
 		proxy.UnauthRatePerMinute,

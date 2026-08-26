@@ -96,7 +96,7 @@
 "settings.section.language" = "语言";
 "settings.section.medical_sources" = "医学信息来源";
 "settings.profile.display_name" = "昵称";
-"settings.profile.display_name.hint" = "会显示在首页问候语中。";
+"settings.profile.display_name.hint" = "会显示在问候语中；留空则不显示名字。";
 "onboarding.display_name.title" = "想让我怎么称呼你？";
 "onboarding.display_name.subtitle" = "这个名字只会用于应用里的问候语。";
 "onboarding.display_name.skip" = "稍后再说";
@@ -187,6 +187,10 @@
 "assistant.intro.body" = "针对你的周期、生活方式和养生问题随时提问，我会根据当前阶段给出建议。";
 "assistant.greeting %@ %@ %lld %@" = "%1$@，见到你真好。现在是%2$@第 %3$lld 天 %4$@\n我们可以慢慢来，先照顾好今天的身体。";
 "assistant.greeting.predicted %@ %@ %lld %@" = "%1$@，见到你真好。预计现在是%2$@第 %3$lld 天 %4$@\n我们可以慢慢来，先照顾好今天的身体。";
+"assistant.greeting.no_name %@ %lld %@" = "见到你真好。现在是%1$@第 %2$lld 天 %3$@\n我们可以慢慢来，先照顾好今天的身体。";
+"assistant.greeting.predicted.no_name %@ %lld %@" = "见到你真好。预计现在是%1$@第 %2$lld 天 %3$@\n我们可以慢慢来，先照顾好今天的身体。";
+"assistant.greeting.bubble %@" = "Hi %@！见到你真好。";
+"assistant.greeting.bubble.no_name" = "Hi！见到你真好。";
 "assistant.suggested_questions_label" = "你可能想问：";
 "assistant.followup_label" = "还可以问问：";
 "assistant.thinking.in_progress" = "思考中…";
@@ -208,6 +212,7 @@
 "assistant.header.day_format %@ %lld" = "%1$@ · 第%2$lld天";
 "assistant.header.summary_title" = "今日概览";
 "assistant.header.exercise" = "锻炼";
+"assistant.header.daylight" = "日照";
 "assistant.header.steps" = "步数";
 "assistant.header.hrv" = "HRV";
 "assistant.header.sleep" = "睡眠";
@@ -232,6 +237,7 @@
 /* Home */
 "home.navigation.title" = "小花园";
 "home.greeting %@" = "Hello, %@";
+"home.greeting.no_name" = "Hello";
 "home.cycle_stage.current" = "当前阶段";
 "home.cycle_stage.explore" = "阶段浏览";
 "home.cycle_stage.a11y %lld %@" = "周期第 %1$lld 天，%2$@";

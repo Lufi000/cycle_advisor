@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage("displayName") private var displayName = "Lufi"
+    @AppStorage("displayName") private var displayName = ""
     @AppStorage("thinkingMode") private var thinkingModeRaw: String = ThinkingMode.fast.rawValue
     private let languageManager = LanguageManager.shared
 

@@ -555,6 +555,17 @@ actor LLMService {
             lines.append(exLine)
         }
 
+        if let todayWorkouts = m.todayWorkouts, !todayWorkouts.isEmpty {
+            let desc = todayWorkouts.map { activity -> String in
+                if let duration = activity.totalDurationMinutes, duration > 0 {
+                    return "\(activity.name) \(Self.formatWorkoutDuration(duration))"
+                }
+                return activity.name
+            }
+            .joined(separator: "、")
+            lines.append("今日具体运动：\(desc)（来自 HealthKit 运动记录；与 Apple 健身圆环锻炼分钟口径不同）")
+        }
+
         if let sleep = m.formattedSleepDurationForPrompt {
             var sleepLine = "最近一次睡眠：\(sleep)"
             if let trend = m.sleepTrend { sleepLine += " 趋势\(trend.symbol)" }
@@ -605,7 +616,7 @@ actor LLMService {
             if currentSymptoms.isEmpty, !cycleSymptoms.isEmpty {
                 let desc = cycleSymptoms.map { "\($0.type.displayName)(\($0.severity.displayName)，\(Self.relativeDayLabel(for: $0.date, now: now)))" }
                     .joined(separator: "、")
-                lines.append("本周期曾记录症状（非当前症状，回答时不要说成现在有）：\(desc)")
+                lines.append("本周期曾记录症状（历史记录，仅作周期回顾参考；非当前症状，回答时必须带「当时/过去」时间表述，不要说成现在有）：\(desc)")
             }
         }
 
@@ -717,8 +728,10 @@ actor LLMService {
         - 提供可操作的生活方式建议，含具体做法/份量/时间
         - 禁用「治疗」「诊断」「医嘱」等医疗措辞，不做医学因果断定
         - 若摘要中注明上午或活动数据仍在累积：不得因今日步数/消耗暂时偏低而批评用户；避免「活动太少」「不够」等施压表述
-        - 若用户状态包含「当前症状（最近48小时）」：回答时充分考虑用户当前的经期症状和出血量，针对性地提供缓解建议，语气要更加温柔体贴
+        - 若用户状态包含「当前症状（最近48小时）」：当用户问题与该症状相关时，回答要充分考虑用户当前的经期症状和出血量，针对性地提供缓解建议，语气要更加温柔体贴
+        - 症状默认不主动提起：用户没提到的话题相关症状（如腰痛、头痛等），除非用户当前问题与之直接相关（主动提到该症状、问运动强度是否合适、问近期身体状态等），否则不要把症状写进回答；症状只作为内部背景来调整语气和建议，不要罗列
         - 若只出现「本周期曾记录症状」或「历史高频症状」：只能作为历史参考，不要说成用户现在有这些症状
+        - 时间口径必须严格按数据标注表述（今日 / 最近48小时 / 过去7天 / 近30天 / 本周期 / 历史）：只有标注「当前/今日/最近48小时」的数据才算现在的事实；「过去7天」「近30天」「本周期曾记录」「历史」等一律是过去参考，引用时必须带上明确时间范围（如「上周」「近一个月」），严禁把过去的数据说成今天或当前状态
         - 若提供了「用户个人画像」：回答应结合用户的身体数据、运动偏好、历史周期规律等个人化信息
         - 遇到诊断/疾病相关问题：先一句话直接说明需要医生判断，再简短提供生活层面可参考的内容
         - 输出纯文本，可用加粗和换行，不输出 JSON 或 markdown 代码块
@@ -842,6 +855,9 @@ actor LLMService {
         }
 
         // 高频症状：历史参考，不能描述成当前症状
+        let historyWindowLabel = stats.cyclesRecorded > 0
+            ? "（近 \(stats.cyclesRecorded) 个周期记录；历史参考，非当前状态）"
+            : "（历史参考，非当前状态，不代表现在有）"
         for phase in CyclePhase.allCases {
             let top = stats.topSymptoms(for: phase, limit: 3)
             if !top.isEmpty {
@@ -849,12 +865,13 @@ actor LLMService {
                     let name = SymptomEntry.SymptomType(rawValue: item.symptom)?.displayName ?? item.symptom
                     return "\(name)(\(item.count)次)"
                 }.joined(separator: "、")
-                lines.append("历史\(phase.displayName)高频症状（非当前状态）：\(desc)")
+                lines.append("历史\(phase.displayName)高频症状\(historyWindowLabel)：\(desc)")
             }
         }
 
         // 运动统计
         let workouts = profile.workoutStats
+        let weekRange = Self.rollingDateRangeLabel(daysBack: 7)
         if let weeklyCount = workouts.weeklyWorkoutCount {
             if weeklyCount > 0 {
                 let activities = (workouts.weeklyActivities ?? [])
@@ -867,14 +884,14 @@ actor LLMService {
                     .joined(separator: "、")
                 let total = workouts.weeklyTotalDurationMinutes.map { "，总时长\(Self.formatWorkoutDuration($0))" } ?? ""
                 let desc = activities.isEmpty ? "\(weeklyCount) 次" : activities
-                lines.append("过去7天运动：\(desc)\(total)")
+                lines.append("过去7天（\(weekRange)）运动：\(desc)\(total)")
             } else {
-                lines.append("过去7天运动：暂无 HealthKit 运动记录")
+                lines.append("过去7天（\(weekRange)）运动：暂无 HealthKit 运动记录")
             }
         }
         if !workouts.topActivities.isEmpty {
             let activities = workouts.topActivities.map { "\($0.name) \($0.count)次" }.joined(separator: "、")
-            lines.append("近30天运动基线：\(activities)，每周约 \(String(format: "%.1f", workouts.weeklyFrequency)) 次，平均每次 \(String(format: "%.0f", workouts.avgDurationMinutes)) 分钟")
+            lines.append("近30天（\(Self.rollingDateRangeLabel(daysBack: 30))）运动基线：\(activities)，每周约 \(String(format: "%.1f", workouts.weeklyFrequency)) 次，平均每次 \(String(format: "%.0f", workouts.avgDurationMinutes)) 分钟")
         }
 
         // AI 提取的生活方式
@@ -922,6 +939,16 @@ actor LLMService {
         default:
             return "\(days)天前"
         }
+    }
+
+    /// 滚动时间窗的日期范围标签，例如「8月19日—8月26日」，用于让模型明确区分时间口径。
+    nonisolated private static func rollingDateRangeLabel(daysBack: Int, now: Date = Date()) -> String {
+        let calendar = Calendar.current
+        guard let start = calendar.date(byAdding: .day, value: -daysBack, to: now) else { return "" }
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "M月d日"
+        return "\(formatter.string(from: start))—\(formatter.string(from: now))"
     }
 
     /// 提示 AI 主动询问缺失的档案字段

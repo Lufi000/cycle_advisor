@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
     private var profileManager = UserProfileManager.shared
-    @AppStorage("displayName") private var displayName = "Lufi"
+    @AppStorage("displayName") private var displayName = ""
     @State private var showResetAlert = false
 
     private var profile: UserProfile { profileManager.profile }

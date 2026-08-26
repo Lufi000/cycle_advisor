@@ -29,7 +29,7 @@ private extension View {
 struct AssistantView: View {
     @Bindable var viewModel: AssistantViewModel
     @Binding var selectedTab: Int
-    @AppStorage("displayName") private var displayName = "Lufi"
+    @AppStorage("displayName") private var displayName = ""
     /// 顶部健康 Header 折叠偏好，持久化保存；折叠状态由滚动手势与手动按钮共同控制。
     @AppStorage("assistant.header.isCollapsed") private var isHeaderCollapsed = false
     private let billing = BillingManager.shared
@@ -237,7 +237,7 @@ struct AssistantView: View {
 
     @ViewBuilder
     private var greetingBubble: some View {
-        Text("Hi \(sanitizedDisplayName)! It’s good to see you.")
+        Text(greetingBubbleText)
             .font(Theme.itim(size: 24))
             .foregroundStyle(Theme.textPrimary)
             .multilineTextAlignment(.center)
@@ -245,6 +245,14 @@ struct AssistantView: View {
             .minimumScaleFactor(0.72)
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 34)
+    }
+
+    private var greetingBubbleText: String {
+        let name = sanitizedDisplayName
+        if name.isEmpty {
+            return String(localized: "assistant.greeting.bubble.no_name")
+        }
+        return String(format: String(localized: "assistant.greeting.bubble %@"), name)
     }
 
     // MARK: - History
@@ -512,15 +520,26 @@ struct AssistantView: View {
     private func greetingText(for context: CycleContext) -> String {
         let displayName = sanitizedDisplayName
         let phaseName = context.phase.displayName
-        if context.isPredicted {
-            return String(localized: "assistant.greeting.predicted \(displayName) \(phaseName) \(context.dayInPhase) \(context.phase.emoji)")
+        let day = context.dayInPhase
+        let emoji = context.phase.emoji
+        if displayName.isEmpty {
+            return String(
+                format: String(localized: context.isPredicted
+                    ? "assistant.greeting.predicted.no_name %@ %lld %@"
+                    : "assistant.greeting.no_name %@ %lld %@"),
+                phaseName, day, emoji
+            )
         }
-        return String(localized: "assistant.greeting \(displayName) \(phaseName) \(context.dayInPhase) \(context.phase.emoji)")
+        return String(
+            format: String(localized: context.isPredicted
+                ? "assistant.greeting.predicted %@ %@ %lld %@"
+                : "assistant.greeting %@ %@ %lld %@"),
+            displayName, phaseName, day, emoji
+        )
     }
 
     private var sanitizedDisplayName: String {
-        let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? "Lufi" : trimmed
+        DisplayName.sanitized(displayName)
     }
 
     /// 仅当免费对话剩余条数低于阈值时显示，且用户可手动关闭，避免信息常驻顶部。

@@ -3,7 +3,7 @@ import SwiftUI
 struct HomeView: View {
     var viewModel: HomeViewModel
 
-    @AppStorage("displayName") private var displayName = "Lufi"
+    @AppStorage("displayName") private var displayName = ""
     @AppStorage("hasAskedDisplayName") private var hasAskedDisplayName = false
     @State private var isSideMenuOpen = false
     @State private var healthRefreshRotation: Double = 0
@@ -69,8 +69,7 @@ struct HomeView: View {
                     DisplayNameOnboardingView(
                         draftName: $draftDisplayName,
                         onSave: {
-                            let trimmed = draftDisplayName.trimmingCharacters(in: .whitespacesAndNewlines)
-                            displayName = trimmed.isEmpty ? "Lufi" : trimmed
+                            displayName = DisplayName.sanitized(draftDisplayName)
                             hasAskedDisplayName = true
                             isDisplayNameSheetPresented = false
                         },
@@ -161,7 +160,7 @@ struct HomeView: View {
     // MARK: - Cycle Stage Header
 
     private var homeGreetingHeader: some View {
-        Text(String(format: String(localized: "home.greeting %@"), sanitizedDisplayName))
+        Text(homeGreetingTitle)
             .font(Theme.itim(size: 36))
             .foregroundStyle(Theme.textPrimary)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -170,9 +169,16 @@ struct HomeView: View {
             .minimumScaleFactor(0.72)
     }
 
+    private var homeGreetingTitle: String {
+        let name = sanitizedDisplayName
+        if name.isEmpty {
+            return String(localized: "home.greeting.no_name")
+        }
+        return String(format: String(localized: "home.greeting %@"), name)
+    }
+
     private var sanitizedDisplayName: String {
-        let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? "Lufi" : trimmed
+        DisplayName.sanitized(displayName)
     }
 
     private var cycleStageHeader: some View {

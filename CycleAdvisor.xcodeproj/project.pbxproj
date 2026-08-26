@@ -32,6 +32,7 @@
 		A1000031 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000031 /* SubscriptionView.swift */; };
 		A1000032 /* HomeSideMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000032 /* HomeSideMenuPanel.swift */; };
 		A1000040 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000040 /* LanguageManager.swift */; };
+		A1000041 /* DisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000041 /* DisplayName.swift */; };
 		A2000001 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001 /* ChatMessage.swift */; };
 		A2000002 /* AssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000002 /* AssistantViewModel.swift */; };
 		A2000003 /* AssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000003 /* AssistantView.swift */; };
@@ -131,6 +132,7 @@
 		B1000031 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		B1000032 /* HomeSideMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSideMenuPanel.swift; sourceTree = "<group>"; };
 		B1000040 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		B1000041 /* DisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayName.swift; sourceTree = "<group>"; };
 		B2000001 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		B2000002 /* AssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantViewModel.swift; sourceTree = "<group>"; };
 		B2000003 /* AssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantView.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				B1000012 /* GrainOverlay.swift */,
 				B1000015 /* TypingIndicatorView.swift */,
 				B1000040 /* LanguageManager.swift */,
+				B1000041 /* DisplayName.swift */,
 				B2000008 /* MarkdownTextView.swift */,
 			);
 			path = Shared;
@@ -533,6 +536,7 @@
 				A1000030 /* SettingsView.swift in Sources */,
 				A1000031 /* SubscriptionView.swift in Sources */,
 				A1000040 /* LanguageManager.swift in Sources */,
+				A1000041 /* DisplayName.swift in Sources */,
 				A1000032 /* HomeSideMenuPanel.swift in Sources */,
 				A2000001 /* ChatMessage.swift in Sources */,
 				A2000002 /* AssistantViewModel.swift in Sources */,
@@ -627,7 +631,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -652,7 +656,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -786,7 +790,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -814,7 +818,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -833,7 +837,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -853,7 +857,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

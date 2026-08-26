@@ -7,6 +7,8 @@ struct CycleAdvisorApp: App {
 
     init() {
         UserDefaults.standard.register(defaults: ["thinkingMode": ThinkingMode.fast.rawValue])
+        // 一次性迁移：清掉旧版默认昵称「Lufi」，之后用户设置的名字（包括 Lufi）正常保留。
+        DisplayName.migrateLegacyDefaultIfNeeded()
         // 安装 Bundle 子类，使得 String(localized:) / Text("key") 都能跟随应用内语言设置。
         LanguageManager.installRuntimeLocalizationOverride()
     }

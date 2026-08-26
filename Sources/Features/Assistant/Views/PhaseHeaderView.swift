@@ -27,7 +27,9 @@ struct PhaseHeaderView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .center, spacing: 12) {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(displayName)
+                    if !displayName.isEmpty {
+                        Text(displayName)
+                    }
                     Text(String(localized: "assistant.header.summary_title"))
                 }
                 .font(Theme.itim(size: 22))
@@ -51,26 +53,7 @@ struct PhaseHeaderView: View {
                 .accessibilityLabel(String(localized: "assistant.header.collapse_a11y"))
             }
 
-            HStack(spacing: 10) {
-                if let hrv = context.healthMetrics.hrvCurrent {
-                    metricChip(
-                        label: String(localized: "assistant.header.hrv"),
-                        value: String(format: String(localized: "unit.hrv_ms %lld"), Int(hrv))
-                    )
-                }
-                if let exercise = context.healthMetrics.formattedExerciseDuration {
-                    metricChip(label: String(localized: "assistant.header.exercise"), value: exercise)
-                }
-                if let sleep = context.healthMetrics.formattedSleepDuration {
-                    metricChip(label: String(localized: "assistant.header.sleep"), value: sleep)
-                }
-            }
-
-            if let steps = context.healthMetrics.formattedSteps {
-                HStack {
-                    metricChip(label: String(localized: "assistant.header.steps"), value: steps)
-                }
-            }
+            metricsChips
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
@@ -79,7 +62,66 @@ struct PhaseHeaderView: View {
         .transition(.opacity.combined(with: .move(edge: .top)))
     }
 
+    /// 今日具体运动（来自 HealthKit 运动记录），例如「跑步 30分钟 · 瑜伽 45分钟」。
+    /// 最多展示 3 项，超出部分用省略号提示。
+    private var workoutChipValue: String? {
+        guard let workouts = context.healthMetrics.todayWorkouts, !workouts.isEmpty else { return nil }
+        let visible = workouts.prefix(3)
+        let parts = visible.map { activity -> String in
+            guard let minutes = activity.totalDurationMinutes, minutes > 0 else {
+                return activity.name
+            }
+            return "\(activity.name) \(Self.compactWorkoutDuration(minutes))"
+        }
+        var value = parts.joined(separator: " · ")
+        if workouts.count > visible.count {
+            value += "…"
+        }
+        return value
+    }
+
+    /// 把分钟数压缩成适合胶囊标签的时长，如「30分钟」「1小时5分」「1h5m」。
+    private static func compactWorkoutDuration(_ minutes: Double) -> String {
+        let total = max(0, Int(minutes.rounded()))
+        let hours = total / 60
+        let mins = total % 60
+        if hours > 0, mins > 0 {
+            return String(format: String(localized: "unit.duration.hour_minute %lld %lld"), Int64(hours), Int64(mins))
+        }
+        if hours > 0 {
+            return String(format: String(localized: "unit.duration.hour %lld"), Int64(hours))
+        }
+        return String(format: String(localized: "unit.duration.minute %lld"), Int64(mins))
+    }
+
     // MARK: - 折叠态：单行状态条
+
+    /// 今日概览指标胶囊：按屏幕宽度自动换行，避免长文本或窄屏时左右被裁切。
+    private var metricsChips: some View {
+        FlowLayout(spacing: 10) {
+            if let hrv = context.healthMetrics.hrvCurrent {
+                metricChip(
+                    label: String(localized: "assistant.header.hrv"),
+                    value: String(format: String(localized: "unit.hrv_ms %lld"), Int(hrv))
+                )
+            }
+            if let sleep = context.healthMetrics.formattedSleepDuration {
+                metricChip(label: String(localized: "assistant.header.sleep"), value: sleep)
+            }
+            if let daylight = context.healthMetrics.formattedDaylightDuration {
+                metricChip(label: String(localized: "assistant.header.daylight"), value: daylight)
+            }
+            // 锻炼：优先展示今日具体运动（跑步/瑜伽等），无运动记录时退回锻炼分钟数。
+            if let workouts = workoutChipValue {
+                metricChip(label: String(localized: "assistant.header.exercise"), value: workouts)
+            } else if let exercise = context.healthMetrics.formattedExerciseDuration {
+                metricChip(label: String(localized: "assistant.header.exercise"), value: exercise)
+            }
+            if let steps = context.healthMetrics.formattedSteps {
+                metricChip(label: String(localized: "assistant.header.steps"), value: steps)
+            }
+        }
+    }
 
     private var collapsedHeader: some View {
         Button {
@@ -88,8 +130,10 @@ struct PhaseHeaderView: View {
             }
         } label: {
             HStack(spacing: 8) {
-                Text(displayName)
-                    .lineLimit(1)
+                if !displayName.isEmpty {
+                    Text(displayName)
+                        .lineLimit(1)
+                }
                 Text(String(localized: "assistant.header.summary_title"))
                     .foregroundStyle(Theme.textSecondary)
                     .lineLimit(1)

@@ -120,8 +120,10 @@ final class HealthKitManager {
         async let sleep    = fetchSleepMetrics()
         async let water    = fetchWaterIntake()
         async let mindful  = fetchMindfulMinutesWeekly()
+        async let todayWorkouts = fetchTodayWorkouts()
 
-        let (h, restingHR, d, a, s, w, mindfulMinutes) = await (hrv, hr, daylight, activity, sleep, water, mindful)
+        let (h, restingHR, d, a, s, w, mindfulMinutes, workouts) =
+            await (hrv, hr, daylight, activity, sleep, water, mindful, todayWorkouts)
 
         return HealthMetrics(
             hrvCurrent:        h.current,
@@ -132,6 +134,7 @@ final class HealthKitManager {
             daylightTrend:     d.trend,
             exerciseMinutes:   a.exerciseMinutes,
             exerciseTrend:     a.exerciseTrend,
+            todayWorkouts:     workouts,
             sleepHours:        s.hours,
             sleepTrend:        s.trend,
             waterMilliliters:  w,
@@ -140,6 +143,16 @@ final class HealthKitManager {
             steps:             a.steps,
             activityTrend:     a.trend
         )
+    }
+
+    /// 今日运动记录：按运动类型聚合（含次数与总时长），供 AI 助手引用具体运动项目。
+    func fetchTodayWorkouts() async -> [WorkoutStats.WorkoutActivity] {
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfDay = calendar.startOfDay(for: now)
+        let workouts = await fetchWorkouts(start: startOfDay, end: now)
+        guard !workouts.isEmpty else { return [] }
+        return Self.summarizeWorkouts(workouts, includeDuration: true).activities
     }
 
     // MARK: - HRV

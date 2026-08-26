@@ -119,6 +119,9 @@ struct HealthMetrics: Codable, Equatable {
     var exerciseMinutes: Int?
     var exerciseTrend: Trend?
 
+    /// 今日 HealthKit 运动记录（按运动类型聚合，含次数与总时长），供 AI 助手引用具体运动项目
+    var todayWorkouts: [WorkoutStats.WorkoutActivity]? = nil
+
     /// 昨夜/最近一次睡眠总时长（小时），来自 HealthKit Sleep Analysis
     var sleepHours: Double?
     var sleepTrend: Trend?
