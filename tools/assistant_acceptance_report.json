@@ -1,0 +1,72 @@
+{
+  "summary": {
+    "total": 14,
+    "executed": 0,
+    "passed": 0,
+    "failed": 0,
+    "errors": 13,
+    "skipped": 1,
+    "pass_rate": 0.0,
+    "avg_score": 0.0,
+    "generated_at": "2026-08-26T20:17:34"
+  },
+  "results": [
+    {
+      "id": "menstrual_cramps_exercise",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "luteal_snack_vegan_lactose_caffeine",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "menstrual_flow_heavy_question",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "medical_boundary_pcos",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "historical_symptom_not_current",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "no_health_data_honest",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "english_luteal_diet",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "morning_low_steps_no_pressure",
+      "skipped": true,
+      "reason": "当前本地时间 20 点，不满足 hour < 12，跳过"
+    },
+    {
+      "id": "ovulation_exercise_plan",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "followup_quality_luteal_sleep",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "suggested_questions_luteal",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "deep_mode_menstrual_cramps",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "predicted_phase_honest",
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "id": "caffeine_evening_explicit",
+      "error": "HTTP Error 401: Unauthorized"
+    }
+  ]
+}
