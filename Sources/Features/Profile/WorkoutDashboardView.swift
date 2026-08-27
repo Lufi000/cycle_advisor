@@ -75,11 +75,12 @@ struct WorkoutDashboardView: View {
     }
 
     private var emptyState: some View {
-        workoutCardShell(
+        let (count, totalMinutes) = effectiveDayStats(period: selectedPeriod, count: 0, totalMinutes: 0)
+        return workoutCardShell(
             period: selectedPeriod,
             featuredActivity: nil,
-            count: 0,
-            totalMinutes: 0,
+            count: count,
+            totalMinutes: totalMinutes,
             displayActivities: [],
             showsShareButton: true
         )
@@ -138,6 +139,8 @@ struct WorkoutDashboardView: View {
         let now = Date()
         let start: Date
         switch period {
+        case .day:
+            start = calendar.startOfDay(for: now)
         case .week:
             var mondayCalendar = calendar
             mondayCalendar.firstWeekday = 2
@@ -154,6 +157,9 @@ struct WorkoutDashboardView: View {
             start = calendar.date(byAdding: .day, value: -363, to: now) ?? now
         }
         let includeYear = period == .year || period == .recentYear
+        if period == .day {
+            return shortDate(start)
+        }
         return "\(shortDate(start, includeYear: includeYear)) – \(shortDate(now, includeYear: includeYear))"
     }
 
@@ -248,6 +254,13 @@ struct WorkoutDashboardView: View {
         let count: Int
         let totalMinutes: Double
         switch period {
+        case .day:
+            activities = sortedWorkoutActivities(stats.dailyActivities ?? [])
+            (count, totalMinutes) = effectiveDayStats(
+                period: period,
+                count: stats.dailyWorkoutCount ?? 0,
+                totalMinutes: stats.dailyTotalDurationMinutes ?? 0
+            )
         case .week:
             activities = sortedWorkoutActivities(stats.calendarWeekActivities ?? [])
             count = stats.calendarWeekWorkoutCount ?? 0
@@ -276,6 +289,19 @@ struct WorkoutDashboardView: View {
         return (count, totalMinutes, activities, activities.first)
     }
 
+    /// 「日」视图没有命名运动、但今天有 Apple 自动锻炼分钟（爬楼/走路等）时，
+    /// 用锻炼分钟补足今日总运动时长，避免「运动分钟 12」与「今日总运动时长 0」互相矛盾。
+    private func effectiveDayStats(period: WorkoutPeriod, count: Int, totalMinutes: Double) -> (count: Int, totalMinutes: Double) {
+        guard period == .day,
+              count <= 0,
+              totalMinutes <= 0,
+              let exerciseMinutes = healthMetrics.exerciseMinutes,
+              exerciseMinutes > 0 else {
+            return (count, totalMinutes)
+        }
+        return (1, Double(exerciseMinutes))
+    }
+
     /// 运动卡片的统一外壳：与屏幕上展示的尺寸保持一致，导出时也复用同一套布局。
     private func workoutCardShell(
         period: WorkoutPeriod,
@@ -284,7 +310,7 @@ struct WorkoutDashboardView: View {
         totalMinutes: Double,
         displayActivities: [WorkoutStats.WorkoutActivity],
         showsShareButton: Bool = false,
-        contentWidth: CGFloat = 264
+        contentWidth: CGFloat = 340
     ) -> some View {
         VStack {
             workoutCardContent(
@@ -310,7 +336,7 @@ struct WorkoutDashboardView: View {
         totalMinutes: Double,
         displayActivities: [WorkoutStats.WorkoutActivity],
         showsShareButton: Bool = false,
-        contentWidth: CGFloat = 313
+        contentWidth: CGFloat = 340
     ) -> some View {
         let showsActivityMetrics = displayActivities.isEmpty && hasActivityMetrics
         let summaryID = periodSummaryID(period: period, for: featuredActivity, count: count, totalMinutes: totalMinutes)
@@ -335,7 +361,11 @@ struct WorkoutDashboardView: View {
             }
 
             if displayActivities.isEmpty {
-                workoutParkArt()
+                if count > 0 {
+                    workoutLightActivityArt()
+                } else {
+                    workoutParkArt()
+                }
             } else {
                 workoutPosterImage(for: featuredActivity)
             }
@@ -457,6 +487,8 @@ struct WorkoutDashboardView: View {
     ) -> String {
         guard count > 0 else {
             switch period {
+            case .day:
+                return String(localized: "workout.summary.no_workouts_day")
             case .week:
                 return String(localized: "workout.summary.no_workouts")
             case .month:
@@ -472,6 +504,8 @@ struct WorkoutDashboardView: View {
             }
         }
         switch period {
+        case .day:
+            return String(localized: "workout.summary.no_activity_type_day")
         case .week:
             return String(localized: "workout.summary.no_activity_type")
         case .month:
@@ -680,6 +714,14 @@ struct WorkoutDashboardView: View {
             .accessibilityHidden(true)
     }
 
+    /// 今日有自动锻炼分钟但没有命名运动时的散步插画：轻量活动也是节奏的一部分。
+    private func workoutLightActivityArt() -> some View {
+        WorkoutPosterArtView(kind: .walking, assetName: "WorkoutPosterWalk")
+            .aspectRatio(1, contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .accessibilityHidden(true)
+    }
+
     private func workoutStatsStrip(totalMinutes: Double, count: Int, period: WorkoutPeriod) -> some View {
         HStack(spacing: 0) {
             workoutPosterStat(
@@ -705,6 +747,8 @@ struct WorkoutDashboardView: View {
 
     private func totalDurationLabel(for period: WorkoutPeriod) -> String {
         switch period {
+        case .day:
+            return String(localized: "workout.metric.today_total_duration")
         case .week:
             return String(localized: "workout.metric.weekly_total_duration")
         case .month:
@@ -781,7 +825,7 @@ struct WorkoutDashboardView: View {
             VStack(alignment: .leading, spacing: 7) {
                 HStack(alignment: .firstTextBaseline) {
                     Text(activity.name)
-                        .font(Theme.itim(size: 22))
+                        .font(Theme.itim(size: 18))
                         .foregroundStyle(Theme.textPrimary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.78)
@@ -977,6 +1021,7 @@ fileprivate enum WorkoutActivityKind {
 }
 
 fileprivate enum WorkoutPeriod: String, CaseIterable, Identifiable {
+    case day
     case week
     case month
     case year
@@ -988,6 +1033,8 @@ fileprivate enum WorkoutPeriod: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
+        case .day:
+            return String(localized: "workout.period.day")
         case .week:
             return String(localized: "workout.period.week")
         case .month:
@@ -1006,6 +1053,8 @@ fileprivate enum WorkoutPeriod: String, CaseIterable, Identifiable {
     /// AI 摘要文案里使用的周期称谓，如「本周」「本月」「今年」「近一周」。
     var summaryPeriodLabel: String {
         switch self {
+        case .day:
+            return String(localized: "workout.period_label.day")
         case .week:
             return String(localized: "workout.period_label.week")
         case .month:

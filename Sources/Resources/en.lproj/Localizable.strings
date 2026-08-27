@@ -17,6 +17,7 @@
 "workout.metric.exercise_minutes" = "Exercise Min";
 "workout.metric.steps" = "Steps";
 "workout.metric.active_calories" = "Active Calories";
+"workout.metric.today_total_duration" = "Today's movement time";
 "workout.metric.weekly_total_duration" = "Weekly movement time";
 "workout.metric.monthly_total_duration" = "Monthly movement time";
 "workout.metric.yearly_total_duration" = "Yearly movement time";
@@ -24,12 +25,14 @@
 "workout.metric.recent_month_total_duration" = "Last 30 days movement time";
 "workout.metric.recent_year_total_duration" = "Last 365 days movement time";
 "workout.metric.workout_count" = "workouts";
+"workout.period.day" = "Day";
 "workout.period.week" = "Week";
 "workout.period.month" = "Month";
 "workout.period.year" = "Year";
 "workout.period.recent_week" = "Last 7 Days";
 "workout.period.recent_month" = "Last 30 Days";
 "workout.period.recent_year" = "Last 365 Days";
+"workout.period_label.day" = "today";
 "workout.period_label.week" = "this week";
 "workout.period_label.month" = "this month";
 "workout.period_label.year" = "this year";
@@ -65,6 +68,7 @@
 "workout.title.light_activity" = "Light Movement";
 "workout.title.rhythm_building" = "Rhythm Building";
 "workout.title.steady_rhythm" = "Steady Movement Rhythm";
+"workout.summary.no_workouts_day" = "No workout records yet today — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
 "workout.summary.no_workouts" = "No workout records yet — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
 "workout.summary.no_workouts_month" = "No workout records yet this month — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
 "workout.summary.no_workouts_year" = "No workout records yet this year — that's okay. Sit in the park, breathe, or take a slow walk. A gentle start is still a start.";
@@ -77,6 +81,7 @@
 "workout.summary.no_activity_type_recent_week" = "In the last 7 days, you’ve started writing rhythm with your body. Every workout is a small practice in realigning attention, energy, and yourself.";
 "workout.summary.no_activity_type_recent_month" = "In the last 30 days, you’ve started writing rhythm with your body. Every workout is a small practice in realigning attention, energy, and yourself.";
 "workout.summary.no_activity_type_recent_year" = "In the last 365 days, you’ve started writing rhythm with your body. Every workout is a small practice in realigning attention, energy, and yourself.";
+"workout.summary.no_activity_type_day" = "Today, you’ve started writing rhythm with your body. Every workout is a small practice in realigning attention, energy, and yourself.";
 "workout.category.count_format" = "%d x";
 "workout.category.total" = "Total";
 "workout.category.accessibility_format" = "%@, %d times, %@";

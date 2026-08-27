@@ -120,6 +120,12 @@ enum MockData {
             .init(name: "步行", count: 4),
             .init(name: "拉伸", count: 2),
         ],
+        dailyActivities: [
+            .init(name: "攀岩", count: 1, totalDurationMinutes: 90),
+        ],
+        dailyWorkoutCount: 1,
+        dailyTotalDurationMinutes: 90,
+        dailyAvgDurationMinutes: 90,
         weeklyActivities: [
             .init(name: "攀岩", count: 3, totalDurationMinutes: 135),
             .init(name: "步行", count: 2, totalDurationMinutes: 55),
@@ -154,6 +160,12 @@ enum MockData {
             .init(key: "running", name: String(localized: "workout.activity.running"), count: 3),
             .init(key: "walking", name: String(localized: "workout.activity.walking"), count: 2),
         ],
+        dailyActivities: [
+            .init(key: "tennis", name: String(localized: "workout.activity.tennis"), count: 1, totalDurationMinutes: 60),
+        ],
+        dailyWorkoutCount: 1,
+        dailyTotalDurationMinutes: 60,
+        dailyAvgDurationMinutes: 60,
         weeklyActivities: [
             .init(key: "tennis", name: String(localized: "workout.activity.tennis"), count: 3, totalDurationMinutes: 150),
             .init(key: "running", name: String(localized: "workout.activity.running"), count: 1, totalDurationMinutes: 30),

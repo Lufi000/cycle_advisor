@@ -131,6 +131,14 @@ struct AccumulatedCycleStats: Codable, Equatable {
 struct WorkoutStats: Codable, Equatable {
     /// 最近 30 天高频运动类型
     var topActivities: [WorkoutActivity]
+    /// 今日高频运动类型
+    var dailyActivities: [WorkoutActivity]? = nil
+    /// 今日运动次数
+    var dailyWorkoutCount: Int? = nil
+    /// 今日运动总时长（分钟）
+    var dailyTotalDurationMinutes: Double? = nil
+    /// 今日平均每次运动时长（分钟）
+    var dailyAvgDurationMinutes: Double? = nil
     /// 过去 7 天高频运动类型
     var weeklyActivities: [WorkoutActivity]?
     /// 过去 7 天运动次数
@@ -187,6 +195,10 @@ struct WorkoutStats: Codable, Equatable {
 
     static let empty = WorkoutStats(
         topActivities: [],
+        dailyActivities: nil,
+        dailyWorkoutCount: nil,
+        dailyTotalDurationMinutes: nil,
+        dailyAvgDurationMinutes: nil,
         weeklyActivities: nil,
         weeklyWorkoutCount: nil,
         weeklyTotalDurationMinutes: nil,

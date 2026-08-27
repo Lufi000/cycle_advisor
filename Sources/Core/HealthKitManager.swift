@@ -555,6 +555,7 @@ final class HealthKitManager {
         // 自然周期：本周从周一起算，本月从 1 号起算，今年从 1 月 1 日起算。
         var mondayCalendar = calendar
         mondayCalendar.firstWeekday = 2
+        let dayStart = calendar.startOfDay(for: now)
         let calendarWeekStart = mondayCalendar.dateInterval(of: .weekOfYear, for: now)?.start
             ?? calendar.startOfDay(for: now)
         let calendarMonthStart = calendar.dateInterval(of: .month, for: now)?.start
@@ -572,10 +573,12 @@ final class HealthKitManager {
         let weekWorkouts = workouts.filter { $0.startDate >= weekStart }
         let monthWorkouts = workouts.filter { $0.startDate >= monthStart }
         let yearWorkouts = workouts.filter { $0.startDate >= yearStart }
+        let dayWorkouts = workouts.filter { $0.startDate >= dayStart }
         let calendarWeekWorkouts = workouts.filter { $0.startDate >= calendarWeekStart }
         let calendarMonthWorkouts = workouts.filter { $0.startDate >= calendarMonthStart }
         let calendarYearWorkouts = workouts.filter { $0.startDate >= calendarYearStart }
 
+        let daily = Self.summarizeWorkouts(dayWorkouts, includeDuration: true)
         let weekly = Self.summarizeWorkouts(weekWorkouts, includeDuration: true)
         let monthly = Self.summarizeWorkouts(monthWorkouts, includeDuration: true)
         let yearly = Self.summarizeWorkouts(yearWorkouts, includeDuration: true)
@@ -599,6 +602,10 @@ final class HealthKitManager {
 
         return WorkoutStats(
             topActivities: Array(topActivities),
+            dailyActivities: daily.activities,
+            dailyWorkoutCount: daily.count,
+            dailyTotalDurationMinutes: daily.totalDuration / 60.0,
+            dailyAvgDurationMinutes: daily.count > 0 ? daily.totalDuration / Double(daily.count) / 60.0 : nil,
             weeklyActivities: weekly.activities,
             weeklyWorkoutCount: weekly.count,
             weeklyTotalDurationMinutes: weekly.totalDuration / 60.0,
