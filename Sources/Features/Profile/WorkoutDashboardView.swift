@@ -1142,8 +1142,12 @@ private struct WorkoutPosterArtView: View {
             return "WorkoutPosterHiking"
         case "mind_and_body":
             return "WorkoutPosterMeditation"
+        case "barre":
+            return "WorkoutPosterBarre"
         case "surfing_sports":
             return "WorkoutPosterSurfing"
+        case "underwater_diving":
+            return "WorkoutPosterDiving"
         default:
             break
         }
