@@ -21,6 +21,8 @@
 		A100000C /* CyclePhaseEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000C /* CyclePhaseEngineTests.swift */; };
 		A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000016 /* ThinkingModeTokenBudgetTests.swift */; };
 		T5000001 /* ResponseLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T6000001 /* ResponseLanguageTests.swift */; };
+		A7000002 /* WorkoutPosterMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000002 /* WorkoutPosterMapperTests.swift */; };
+		A7000001 /* WorkoutPosterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001 /* WorkoutPosterMapper.swift */; };
 		A100000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1000011 /* Assets.xcassets */; };
 		A100000E /* GrainOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012 /* GrainOverlay.swift */; };
 		A100000F /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
@@ -120,6 +122,8 @@
 		B100000C /* CyclePhaseEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePhaseEngineTests.swift; sourceTree = "<group>"; };
 		B1000016 /* ThinkingModeTokenBudgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingModeTokenBudgetTests.swift; sourceTree = "<group>"; };
 		T6000001 /* ResponseLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseLanguageTests.swift; sourceTree = "<group>"; };
+		B7000002 /* WorkoutPosterMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPosterMapperTests.swift; sourceTree = "<group>"; };
+		B7000001 /* WorkoutPosterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPosterMapper.swift; sourceTree = "<group>"; };
 		B100000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B100000E /* CycleAdvisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisor.entitlements; sourceTree = "<group>"; };
 		B100000F /* CycleAdvisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,6 +292,7 @@
 				B1000015 /* TypingIndicatorView.swift */,
 				B1000041 /* DisplayName.swift */,
 				B2000008 /* MarkdownTextView.swift */,
+				B7000001 /* WorkoutPosterMapper.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 				B3000007 /* SolarTermEngineTests.swift */,
 				B1000016 /* ThinkingModeTokenBudgetTests.swift */,
 				T6000001 /* ResponseLanguageTests.swift */,
+				B7000002 /* WorkoutPosterMapperTests.swift */,
 			);
 			path = CycleAdvisorTests;
 			sourceTree = "<group>";
@@ -568,6 +574,7 @@
 				A6000002 /* UserProfileManager.swift in Sources */,
 				A6000003 /* ProfileView.swift in Sources */,
 				A6000004 /* WorkoutDashboardView.swift in Sources */,
+				A7000001 /* WorkoutPosterMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +586,7 @@
 				A3000007 /* SolarTermEngineTests.swift in Sources */,
 				A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */,
 				T5000001 /* ResponseLanguageTests.swift in Sources */,
+				A7000002 /* WorkoutPosterMapperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
