@@ -22,6 +22,8 @@
 		A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000016 /* ThinkingModeTokenBudgetTests.swift */; };
 		T5000001 /* ResponseLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T6000001 /* ResponseLanguageTests.swift */; };
 		A7000002 /* WorkoutPosterMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000002 /* WorkoutPosterMapperTests.swift */; };
+		A8000002 /* PeriodPredictionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000002 /* PeriodPredictionTests.swift */; };
+		A8000001 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
 		A7000001 /* WorkoutPosterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001 /* WorkoutPosterMapper.swift */; };
 		A100000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1000011 /* Assets.xcassets */; };
 		A100000E /* GrainOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012 /* GrainOverlay.swift */; };
@@ -123,6 +125,8 @@
 		B1000016 /* ThinkingModeTokenBudgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingModeTokenBudgetTests.swift; sourceTree = "<group>"; };
 		T6000001 /* ResponseLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseLanguageTests.swift; sourceTree = "<group>"; };
 		B7000002 /* WorkoutPosterMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPosterMapperTests.swift; sourceTree = "<group>"; };
+		B8000002 /* PeriodPredictionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPredictionTests.swift; sourceTree = "<group>"; };
+		B8000001 /* PeriodPrediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPrediction.swift; sourceTree = "<group>"; };
 		B7000001 /* WorkoutPosterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPosterMapper.swift; sourceTree = "<group>"; };
 		B100000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B100000E /* CycleAdvisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisor.entitlements; sourceTree = "<group>"; };
@@ -250,6 +254,7 @@
 			children = (
 				B1000004 /* CyclePhase.swift */,
 				B5000001 /* MenstrualSymptoms.swift */,
+				B8000001 /* PeriodPrediction.swift */,
 				B1000005 /* ResearchReference.swift */,
 				B3000001 /* SolarTerm.swift */,
 				B1000006 /* Suggestion.swift */,
@@ -305,6 +310,7 @@
 				B1000016 /* ThinkingModeTokenBudgetTests.swift */,
 				T6000001 /* ResponseLanguageTests.swift */,
 				B7000002 /* WorkoutPosterMapperTests.swift */,
+				B8000002 /* PeriodPredictionTests.swift */,
 			);
 			path = CycleAdvisorTests;
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 				A1000002 /* MainTabView.swift in Sources */,
 				A1000003 /* CyclePhaseEngine.swift in Sources */,
 				A1000004 /* CyclePhase.swift in Sources */,
+				A8000001 /* PeriodPrediction.swift in Sources */,
 				A1000005 /* ResearchReference.swift in Sources */,
 				A1000006 /* Suggestion.swift in Sources */,
 				A1000007 /* CycleRingView.swift in Sources */,
@@ -587,6 +594,7 @@
 				A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */,
 				T5000001 /* ResponseLanguageTests.swift in Sources */,
 				A7000002 /* WorkoutPosterMapperTests.swift in Sources */,
+				A8000002 /* PeriodPredictionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
