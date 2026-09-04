@@ -589,3 +589,7 @@
 /* Watch */
 "watch.no_data" = "Registra tu periodo en la app Salud del iPhone para ver predicciones";
 "watch.complication.days_left %lld" = "en %lld días";
+"watch.celebration.title" = "Entrenamiento completado 👏";
+"watch.celebration.body" = "Toca para ver tu recuerdo deportivo";
+"watch.celebration.message" = "Hoy te cuidaste bien";
+"watch.celebration.done" = "Quedármelo";

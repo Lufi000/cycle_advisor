@@ -590,3 +590,7 @@
 /* Watch */
 "watch.no_data" = "在 iPhone 健康 app 记录经期后开始预测";
 "watch.complication.days_left %lld" = "还有 %lld 天";
+"watch.celebration.title" = "运动完成 👏";
+"watch.celebration.body" = "点开看看属于你的运动纪念";
+"watch.celebration.message" = "你今天照顾好了自己";
+"watch.celebration.done" = "收下";

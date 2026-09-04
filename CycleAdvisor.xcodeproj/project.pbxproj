@@ -93,6 +93,8 @@
 		KA000016 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
 		KA000017 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
 		KA000021 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
+		KA000022 /* WatchWorkoutObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000008 /* WatchWorkoutObserver.swift */; };
+		KA000023 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000009 /* CelebrationView.swift */; };
 		KCP00002 /* CycleAdvisorWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = KB000005 /* CycleAdvisorWatch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		MA000001 /* CycleAdvisorComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = MB000001 /* CycleAdvisorComplication.swift */; };
 		MA000010 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
@@ -254,6 +256,8 @@
 		KB000005 /* CycleAdvisorWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisorWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		KB000006 /* WatchCycleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCycleViewModel.swift; sourceTree = "<group>"; };
 		KB000007 /* WatchHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHomeView.swift; sourceTree = "<group>"; };
+		KB000008 /* WatchWorkoutObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutObserver.swift; sourceTree = "<group>"; };
+		KB000009 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		MB000001 /* CycleAdvisorComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorComplication.swift; sourceTree = "<group>"; };
 		MB000002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		MB000003 /* CycleAdvisorWatchComplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisorWatchComplication.entitlements; sourceTree = "<group>"; };
@@ -528,6 +532,8 @@
 				KB000001 /* CycleAdvisorWatchApp.swift */,
 				KB000006 /* WatchCycleViewModel.swift */,
 				KB000007 /* WatchHomeView.swift */,
+				KB000008 /* WatchWorkoutObserver.swift */,
+				KB000009 /* CelebrationView.swift */,
 				KB000003 /* Assets.xcassets */,
 				KB000004 /* CycleAdvisorWatch.entitlements */,
 			);
@@ -809,6 +815,8 @@
 				KA000001 /* CycleAdvisorWatchApp.swift in Sources */,
 				KA000018 /* WatchCycleViewModel.swift in Sources */,
 				KA000019 /* WatchHomeView.swift in Sources */,
+				KA000022 /* WatchWorkoutObserver.swift in Sources */,
+				KA000023 /* CelebrationView.swift in Sources */,
 				KA000010 /* Theme.swift in Sources */,
 				KA000011 /* CyclePhase.swift in Sources */,
 				KA000012 /* PeriodPrediction.swift in Sources */,

@@ -589,3 +589,7 @@
 /* Watch */
 "watch.no_data" = "Log your period in the Health app on iPhone to start predictions";
 "watch.complication.days_left %lld" = "in %lld days";
+"watch.celebration.title" = "Workout complete 👏";
+"watch.celebration.body" = "Tap to see your workout keepsake";
+"watch.celebration.message" = "You took good care of yourself today";
+"watch.celebration.done" = "Keep it";

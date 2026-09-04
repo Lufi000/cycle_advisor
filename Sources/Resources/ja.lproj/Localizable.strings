@@ -589,3 +589,7 @@
 /* Watch */
 "watch.no_data" = "iPhone のヘルスケア app で生理を記録すると予測が始まります";
 "watch.complication.days_left %lld" = "あと %lld 日";
+"watch.celebration.title" = "ワークアウト完了 👏";
+"watch.celebration.body" = "タップして運動の記念を見る";
+"watch.celebration.message" = "今日の自分をいたわりましたね";
+"watch.celebration.done" = "受け取る";

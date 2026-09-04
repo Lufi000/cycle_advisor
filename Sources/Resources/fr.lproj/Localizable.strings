@@ -589,3 +589,7 @@
 /* Watch */
 "watch.no_data" = "Enregistre tes règles dans l'app Santé de l'iPhone pour lancer les prédictions";
 "watch.complication.days_left %lld" = "dans %lld jours";
+"watch.celebration.title" = "Entraînement terminé 👏";
+"watch.celebration.body" = "Touche pour voir ton souvenir sportif";
+"watch.celebration.message" = "Tu as bien pris soin de toi aujourd'hui";
+"watch.celebration.done" = "Garder";
