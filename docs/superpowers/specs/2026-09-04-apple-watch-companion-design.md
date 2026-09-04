@@ -11,13 +11,13 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 本次目标：
 
 1. 新增 watchOS 配套 app：周期速览 + 运动完成插图庆祝。
-2. iPhone 端：主页周期模块内显示月经预测（日期 + 倒计时）；每周/每月最爱运动通知。
+2. iPhone 端：经期预测本地通知（前 2 天 + 当天）；主页周期模块内显示月经预测（日期 + 倒计时）。
 
 核心产品理念：**插图 = 奖励**。运动完成后、周期总结时，给用户对应运动的精美插图，形成正反馈闭环。所有素材（20 张 WorkoutPoster 插图）与"运动类型 → 插图"映射均已存在，本次零新增素材。
 
 ### 明确不做
 
-- 不做 iPhone 端经期预测通知（系统"健康"app 已提供该能力，不重复造）
+- 不做每周/每月最爱运动通知（运动模块 dashboard 已有周/月统计与插图展示，不重复推送）
 - 不做运动打卡/记录系统（记录归 Apple 体能训练）
 - 不做 `HKWorkoutSession`（手表端不发起运动）
 - 不做手表端 AI 聊天、文献引用、设置页
@@ -76,18 +76,17 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 - 与 Watch 速览（§2.1）共用同一套文案 key 与计算逻辑，两端显示一致
 - 视觉遵循现有暖色纸质主题，样式对齐环内现有小字（`Theme.captionSize`、次要色），不抢阶段主信息
 
-### 2.5 iPhone：每周 / 每月最爱运动通知
+### 2.5 iPhone：经期预测通知
 
-- **每周**：每周日 20:00 ——「这周你做得最多的是 瑜伽」+ 该运动插图附件
-- **每月**：每月 1 号 10:00 ——上月最爱运动，同样带插图
-- 数据来源：HealthKit  workouts 统计（与 `WorkoutStats.topActivities` 同一套查询逻辑）
-- 本周/月无运动记录 → 当周/当月不发，不打扰
-- **内容时效**：通知文案在调度时生成。为避免"用户没开 app 导致内容过期"，用 `BGAppRefreshTask` 每日刷新一次通知内容；app 启动时也刷新。最坏情况内容滞后 1 天，可接受
-- 插图走 `UNNotificationAttachment`（JPG/PNG < 1 MB，需为通知导出压缩版，见 §4.3）
+- 两条本地通知：预测经期**前 2 天**（「可以提前准备了」）、**当天**各一条，上午 9:00
+- 预测日期来源：`CyclePhaseEngine.nextPeriodDate(lastPeriodStart:cycleLength:)`（现有）
+- 每次 app 启动且周期数据变化时重算并重排通知；经期实际来临（HealthKit 出现新 menstrualFlow 记录）时取消当天未发的预测通知
+- 预测日期是确定值，通知内容调度时生成即可，不会过期，**不需要后台刷新任务**
+- iPhone 通知自动镜像到配对的手表，无需手表端单独实现
 
 ## 3. 本地化
 
-所有新增文案（Watch UI、庆祝文案、主页预测行、周/月通知）进现有 7 语言 lproj：zh-Hans、zh-Hant、en、ja、ko、es、fr。key 前缀约定：`watch.*`、`home.prediction.*`、`notify.workout.*`。
+所有新增文案（Watch UI、庆祝文案、主页预测行、经期预测通知）进现有 7 语言 lproj：zh-Hans、zh-Hant、en、ja、ko、es、fr。key 前缀约定：`watch.*`、`home.prediction.*`、`notify.period.*`。
 
 ## 4. 技术架构
 
@@ -112,12 +111,11 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 
 - 20 张 PNG 源图在 `~/Desktop/运动配图`，18 张已进 iPhone 的 Assets.xcassets
 - Watch target 复制一份 asset catalog，尺寸按 45mm 表盘 @2x（约 360×450 pt 内）压缩，单张 ≤ 100 KB，总体积 < 1 MB
-- 通知附件版：从同一源导出 ≤ 1 MB JPEG（iPhone 通知用，不打进 Watch target）
 
 ### 4.4 权限与能力
 
 - Watch target：HealthKit capability（读 workout、menstrualFlow）；无网络需求，不加 App Transport 例外
-- iPhone：通知权限（首次启动时请求，拒绝则 §2.5 静默关闭）；Background Modes 增加 App Refresh（供 §2.5 内容刷新）
+- iPhone：通知权限（首次启动时请求，拒绝则 §2.5 静默关闭）
 - 隐私清单 `PrivacyInfo.xcprivacy`：HealthKit 读取与本地通知均为系统能力，无需新增声明条目（实现时按 Apple 当前要求核对一次）
 
 ### 4.5 错误处理
@@ -128,14 +126,13 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 | 预测日期已过但无新经期记录 | 文案切换为「可能推迟了 X 天」，不报警 |
 | 通知权限被拒 | 设置页显示入口状态，不再弹窗 |
 | 插图 asset 缺失 | 兜底 `WorkoutPosterPark`，记日志 |
-| BGAppRefresh 被系统抑制 | 通知内容滞后，接受 |
 
 ## 5. 测试
 
 - **单元测试**（进现有 `CycleAdvisorTests`）：
   - `WorkoutPosterMapper`：覆盖全部映射 case + 兜底
   - 预测日期/倒计时边界：跨月、周期第 1 天、推迟场景
-  - 通知调度逻辑：上周无运动 → 不调度；有运动 → 内容取 topActivity 第一名
+  - 经期预测通知调度：数据变化重排、经期来临取消未发通知、权限拒绝时不调度
   - 去重逻辑：同一 workout UUID 不重复触发庆祝
 - **手动测试清单**（模拟器配对 iPhone + Watch）：
   - 健康 app 里手动录入一条 workout → 手表收到庆祝
@@ -152,16 +149,15 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 | Watch target：速览页 + complication | 3–4 天 |
 | Watch：运动庆祝（observer + 前台/后台两路径） | 3–4 天 |
 | iPhone：主页周期模块预测显示 | 1 天 |
-| iPhone：周/月最爱运动通知（含 BGAppRefresh） | 2 天 |
+| iPhone：经期预测通知 | 1 天 |
 | 7 语言文案 + 插图资产处理 | 1–2 天 |
 | 真机联调 + 修坑 | 2–3 天 |
 
-合计约 **2–2.5 周**。
+合计约 **2 周**（12–17 个工作日）。
 
 ## 7. 里程碑顺序
 
 1. 共享代码抽取（iPhone 行为不变，纯重构，先行合并）
-2. iPhone 主页周期模块预测显示（独立可发）
+2. iPhone 经期预测通知 + 主页周期模块预测显示（独立可发）
 3. Watch target：速览 + complication
 4. Watch：运动完成庆祝
-5. iPhone 周/月通知
