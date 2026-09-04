@@ -11,6 +11,7 @@ final class HealthKitManager {
     private(set) var isAvailable = HKHealthStore.isHealthDataAvailable()
 
     private static let readTypes: Set<HKObjectType> = [
+        HKQuantityType(.appleSleepingWristTemperature),
         HKQuantityType(.heartRateVariabilitySDNN),
         HKQuantityType(.restingHeartRate),
         HKQuantityType(.timeInDaylight),
@@ -32,6 +33,10 @@ final class HealthKitManager {
         HKCategoryType(.moodChanges),
         HKCategoryType(.fatigue),
         HKCategoryType(.appetiteChanges),
+        HKCategoryType(.nausea),
+        HKCategoryType(.vomiting),
+        HKCategoryType(.dizziness),
+        HKCategoryType(.intermenstrualBleeding),
         // Body measurements for profile
         HKQuantityType(.bodyMass),
         HKQuantityType(.height),
@@ -822,6 +827,118 @@ final class HealthKitManager {
         84: ("underwater_diving", "潜水"),
         3000: ("other", "其他运动")
     ]
+
+    // MARK: - Conception Tracking (Wrist Temperature / Vitals / Early Symptoms)
+
+#if os(iOS)
+    /// 最近 daysBack 天的腕温日序列（同日多样本取均值）。样本本身就是摄氏度绝对值。
+    /// 需要 Series 8+/Ultra 佩戴睡眠约 2 周建立基线；数据不足时返回的数组较短，由调用方判定。
+    func fetchWristTemperatureSeries(daysBack: Int = 60) async -> [BasalTemperatureEntry] {
+        let type = HKQuantityType(.appleSleepingWristTemperature)
+        let calendar = Calendar.current
+        let start = calendar.date(byAdding: .day, value: -daysBack, to: Date())!
+        let samples = await fetchQuantitySamples(type: type, start: start, end: Date())
+
+        var byDay: [Date: (sum: Double, count: Int)] = [:]
+        for sample in samples {
+            let day = calendar.startOfDay(for: sample.startDate)
+            let value = sample.quantity.doubleValue(for: .degreeCelsius())
+            var bucket = byDay[day] ?? (0, 0)
+            bucket.sum += value
+            bucket.count += 1
+            byDay[day] = bucket
+        }
+        return byDay.map { day, bucket in
+            BasalTemperatureEntry(
+                date: day,
+                celsius: bucket.sum / Double(bucket.count),
+                disturbances: [],
+                source: .wristTemperature
+            )
+        }.sorted { $0.date < $1.date }
+    }
+
+    /// 最近 daysBack 天的每日生命体征（RHR / HRV 当日均值）
+    func fetchDailyVitals(daysBack: Int = 60) async -> [DailyVitals] {
+        let calendar = Calendar.current
+        let start = calendar.date(byAdding: .day, value: -daysBack, to: Date())!
+        let now = Date()
+
+        async let rhrSamples = fetchQuantitySamples(
+            type: HKQuantityType(.restingHeartRate), start: start, end: now
+        )
+        async let hrvSamples = fetchQuantitySamples(
+            type: HKQuantityType(.heartRateVariabilitySDNN), start: start, end: now
+        )
+        let (rhr, hrv) = await (rhrSamples, hrvSamples)
+
+        let rhrUnit = HKUnit.count().unitDivided(by: .minute())
+        let hrvUnit = HKUnit.secondUnit(with: .milli)
+
+        var rhrByDay: [Date: (sum: Double, count: Int)] = [:]
+        for sample in rhr {
+            let day = calendar.startOfDay(for: sample.startDate)
+            var bucket = rhrByDay[day] ?? (0, 0)
+            bucket.sum += sample.quantity.doubleValue(for: rhrUnit)
+            bucket.count += 1
+            rhrByDay[day] = bucket
+        }
+        var hrvByDay: [Date: (sum: Double, count: Int)] = [:]
+        for sample in hrv {
+            let day = calendar.startOfDay(for: sample.startDate)
+            var bucket = hrvByDay[day] ?? (0, 0)
+            bucket.sum += sample.quantity.doubleValue(for: hrvUnit)
+            bucket.count += 1
+            hrvByDay[day] = bucket
+        }
+
+        let allDays = Set(rhrByDay.keys).union(hrvByDay.keys)
+        return allDays.map { day in
+            DailyVitals(
+                date: day,
+                restingHeartRate: rhrByDay[day].map { $0.sum / Double($0.count) },
+                hrvSDNN: hrvByDay[day].map { $0.sum / Double($0.count) }
+            )
+        }.sorted { $0.date < $1.date }
+    }
+
+    /// 最近 daysBack 天的早孕相关症状（含已有经期症状类型的全量样本）
+    func fetchPregnancySymptoms(daysBack: Int = 60) async -> [SymptomRecord] {
+        let calendar = Calendar.current
+        let start = calendar.date(byAdding: .day, value: -daysBack, to: Date())!
+        let now = Date()
+
+        let mapping: [(HKCategoryType, PregnancySymptomType)] = [
+            (HKCategoryType(.nausea),                .nausea),
+            (HKCategoryType(.vomiting),              .vomiting),
+            (HKCategoryType(.fatigue),               .fatigue),
+            (HKCategoryType(.breastPain),            .breastTenderness),
+            (HKCategoryType(.bloating),              .bloating),
+            (HKCategoryType(.abdominalCramps),       .abdominalCramps),
+            (HKCategoryType(.headache),              .headache),
+            (HKCategoryType(.intermenstrualBleeding), .spotting),
+            (HKCategoryType(.appetiteChanges),       .appetiteChange),
+            (HKCategoryType(.moodChanges),           .moodChange),
+            (HKCategoryType(.dizziness),             .dizziness),
+        ]
+
+        var records: [SymptomRecord] = []
+        for (hkType, type) in mapping {
+            let samples = await fetchCategorySamples(
+                type: hkType, start: start, end: now,
+                limit: HKObjectQueryNoLimit, ascending: true
+            )
+            records += samples.map {
+                SymptomRecord(
+                    date: calendar.startOfDay(for: $0.startDate),
+                    type: type,
+                    source: .healthKit
+                )
+            }
+        }
+        return records
+    }
+#endif
 
     // MARK: - Historical Cycle Data (Profile)
 
