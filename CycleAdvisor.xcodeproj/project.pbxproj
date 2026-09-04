@@ -24,6 +24,8 @@
 		A7000002 /* WorkoutPosterMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000002 /* WorkoutPosterMapperTests.swift */; };
 		A8000002 /* PeriodPredictionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000002 /* PeriodPredictionTests.swift */; };
 		A9000002 /* PeriodNotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000002 /* PeriodNotificationSchedulerTests.swift */; };
+		AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000002 /* WorkoutCelebrationPlannerTests.swift */; };
+		AA000001 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
 		A9000001 /* PeriodNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001 /* PeriodNotificationScheduler.swift */; };
 		A8000001 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
 		A7000001 /* WorkoutPosterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001 /* WorkoutPosterMapper.swift */; };
@@ -90,6 +92,7 @@
 		KA000015 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
 		KA000016 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
 		KA000017 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
+		KA000021 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
 		KCP00002 /* CycleAdvisorWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = KB000005 /* CycleAdvisorWatch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		MA000001 /* CycleAdvisorComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = MB000001 /* CycleAdvisorComplication.swift */; };
 		MA000010 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
@@ -190,6 +193,8 @@
 		B8000002 /* PeriodPredictionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPredictionTests.swift; sourceTree = "<group>"; };
 		B9000002 /* PeriodNotificationSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodNotificationSchedulerTests.swift; sourceTree = "<group>"; };
 		B9000001 /* PeriodNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodNotificationScheduler.swift; sourceTree = "<group>"; };
+		BA000002 /* WorkoutCelebrationPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCelebrationPlannerTests.swift; sourceTree = "<group>"; };
+		BA000001 /* WorkoutCelebrationPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCelebrationPlanner.swift; sourceTree = "<group>"; };
 		B8000001 /* PeriodPrediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPrediction.swift; sourceTree = "<group>"; };
 		B7000001 /* WorkoutPosterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPosterMapper.swift; sourceTree = "<group>"; };
 		B100000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -389,6 +394,7 @@
 				B1000041 /* DisplayName.swift */,
 				B2000008 /* MarkdownTextView.swift */,
 				B7000001 /* WorkoutPosterMapper.swift */,
+				BA000001 /* WorkoutCelebrationPlanner.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 				B7000002 /* WorkoutPosterMapperTests.swift */,
 				B8000002 /* PeriodPredictionTests.swift */,
 				B9000002 /* PeriodNotificationSchedulerTests.swift */,
+				BA000002 /* WorkoutCelebrationPlannerTests.swift */,
 			);
 			path = CycleAdvisorTests;
 			sourceTree = "<group>";
@@ -756,6 +763,7 @@
 				A6000003 /* ProfileView.swift in Sources */,
 				A6000004 /* WorkoutDashboardView.swift in Sources */,
 				A7000001 /* WorkoutPosterMapper.swift in Sources */,
+				AA000001 /* WorkoutCelebrationPlanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +778,7 @@
 				A7000002 /* WorkoutPosterMapperTests.swift in Sources */,
 				A8000002 /* PeriodPredictionTests.swift in Sources */,
 				A9000002 /* PeriodNotificationSchedulerTests.swift in Sources */,
+				AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,6 +814,7 @@
 				KA000012 /* PeriodPrediction.swift in Sources */,
 				KA000013 /* CyclePhaseEngine.swift in Sources */,
 				KA000014 /* WorkoutPosterMapper.swift in Sources */,
+				KA000021 /* WorkoutCelebrationPlanner.swift in Sources */,
 				KA000015 /* HealthKitManager.swift in Sources */,
 				KA000016 /* UserProfile.swift in Sources */,
 				KA000017 /* MenstrualSymptoms.swift in Sources */,
