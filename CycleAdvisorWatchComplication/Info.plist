@@ -25,5 +25,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Bunlet needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.</string>
 </dict>
 </plist>

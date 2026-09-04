@@ -1153,6 +1153,7 @@
 				DEVELOPMENT_TEAM = 3488U99HV8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bunlet needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.cycleadvisor.app;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1180,6 +1181,7 @@
 				DEVELOPMENT_TEAM = 3488U99HV8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bunlet needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.cycleadvisor.app;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

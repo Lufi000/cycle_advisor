@@ -31,6 +31,11 @@ struct CycleAdvisorWatchApp: App {
                     UNUserNotificationCenter.current()
                         .removePendingNotificationRequests(withIdentifiers: [pending.notificationID])
                     celebrationStore.markCelebrated(pending.workoutUUID)
+                    // 超过 5 分钟的 pending 早已错过时机（通知兜底已发过），静默清掉不再全屏展示
+                    if pending.fireDate < Date().addingTimeInterval(-300) {
+                        celebrationStore.pending = nil
+                        return
+                    }
                     showCelebration = true
                 }
         }
