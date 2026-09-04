@@ -574,3 +574,9 @@
 "workout.activity.transition" = "转换区";
 "workout.activity.underwater_diving" = "潜水";
 "workout.activity.other" = "其他运动";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "预计 %@ · 还有 %lld 天";
+"home.prediction.today" = "预计今天来潮";
+"home.prediction.in_period %lld" = "经期第 %lld 天";
+"home.prediction.overdue %lld" = "可能推迟了 %lld 天";

@@ -200,6 +200,12 @@ struct HomeView: View {
                 }
             }
 
+            if inspectedPhase == nil, let prediction = viewModel.periodPrediction {
+                Text(prediction.text)
+                    .font(Theme.itim(size: 14))
+                    .foregroundStyle(homeMutedText)
+            }
+
             CycleTrackingTimelineView(
                 context: context,
                 engine: engine,

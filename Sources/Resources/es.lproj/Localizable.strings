@@ -573,3 +573,9 @@
 "workout.activity.transition" = "Transición";
 "workout.activity.underwater_diving" = "Buceo";
 "workout.activity.other" = "Otro entrenamiento";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "Previsto: %@ · faltan %lld días";
+"home.prediction.today" = "Previsto para hoy";
+"home.prediction.in_period %lld" = "Día %lld del periodo";
+"home.prediction.overdue %lld" = "Podría retrasarse %lld días";

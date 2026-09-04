@@ -573,3 +573,9 @@
 "workout.activity.transition" = "전환";
 "workout.activity.underwater_diving" = "수중 다이빙";
 "workout.activity.other" = "기타 운동";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "예정일 %@ · %lld일 남음";
+"home.prediction.today" = "오늘이 예정일입니다";
+"home.prediction.in_period %lld" = "생리 %lld일차";
+"home.prediction.overdue %lld" = "%lld일 늦어질 수 있습니다";

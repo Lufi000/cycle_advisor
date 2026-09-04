@@ -35,6 +35,17 @@ final class HomeViewModel {
     private var lastPeriodStart: Date?
     private var lastCycleLength: Int?
 
+    /// 经期预测（主页周期模块与通知调度共用）
+    var periodPrediction: PeriodPrediction? {
+        guard let lastPeriodStart, let lastCycleLength else { return nil }
+        return PeriodPrediction.make(
+            lastPeriodStart: lastPeriodStart,
+            cycleLength: lastCycleLength,
+            isInPeriod: context.phase == .menstrual && !context.isPredicted,
+            periodDay: context.cycleDay
+        )
+    }
+
     /// - Parameter force: `true` 时忽略「已成功加载」门禁，用于用户主动刷新健康数据。
     @MainActor
     func load(force: Bool = false) async {
