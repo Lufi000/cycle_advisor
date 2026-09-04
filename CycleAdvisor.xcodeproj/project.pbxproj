@@ -83,6 +83,7 @@
 		KA000018 /* WatchCycleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000006 /* WatchCycleViewModel.swift */; };
 		KA000019 /* WatchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000007 /* WatchHomeView.swift */; };
 		KA000020 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
+		KA000024 /* WatchAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = KB000010 /* WatchAssets.xcassets */; };
 		M7000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
 		KA000010 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
 		KA000011 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
@@ -252,6 +253,7 @@
 		WB000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		KB000001 /* CycleAdvisorWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorWatchApp.swift; sourceTree = "<group>"; };
 		KB000003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		KB000010 /* WatchAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WatchAssets.xcassets; sourceTree = "<group>"; };
 		KB000004 /* CycleAdvisorWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisorWatch.entitlements; sourceTree = "<group>"; };
 		KB000005 /* CycleAdvisorWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisorWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		KB000006 /* WatchCycleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCycleViewModel.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 				KB000008 /* WatchWorkoutObserver.swift */,
 				KB000009 /* CelebrationView.swift */,
 				KB000003 /* Assets.xcassets */,
+				KB000010 /* WatchAssets.xcassets */,
 				KB000004 /* CycleAdvisorWatch.entitlements */,
 			);
 			path = CycleAdvisorWatch;
@@ -708,6 +711,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				KA000003 /* Assets.xcassets in Resources */,
+				KA000024 /* WatchAssets.xcassets in Resources */,
 				KA000020 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
