@@ -585,3 +585,6 @@
 "notify.period.reminder.body %@" = "%@ の予定です。早めに準備を";
 "notify.period.dayof.title" = "今日が生理予定日かもしれません";
 "notify.period.dayof.body" = "体のサインに気をつけて、今日はやさしく過ごしましょう";
+
+/* Watch */
+"watch.no_data" = "iPhone のヘルスケア app で生理を記録すると予測が始まります";

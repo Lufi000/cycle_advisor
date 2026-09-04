@@ -586,3 +586,6 @@
 "notify.period.reminder.body %@" = "预计 %@ 来潮，可以提前准备啦";
 "notify.period.dayof.title" = "今天可能是经期第一天";
 "notify.period.dayof.body" = "留意身体信号，今天对自己温柔一点";
+
+/* Watch */
+"watch.no_data" = "在 iPhone 健康 app 记录经期后开始预测";

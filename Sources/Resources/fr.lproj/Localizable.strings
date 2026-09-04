@@ -585,3 +585,6 @@
 "notify.period.reminder.body %@" = "Prévu le %@ — prépare-toi à l'avance";
 "notify.period.dayof.title" = "Tes règles pourraient arriver aujourd'hui";
 "notify.period.dayof.body" = "Écoute ton corps et ménage-toi aujourd'hui";
+
+/* Watch */
+"watch.no_data" = "Enregistre tes règles dans l'app Santé de l'iPhone pour lancer les prédictions";

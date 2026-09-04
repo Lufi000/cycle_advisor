@@ -4,7 +4,7 @@ import SwiftUI
 struct CycleAdvisorWatchApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WatchHomeView()
         }
     }
 }

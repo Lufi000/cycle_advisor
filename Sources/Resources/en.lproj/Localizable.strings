@@ -585,3 +585,6 @@
 "notify.period.reminder.body %@" = "Expected %@ — time to prepare";
 "notify.period.dayof.title" = "Your period may start today";
 "notify.period.dayof.body" = "Listen to your body and take it easy today";
+
+/* Watch */
+"watch.no_data" = "Log your period in the Health app on iPhone to start predictions";
