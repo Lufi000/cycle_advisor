@@ -165,14 +165,8 @@ struct WorkoutDashboardView: View {
 
     private func shortDate(_ date: Date, includeYear: Bool = false) -> String {
         let formatter = DateFormatter()
-        switch LanguageManager.shared.current {
-        case .english:
-            formatter.locale = Locale(identifier: "en_US")
-        case .simplifiedChinese:
-            formatter.locale = Locale(identifier: "zh_CN")
-        case .system:
-            formatter.locale = .current
-        }
+        // 语言跟随系统,日期格式直接用当前 Locale。
+        formatter.locale = .current
         formatter.setLocalizedDateFormatFromTemplate(includeYear ? "yMMMd" : "MMMd")
         return formatter.string(from: date)
     }
@@ -888,6 +882,21 @@ struct WorkoutDashboardView: View {
     }
 
     private func workoutIconName(for activity: WorkoutStats.WorkoutActivity) -> String {
+        // 部分球类有专属图标，先于球类通用图标判断
+        switch activity.key.lowercased() {
+        case "tennis":
+            return "tennis.racket"
+        case "table_tennis":
+            return "figure.table.tennis"
+        case "pickleball":
+            return "figure.pickleball"
+        case "barre":
+            return "figure.barre"
+        case "pilates":
+            return "figure.pilates"
+        default:
+            break
+        }
         switch workoutActivityKind(for: activity) {
         case .climbing:
             return "figure.climbing"

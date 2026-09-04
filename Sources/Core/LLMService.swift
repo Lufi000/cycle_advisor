@@ -122,6 +122,16 @@ enum ThinkingMode: String, CaseIterable, Identifiable {
 
     /// 深度模式有 <think> 推理块
     var hasThinking: Bool { self == .deep }
+
+    /// 流式对话的 max_tokens 上限。
+    /// DeepSeek 推理模型把思考（reasoning_content）和正式回答合并计入 max_tokens，
+    /// 800 容易被思考耗光导致正式回答为空（finish_reason="length"），深度模式需要更大额度。
+    var chatMaxTokens: Int {
+        switch self {
+        case .fast: return 800
+        case .deep: return 4096
+        }
+    }
 }
 
 // MARK: - Service
@@ -228,7 +238,7 @@ actor LLMService {
             messages: [LLMMessage(role: "system", content: systemPrompt)] + history,
             stream: true,
             temperature: 0.70,
-            maxTokens: 800,
+            maxTokens: thinkingMode.chatMaxTokens,
             responseFormat: nil
         )
 
@@ -430,12 +440,22 @@ actor LLMService {
 
     enum ResponseLanguage: Equatable {
         case simplifiedChinese
+        case traditionalChinese
         case english
+        case japanese
+        case korean
+        case spanish
+        case french
 
         var displayName: String {
             switch self {
             case .simplifiedChinese: return "简体中文"
+            case .traditionalChinese: return "繁體中文"
             case .english: return "English"
+            case .japanese: return "日本語"
+            case .korean: return "한국어"
+            case .spanish: return "Español"
+            case .french: return "Français"
             }
         }
 
@@ -447,29 +467,62 @@ actor LLMService {
                     "如果作息被打乱，怎么调整更稳妥？",
                     "有哪些常见误区我需要先避开？",
                 ]
+            case .traditionalChinese:
+                return [
+                    "能給我一個今天就能執行的版本嗎？",
+                    "如果作息被打亂，怎麼調整更穩妥？",
+                    "有哪些常見誤區我需要先避開？",
+                ]
             case .english:
                 return [
                     "Can you make this actionable for today?",
                     "How should I adjust if my routine changes?",
                     "What common mistakes should I avoid?",
                 ]
+            case .japanese:
+                return [
+                    "今日すぐ実践できるバージョンにしてもらえますか？",
+                    "生活リズムが崩れたときは、どう調整するのが安心ですか？",
+                    "避けておきたいよくある誤解はありますか？",
+                ]
+            case .korean:
+                return [
+                    "오늘 바로 실행할 수 있는 버전으로 알려줄 수 있나요?",
+                    "생활 리듬이 흐트러지면 어떻게 조정하는 게 안전할까요?",
+                    "미리 피해야 할 흔한 오해가 있을까요?",
+                ]
+            case .spanish:
+                return [
+                    "¿Puedes darme una versión que pueda aplicar hoy mismo?",
+                    "¿Cómo debería ajustarlo si mi rutina se altera?",
+                    "¿Qué errores comunes debería evitar?",
+                ]
+            case .french:
+                return [
+                    "Pouvez-vous me donner une version applicable dès aujourd'hui ?",
+                    "Comment dois-je m'adapter si ma routine est perturbée ?",
+                    "Quelles erreurs courantes dois-je éviter ?",
+                ]
             }
         }
     }
 
+    /// 语言完全跟随系统：按当前 Locale 推断 AI 回复语言，不支持的语种回退英文。
     nonisolated static func preferredResponseLanguage(
-        appLanguage: LanguageManager.AppLanguage = LanguageManager.shared.current,
         locale: Locale = .current
     ) -> ResponseLanguage {
-        switch appLanguage {
-        case .english:
-            return .english
-        case .simplifiedChinese:
-            return .simplifiedChinese
-        case .system:
-            let identifier = locale.identifier.lowercased()
-            return identifier.hasPrefix("zh") ? .simplifiedChinese : .english
+        let identifier = locale.identifier.lowercased()
+        if identifier.hasPrefix("ja") { return .japanese }
+        if identifier.hasPrefix("ko") { return .korean }
+        if identifier.hasPrefix("es") { return .spanish }
+        if identifier.hasPrefix("fr") { return .french }
+        if identifier.hasPrefix("zh") {
+            // zh-Hant / zh-HK / zh-TW / zh-MO 等按繁体处理，其余中文按简体。
+            return identifier.contains("hant") || identifier.contains("-hk") || identifier.contains("-tw") || identifier.contains("-mo")
+                ? .traditionalChinese
+                : .simplifiedChinese
         }
+        return .english
     }
 
     nonisolated static func responseLanguage(
@@ -488,6 +541,8 @@ actor LLMService {
 
         var cjkCount = 0
         var latinCount = 0
+        var kanaCount = 0
+        var hangulCount = 0
 
         for scalar in text.unicodeScalars {
             switch scalar.value {
@@ -495,9 +550,22 @@ actor LLMService {
                 cjkCount += 1
             case 0x0041...0x005A, 0x0061...0x007A:
                 latinCount += 1
+            case 0x3040...0x30FF, 0x31F0...0x31FF:
+                kanaCount += 1
+            case 0xAC00...0xD7AF, 0x1100...0x11FF, 0x3130...0x318F:
+                hangulCount += 1
             default:
                 continue
             }
+        }
+
+        // 平假名/片假名是日语的强信号；谚文是韩语的强信号。优先于汉字与拉丁字母判断。
+        if kanaCount > 0 {
+            return .japanese
+        }
+
+        if hangulCount > 0 {
+            return .korean
         }
 
         if cjkCount > 0 {
@@ -668,11 +736,36 @@ actor LLMService {
             countLine = "\(periodLabel)运动总次数：\(count)"
             durationLine = "\(periodLabel)运动总时长：\(Self.formatWorkoutDuration(totalDurationMinutes))"
             periodInstruction = "这是\(periodLabel)的运动小结：文案中若提到时间范围，请使用「\(periodLabel)」，不要写成其他周期（例如「这周」）。"
+        case .traditionalChinese:
+            sectionHeader = "【\(periodLabel)運動】"
+            countLine = "\(periodLabel)運動總次數：\(count)"
+            durationLine = "\(periodLabel)運動總時長：\(Self.formatWorkoutDuration(totalDurationMinutes, language: .traditionalChinese))"
+            periodInstruction = "這是\(periodLabel)的運動小結：文案中若提到時間範圍，請使用「\(periodLabel)」，不要寫成其他週期（例如「這週」）。"
         case .english:
             sectionHeader = "【\(periodLabel) workouts】"
             countLine = "Total workouts in \(periodLabel): \(count)"
             durationLine = "Total duration in \(periodLabel): \(Self.formatWorkoutDuration(totalDurationMinutes, language: .english))"
             periodInstruction = "This is the \(periodLabel) workout summary. If you mention a time span, use '\(periodLabel)' only — do not write 'this week' or any other period."
+        case .japanese:
+            sectionHeader = "【\(periodLabel)のワークアウト】"
+            countLine = "\(periodLabel)のワークアウト回数：\(count)"
+            durationLine = "\(periodLabel)のワークアウト総時間：\(Self.formatWorkoutDuration(totalDurationMinutes, language: .japanese))"
+            periodInstruction = "これは\(periodLabel)のワークアウトまとめです。時間範囲に触れる場合は「\(periodLabel)」だけを使い、「今週」など別の周期で書かないでください。"
+        case .korean:
+            sectionHeader = "【\(periodLabel) 운동】"
+            countLine = "\(periodLabel) 운동 총 횟수: \(count)"
+            durationLine = "\(periodLabel) 운동 총 시간: \(Self.formatWorkoutDuration(totalDurationMinutes, language: .korean))"
+            periodInstruction = "이것은 \(periodLabel) 운동 요약입니다. 시간 범위를 언급할 때는 '\(periodLabel)'만 사용하고, '이번 주'처럼 다른 주기로 쓰지 마세요."
+        case .spanish:
+            sectionHeader = "【\(periodLabel) entrenamientos】"
+            countLine = "Entrenamientos totales en \(periodLabel): \(count)"
+            durationLine = "Duración total en \(periodLabel): \(Self.formatWorkoutDuration(totalDurationMinutes, language: .spanish))"
+            periodInstruction = "Este es el resumen de entrenamientos de \(periodLabel). Si mencionas un período de tiempo, usa solo '\(periodLabel)'; no escribas 'esta semana' ni ningún otro período."
+        case .french:
+            sectionHeader = "【\(periodLabel) entraînements】"
+            countLine = "Nombre total d'entraînements sur \(periodLabel) : \(count)"
+            durationLine = "Durée totale sur \(periodLabel) : \(Self.formatWorkoutDuration(totalDurationMinutes, language: .french))"
+            periodInstruction = "Voici le résumé des entraînements de \(periodLabel). Si tu mentionnes une période, utilise uniquement « \(periodLabel) » — n'écris pas « cette semaine » ni aucune autre période."
         }
 
         return """
@@ -705,10 +798,30 @@ actor LLMService {
             if hours > 0, mins > 0 { return "约 \(hours) 小时 \(mins) 分钟" }
             if hours > 0 { return "约 \(hours) 小时" }
             return "约 \(mins) 分钟"
+        case .traditionalChinese:
+            if hours > 0, mins > 0 { return "約 \(hours) 小時 \(mins) 分鐘" }
+            if hours > 0 { return "約 \(hours) 小時" }
+            return "約 \(mins) 分鐘"
         case .english:
             if hours > 0, mins > 0 { return "about \(hours) hours \(mins) minutes" }
             if hours > 0 { return "about \(hours) hours" }
             return "about \(mins) minutes"
+        case .japanese:
+            if hours > 0, mins > 0 { return "約 \(hours) 時間 \(mins) 分" }
+            if hours > 0 { return "約 \(hours) 時間" }
+            return "約 \(mins) 分"
+        case .korean:
+            if hours > 0, mins > 0 { return "약 \(hours)시간 \(mins)분" }
+            if hours > 0 { return "약 \(hours)시간" }
+            return "약 \(mins)분"
+        case .spanish:
+            if hours > 0, mins > 0 { return "aprox. \(hours) h \(mins) min" }
+            if hours > 0 { return "aprox. \(hours) h" }
+            return "aprox. \(mins) min"
+        case .french:
+            if hours > 0, mins > 0 { return "environ \(hours) h \(mins) min" }
+            if hours > 0 { return "environ \(hours) h" }
+            return "environ \(mins) min"
         }
     }
 

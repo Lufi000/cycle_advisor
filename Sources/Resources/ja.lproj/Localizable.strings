@@ -1,0 +1,575 @@
+/* Tabs */
+"tab.home" = "Bloom";
+"tab.settings" = "設定";
+"tab.workout" = "ワークアウト";
+"tab.assistant" = "AI アシスタント";
+"subscription.title" = "AI Pro";
+
+/* Common */
+"common.done" = "完了";
+
+/* Workout */
+"workout.empty.title" = "休むのも、リズムの一部";
+"workout.empty.body" = "まだワークアウトの記録はありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.empty.suggestion.breathe" = "呼吸と瞑想";
+"workout.empty.suggestion.walk" = "公園を散歩";
+"workout.empty.suggestion.stretch" = "やさしいストレッチ";
+"workout.metric.exercise_minutes" = "エクササイズ分";
+"workout.metric.steps" = "歩数";
+"workout.metric.active_calories" = "アクティブカロリー";
+"workout.metric.today_total_duration" = "今日の運動時間";
+"workout.metric.weekly_total_duration" = "今週の運動時間";
+"workout.metric.monthly_total_duration" = "今月の運動時間";
+"workout.metric.yearly_total_duration" = "今年の運動時間";
+"workout.metric.recent_week_total_duration" = "過去7日間の運動時間";
+"workout.metric.recent_month_total_duration" = "過去30日間の運動時間";
+"workout.metric.recent_year_total_duration" = "過去365日間の運動時間";
+"workout.metric.workout_count" = "回のワークアウト";
+"workout.period.day" = "日";
+"workout.period.week" = "週";
+"workout.period.month" = "月";
+"workout.period.year" = "年";
+"workout.period.recent_week" = "過去7日間";
+"workout.period.recent_month" = "過去30日間";
+"workout.period.recent_year" = "過去365日間";
+"workout.period_label.day" = "今日";
+"workout.period_label.week" = "今週";
+"workout.period_label.month" = "今月";
+"workout.period_label.year" = "今年";
+"workout.period_label.recent_week" = "過去7日間";
+"workout.period_label.recent_month" = "過去30日間";
+"workout.period_label.recent_year" = "過去365日間";
+"workout.share.label" = "ワークアウトカードを共有";
+"workout.share.save_title" = "ワークアウトカードを保存";
+"workout.share.saved" = "フォトライブラリに保存しました。";
+"workout.share.save_failed" = "保存に失敗しました。もう一度お試しください。";
+"workout.share.photo_access_denied" = "写真へのアクセスがオフになっています。カードを保存するには「設定」で許可してください。";
+"workout.title.recovery" = "休むのも、リズムの一部";
+"workout.title.activity_ace_format" = "%@の達人";
+"workout.title.climbing" = "壁の謎解き屋";
+"workout.title.walking" = "歩き続ける人";
+"workout.title.running" = "風を追うランナー";
+"workout.title.yoga" = "心身の調律師";
+"workout.title.cycling" = "巡航ライダー";
+"workout.title.swimming" = "波のトビウオ";
+"workout.title.strength" = "筋力鍛錬家";
+"workout.title.flexibility" = "柔軟マスター";
+"workout.title.dance" = "リズムの妖精";
+"workout.title.ball_sports" = "コートのプレイヤー";
+"workout.title.tennis" = "ベースラインダンサー";
+"workout.title.basketball" = "ゴールハンター";
+"workout.title.badminton" = "シャトルアサシン";
+"workout.title.soccer" = "ピッチの司令塔";
+"workout.title.volleyball" = "ネットの大砲";
+"workout.title.table_tennis" = "回転の魔術師";
+"workout.title.golf" = "スイングの詩人";
+"workout.title.baseball" = "ホームラン砲";
+"workout.title.cardio" = "脂肪燃焼エンジン";
+"workout.title.light_activity" = "軽い動きの途中";
+"workout.title.rhythm_building" = "リズムづくり中";
+"workout.title.steady_rhythm" = "安定した運動リズム";
+"workout.summary.no_workouts_day" = "今日はまだワークアウトの記録がありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.summary.no_workouts" = "まだワークアウトの記録はありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.summary.no_workouts_month" = "今月はまだワークアウトの記録がありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.summary.no_workouts_year" = "今年はまだワークアウトの記録がありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.summary.no_workouts_recent_week" = "過去7日間はワークアウトの記録がありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.summary.no_workouts_recent_month" = "過去30日間はワークアウトの記録がありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.summary.no_workouts_recent_year" = "過去365日間はワークアウトの記録がありません — 大丈夫です。公園で少し座って、深呼吸してみたり、ゆっくり歩いてみたり。やさしいはじまりも、立派なはじまりです。";
+"workout.summary.no_activity_type" = "この1週間、あなたは体でリズムを描きはじめています。ひとつひとつのワークアウトが、注意力とエネルギーと自分自身を再び整える小さな練習です。";
+"workout.summary.no_activity_type_month" = "この1か月、あなたは体でリズムを描きはじめています。ひとつひとつのワークアウトが、注意力とエネルギーと自分自身を再び整える小さな練習です。";
+"workout.summary.no_activity_type_year" = "今年、あなたは体でリズムを描きはじめています。ひとつひとつのワークアウトが、注意力とエネルギーと自分自身を再び整える小さな練習です。";
+"workout.summary.no_activity_type_recent_week" = "過去7日間、あなたは体でリズムを描きはじめています。ひとつひとつのワークアウトが、注意力とエネルギーと自分自身を再び整える小さな練習です。";
+"workout.summary.no_activity_type_recent_month" = "過去30日間、あなたは体でリズムを描きはじめています。ひとつひとつのワークアウトが、注意力とエネルギーと自分自身を再び整える小さな練習です。";
+"workout.summary.no_activity_type_recent_year" = "過去365日間、あなたは体でリズムを描きはじめています。ひとつひとつのワークアウトが、注意力とエネルギーと自分自身を再び整える小さな練習です。";
+"workout.summary.no_activity_type_day" = "今日、あなたは体でリズムを描きはじめています。ひとつひとつのワークアウトが、注意力とエネルギーと自分自身を再び整える小さな練習です。";
+"workout.category.count_format" = "%d 回";
+"workout.category.total" = "合計";
+"workout.category.accessibility_format" = "%@、%d回、%@";
+"workout.duration.hour_min_format" = "%d時間%d分";
+"workout.duration.hour_format" = "%d時間";
+"workout.duration.minute_format" = "%d分";
+
+/* Sidebar */
+"sidebar.title" = "メニュー";
+"sidebar.open_a11y" = "メニューを開く";
+"sidebar.close_a11y" = "メニューを閉じる";
+
+/* Settings */
+"settings.section.ai" = "AI";
+"settings.section.profile" = "プロフィール";
+"settings.section.disclaimer" = "免責事項";
+"settings.section.language" = "言語";
+"settings.section.medical_sources" = "医学情報ソース";
+"settings.profile.display_name" = "表示名";
+"settings.profile.display_name.hint" = "あいさつに表示されます。空欄の場合は名前を表示しません。";
+"onboarding.display_name.title" = "何とお呼びしましょう？";
+"onboarding.display_name.subtitle" = "この名前はアプリ内のあいさつでのみ使われます。";
+"onboarding.display_name.skip" = "あとで";
+"onboarding.display_name.save" = "保存";
+"settings.thinking_mode" = "思考モード";
+"settings.thinking_mode.hint" = "この設定を使う今後の AI チャット機能に適用されます。";
+"settings.language.title" = "アプリの言語";
+"settings.language.hint" = "アプリの言語はシステムに従います。タップして「設定」で変更できます。";
+
+/* Billing */
+"billing.section.account" = "クレジットアカウント";
+"billing.section.recharge" = "チャージ";
+"billing.section.subscription" = "サブスクリプション";
+"billing.section.metrics" = "7日間の指標";
+"billing.section.ledger" = "明細";
+"billing.balance.title" = "利用可能残高";
+"billing.balance.value" = "%d クレジット";
+"billing.balance.inline" = "残高 %d";
+"billing.subscription.title" = "AI アクセス";
+"billing.subscription.badge_active" = "AI Pro";
+"billing.subscription.badge_inactive" = "無料";
+"billing.subscription.inactive" = "AI Pro は有効ではありません";
+"billing.subscription.active_until" = "AI Pro は %@ まで有効";
+"billing.subscription.active_title" = "AI Pro 有効";
+"billing.subscription.active_detail" = "サブスクリプションは有効です。タップして管理できます。";
+"billing.subscription.chat_active" = "AI Pro チャットを利用できます";
+"billing.subscription.free_plan" = "無料プラン";
+"billing.subscription.required_hint" = "今日の無料メッセージを使い切った後も AI チャットを続けるには、サブスクリプションに登録してください。";
+"billing.subscription.monthly_price" = "AI Pro %@";
+"billing.subscription.monthly_detail" = "1か月の自動更新サブスクリプション。今日の無料メッセージを使い切った後も AI Pro チャットを利用できます。";
+"billing.chat.remaining_today" = "本日あと %d 回チャットできます";
+"billing.free_chat.remaining" = "本日の無料チャットは残り %d 回です";
+"billing.free_chat.warning_low" = "本日の無料チャットは残り %d 回です — 使い切った後も続けるには AI Pro に登録してください。";
+"billing.free_chat.warning_dismiss_a11y" = "通知を閉じる";
+"billing.low_balance.hint" = "残高が少なくなっています。チャットが中断されないようチャージしてください。";
+"billing.package.credits" = "%d クレジット";
+"billing.menu.buy_pack" = "%@ を購入（%d クレジット）";
+"billing.menu.subscribe" = "%@ に登録";
+"billing.menu.balance" = "%d クレジット";
+"billing.metrics.chat_7d" = "チャット回数";
+"billing.metrics.consume_7d" = "消費クレジット";
+"billing.metrics.revenue_7d" = "支払い金額";
+"billing.metrics.amount_cny" = "¥%.2f";
+"billing.tuning.keep" = "価格設定の提案：現在のパッケージを維持しましょう。";
+"billing.tuning.decrease" = "価格設定の提案：利益率が低いため、各ティアのクレジットを10〜15%減らしてください。";
+"billing.tuning.increase_entry" = "価格設定の提案：利益率は高いものの転換率が低いため、入門ティアのクレジットを約10%増やしてください。";
+"billing.tuning.mid_tier" = "価格設定の提案：超過購入が多いため、中間ティアのパッケージの価値を高めてください。";
+"billing.ledger.empty" = "まだ明細がありません";
+"billing.ledger.balance" = "残高 %d";
+"billing.ledger.hold" = "チャットの事前保留";
+"billing.ledger.rollback" = "失敗時のロールバック";
+"billing.ledger.refund" = "精算の払い戻し";
+"billing.ledger.consume_extra" = "精算の追加請求";
+"billing.ledger.settle" = "チャット精算（%d クレジット）";
+"billing.ledger.recharge" = "チャージ %@";
+"billing.ledger.subscription" = "AI Pro サブスクリプション";
+"billing.error.insufficient_credits" = "クレジットが不足しています。チャージしてください。";
+"billing.error.rate_limited" = "リクエストが頻繁すぎます。しばらくしてからもう一度お試しください。";
+"billing.error.daily_limit" = "本日のチャット上限に達しました。明日またお試しください。";
+"billing.error.purchase_unavailable" = "購入を利用できません。しばらくしてからもう一度お試しください。";
+"billing.error.purchase_not_verified" = "購入を確認できませんでした。もう一度お試しください。";
+"billing.error.subscription_required" = "本日の無料チャットを使い切りました。続けるには AI Pro に登録してください。";
+"billing.error.product_load_failed" = "サブスクリプションの詳細を読み込めませんでした。タップして再試行してください。";
+
+/* Subscription actions & legal (App Store Guideline 3.1.1 / 3.1.2) */
+"billing.action.subscribe_aipro" = "AI Pro に登録";
+"billing.action.purchasing_aipro" = "AI Pro を購入中…";
+"billing.action.restore" = "購入を復元";
+"billing.action.restoring" = "復元中…";
+"billing.action.restored" = "サブスクリプションを復元しました。";
+"billing.action.no_purchases" = "この Apple ID に有効なサブスクリプションが見つかりません。";
+"billing.action.manage" = "サブスクリプションを管理";
+"billing.action.purchasing" = "購入中…";
+"billing.action.purchase_cancelled" = "購入がキャンセルされました。";
+"billing.action.purchase_pending" = "購入は保留中です。完了するとサブスクリプションが更新されます。";
+"billing.action.purchase_in_progress" = "別の購入手続きが進行中です。しばらくお待ちください。";
+"billing.subscription.loading" = "サブスクリプションを読み込み中…";
+"billing.subscription.info_a11y" = "サブスクリプション情報";
+"billing.subscription.disclosure" = "AI Pro は、今日の無料メッセージを使い切った後に AI Pro チャットを利用できるようになる、1か月の自動更新サブスクリプションです。購入が確定すると、お支払いはご利用の Apple ID に請求されます。現在の期間が終了する 24 時間前までにキャンセルしない限り、記載された価格で自動的に更新されます。サブスクリプションは、同じ Apple ID でサインインしているデバイスで利用できます。Apple ID のサブスクリプション設定からいつでも管理・キャンセルできます。";
+"billing.legal.terms" = "利用規約";
+"billing.legal.privacy" = "プライバシーポリシー";
+
+/* AI Assistant tab */
+"assistant.intro.title" = "あなたの周期アシスタント";
+"assistant.intro.body" = "周期や生活習慣、健康について何でも聞いてください。現在のフェーズに合わせた提案をお届けします。";
+"assistant.greeting %@ %@ %lld %@" = "こんにちは、%1$@。会えてうれしいです。現在は%2$@の%3$lld日目です %4$@\n今日はゆっくり、まず今の体をいたわりましょう。";
+"assistant.greeting.predicted %@ %@ %lld %@" = "こんにちは、%1$@。会えてうれしいです。現在は%2$@の%3$lld日目と推定されます %4$@\n今日はゆっくり、まず今の体をいたわりましょう。";
+"assistant.greeting.no_name %@ %lld %@" = "会えてうれしいです。現在は%1$@の%2$lld日目です %3$@\n今日はゆっくり、まず今の体をいたわりましょう。";
+"assistant.greeting.predicted.no_name %@ %lld %@" = "会えてうれしいです。現在は%1$@の%2$lld日目と推定されます %3$@\n今日はゆっくり、まず今の体をいたわりましょう。";
+"assistant.greeting.bubble %@" = "こんにちは、%@。会えてうれしいです。";
+"assistant.greeting.bubble.no_name" = "こんにちは。会えてうれしいです。";
+"assistant.suggested_questions_label" = "こんな質問はいかがですか：";
+"assistant.followup_label" = "こちらも聞けます：";
+"assistant.thinking.in_progress" = "考え中…";
+"assistant.thinking.completed" = "思考プロセス";
+"assistant.new_chat" = "新しいチャット";
+"assistant.clear_history" = "すべてのチャットを削除";
+"assistant.history.title" = "チャット履歴";
+"assistant.history.untitled" = "無題のチャット";
+"assistant.history.messages_count_suffix" = "件のメッセージ";
+"assistant.error_fallback" = "申し訳ありません、問題が発生しました。もう一度お試しください 🙏";
+"assistant.input_placeholder" = "何でも聞いてください…";
+"assistant.date.today" = "今日";
+"assistant.date.yesterday" = "昨日";
+"assistant.date.day_before_yesterday" = "一昨日";
+"assistant.message.copy" = "コピー";
+"assistant.message.refresh" = "更新";
+"assistant.message.delete" = "削除";
+
+"assistant.header.day_format %@ %lld" = "%1$@ · %2$lld日目";
+"assistant.header.summary_title" = "今日のスナップショット";
+"assistant.header.exercise" = "運動";
+"assistant.header.daylight" = "日光";
+"assistant.header.steps" = "歩数";
+"assistant.header.hrv" = "HRV";
+"assistant.header.sleep" = "睡眠";
+"assistant.header.collapse_a11y" = "今日のスナップショットを折りたたむ";
+"assistant.header.expand_a11y" = "今日のスナップショットを展開";
+
+/* Units (formatted health metrics) */
+"unit.duration.hour_minute %lld %lld" = "%1$lld時間%2$lld分";
+"unit.duration.hour %lld" = "%1$lld時間";
+"unit.duration.minute %lld" = "%1$lld分";
+"unit.duration.minute_zero" = "0分";
+"unit.steps.count %lld" = "%1$lld歩";
+"unit.hrv_ms %lld" = "%1$lldms";
+
+/* Home cycle ring */
+"home.cycle_ring.day_label" = "日目";
+
+/* Thinking mode (DeepSeek) */
+"thinking.fast" = "高速";
+"thinking.deep" = "熟考";
+
+/* Home */
+"home.navigation.title" = "Bloom";
+"home.greeting %@" = "こんにちは、%@";
+"home.greeting.no_name" = "こんにちは";
+"home.cycle_stage.current" = "現在のフェーズ";
+"home.cycle_stage.explore" = "フェーズガイド";
+"home.cycle_stage.a11y %lld %@" = "周期%1$lld日目、%2$@";
+"home.health_metrics.title" = "健康データ";
+"home.health_metrics.today" = "今日の健康";
+"home.health_metrics.daylight" = "日光";
+"home.health_metrics.exercise" = "運動";
+"home.health_metrics.steps" = "歩数";
+"home.health_metrics.sleep" = "睡眠";
+"home.health_metrics.refresh_a11y" = "健康データを更新";
+"health.metric.meaning.title" = "この指標の意味";
+"health.metric.source.title" = "データソース";
+"health.metric.hrv.meaning" = "心拍変動（HRV）とは、心拍と心拍の間の時間のゆらぎのことです。回復やストレス、自律神経の状態の傾向を示すシグナルとしてよく使われます。1日の単独の値はあくまで参考であり、診断ではありません。";
+"health.metric.hrv.source" = "「ヘルスケア」の「心拍変動」から取得。通常は Apple Watch や対応デバイスがバックグラウンドで測定します。";
+"health.metric.daylight.meaning" = "日光の時間は、今日自然光の下で記録された時間の合計です。屋外の光への露出を把握するのに役立ち、概日リズムや気分、睡眠のタイミングと関係しています。";
+"health.metric.daylight.source" = "「ヘルスケア」の「日光の下で過ごした時間」から取得。通常はこの指標に対応した Apple Watch モデルが記録します。";
+"health.metric.exercise.meaning" = "エクササイズ分数は、今日 Apple のアクティビティの「エクササイズ」リングにカウントされた時間で、比較的はっきりした強度の活動を反映します。";
+"health.metric.exercise.source" = "「ヘルスケア」の「エクササイズ時間」から取得。Apple Watch、ワークアウト、対応アプリによって記録されます。";
+"health.metric.steps.meaning" = "歩数は今日記録された歩行の合計です。日常の活動傾向を見るのに役立ちますが、運動強度を完全に表すものではありません。";
+"health.metric.steps.source" = "「ヘルスケア」の「歩数」から取得。iPhone、Apple Watch、対応デバイスが記録します。";
+"health.metric.sleep.meaning" = "睡眠時間は、直近の睡眠セッションで眠っていた合計時間です。安定した睡眠は周期リズムや気分、回復と深く関係しています。1晩の値はあくまで参考であり、診断ではありません。";
+"health.metric.sleep.source" = "「ヘルスケア」の「睡眠分析」から取得。通常は Apple Watch や対応する睡眠トラッキングデバイスが記録します。";
+"home.cycle_detail.current_badge" = "現在";
+"home.cycle_detail.duration_format" = "約%d日";
+
+/* Disclaimer */
+"disclaimer.text" = "参考情報です。医療アドバイスではありません";
+
+/* Citations */
+"citation.sources.title" = "出典";
+"citation.sources.count_format" = "%d 件";
+"citation.toggle_sources_a11y" = "出典を展開または折りたたむ";
+"citation.open_source_a11y" = "出典を開く";
+"citation.owh.publisher" = "Office on Women's Health";
+"citation.owh_menstrual.title" = "月経周期";
+"citation.owh_menstrual.summary" = "周期の各フェーズ、生理中の症状、受診の目安。";
+"citation.owh_pms.title" = "月経前症候群（PMS）";
+"citation.owh_pms.summary" = "PMS の一般的な症状と、役立つ可能性のある生活習慣。";
+"citation.cdc.publisher" = "Centers for Disease Control and Prevention";
+"citation.cdc_activity.title" = "成人の身体活動ガイドライン";
+"citation.cdc_activity.summary" = "エビデンスに基づく活動目標と強度の指針。";
+"citation.nih.publisher" = "National Institutes of Health";
+"citation.nih_sleep.title" = "睡眠不足と睡眠の欠乏";
+"citation.nih_sleep.summary" = "十分で質の良い睡眠が健康に重要な理由。";
+"citation.dga.publisher" = "U.S. Dietary Guidelines";
+"citation.dga_nutrition.title" = "米国人のための食事ガイドライン";
+"citation.dga_nutrition.summary" = "健康的な食事パターンに関する連邦政府の栄養指針。";
+"citation.nccih.publisher" = "National Center for Complementary and Integrative Health";
+"citation.nccih_tcm.title" = "伝統中国医学：知っておくべきこと";
+"citation.nccih_tcm.summary" = "伝統的・補完的な健康実践に関する安全面の背景情報。";
+
+/* Cycle Phases */
+"phase.menstrual" = "生理";
+"phase.follicular" = "卵胞期";
+"phase.ovulation" = "排卵";
+"phase.luteal" = "黄体期";
+"phase.predicted_prefix" = "予測 ";
+"phase.predicted_label" = "推定";
+
+"phase.menstrual.desc" = "エストロゲンとプロゲステロンが最も低い時期。体は回復に向かっています。体を温かく保ち、よく休み、鉄分を補い、ウォーキングやヨガなどのやさしい動きを心がけましょう。";
+"phase.follicular.desc" = "ここでは生理後（生理が終わってから排卵まで）の時期を指します。卵胞が発育しエストロゲンが上昇 — エネルギーも気分も上向きに。新しいワークアウトに挑戦したり、大切なプロジェクトを進めたりするのに最適な時期です。";
+"phase.ovulation.desc" = "エストロゲンがピークに。体力と集中力が周期の中で最高潮に達します。高強度のトレーニングや創造的な作業に最適です。";
+"phase.luteal.desc" = "プロゲステロンが上昇し、体温と代謝が高まります。後半は気分のゆらぎや PMS が現れることも — 規則正しい生活とバランスの取れた食事を心がけましょう。";
+
+"phase.menstrual.overlay"  = "体（特にお腹）を温かく保ち、温かく消化の良い食べ物を選びましょう。";
+"phase.follicular.overlay" = "エネルギーが戻ってきています — 有酸素運動や筋力トレーニングを取り入れ、良質なたんぱく質を優先しましょう。";
+"phase.ovulation.overlay"  = "心も体も軽やかに感じられるはず — 高強度のワークアウトや人との交流に良い時期です。水分補給も忘れずに。";
+"phase.luteal.overlay"     = "むくみや気分のゆらぎが出やすい時期 — 塩分を控えめに、動きはやさしく、リラックスする時間をつくりましょう。";
+
+/* Suggestion Dimensions */
+"dim.diet" = "食事";
+"dim.exercise" = "運動";
+"dim.mood" = "気分";
+"dim.sleep" = "睡眠";
+
+/* Period Detail */
+"period.detail.title" = "生理のプロフィール";
+"period.detail.flow" = "経血量";
+"period.detail.symptoms" = "最近の症状";
+"period.detail.no_data" = "生理の症状はまだ記録されていません — ヘルスケアアプリで記録できます";
+"period.symptoms.title" = "生理の症状";
+"period.symptoms.summary %lld" = "最近の症状 %lld 件";
+
+/* Flow Level */
+"flow.unspecified" = "未指定";
+"flow.light" = "少なめ";
+"flow.medium" = "普通";
+"flow.heavy" = "多め";
+"flow.none" = "なし";
+
+/* Symptom Severity */
+"severity.not_present" = "なし";
+"severity.mild" = "軽い";
+"severity.moderate" = "中程度";
+"severity.severe" = "強い";
+
+/* Symptom Types */
+"symptom.abdominal_cramps" = "腹部のけいれん";
+"symptom.bloating" = "膨満感";
+"symptom.breast_pain" = "乳房の痛み";
+"symptom.headache" = "頭痛";
+"symptom.acne" = "にきび";
+"symptom.lower_back_pain" = "腰痛";
+"symptom.pelvic_pain" = "骨盤の痛み";
+"symptom.mood_changes" = "気分の変化";
+"symptom.fatigue" = "疲労";
+"symptom.appetite_changes" = "食欲の変化";
+
+/* Profile */
+"profile.title" = "マイプロフィール";
+"profile.empty" = "プロフィールデータはまだありません\n時間とともに自動で蓄積されます";
+"profile.section.body" = "体の情報";
+"profile.section.name" = "名前";
+"profile.section.cycle" = "周期の統計";
+"profile.section.workout" = "ワークアウトの習慣";
+"profile.section.symptoms" = "症状の記録";
+"profile.section.lifestyle" = "生活習慣";
+"profile.age" = "年齢";
+"profile.height" = "身長";
+"profile.weight" = "体重";
+"profile.avg_cycle" = "平均周期";
+"profile.avg_period" = "平均生理日数";
+"profile.days" = "日";
+"profile.cycles_recorded" = "記録された周期数";
+"profile.flow_pattern" = "経血量の傾向";
+"profile.weekly_freq" = "週間頻度";
+"profile.times_week" = "回/週";
+"profile.avg_duration" = "平均時間";
+"profile.minutes" = "分";
+"profile.sleep" = "睡眠パターン";
+"profile.diet" = "食事の好み";
+"profile.sensitivities" = "敏感なもの";
+"profile.conditions" = "健康状態";
+"profile.ai_source" = "AI との会話から抽出";
+"profile.reset" = "プロフィールをリセット";
+"profile.reset.confirm" = "すべてのプロフィールデータをリセットしてもよろしいですか？";
+"profile.reset.cancel" = "キャンセル";
+"profile.reset.action" = "リセット";
+
+/* Errors */
+"error.empty_response" = "AI からの応答がありません。もう一度お試しください";
+"error.invalid_response" = "無効なネットワーク応答です";
+"error.http_format" = "サーバーエラー（%d）が発生しました。もう一度お試しください";
+"error.auth_failed" = "AI サービスの認証に失敗しました。アプリのトークンを確認してください。";
+"error.network_unavailable" = "AI サービスに接続できません。ネットワークを確認してもう一度お試しください。";
+"error.decoding" = "応答の解析に失敗しました。もう一度お試しください";
+
+/* Widget */
+"widget.display_name" = "今日の健康";
+"widget.description" = "今日の日光時間と心拍変動（HRV）を確認できます";
+"widget.today_health" = "今日の健康";
+"widget.daylight" = "日光";
+"widget.day_in_phase %lld" = "%lld日目";
+"widget.cycle_day %lld %lld" = "%1$lld日目 · 周期%2$lld日目";
+"widget.hrv_avg %lld" = "平均 %lld";
+
+/* Solar Terms Tab */
+"tab.solar_terms" = "二十四節気";
+
+/* Seasons */
+"season.spring" = "春";
+"season.summer" = "夏";
+"season.autumn" = "秋";
+"season.winter" = "冬";
+
+/* Solar Terms UI */
+"solar.current" = "現在の節気";
+"solar.next" = "次の節気";
+"solar.days_until %lld" = "次の節気まであと%lld日";
+
+/* 24 Solar Terms — Names */
+"solar.lichun" = "立春";
+"solar.yushui" = "雨水";
+"solar.jingzhe" = "啓蟄";
+"solar.chunfen" = "春分";
+"solar.qingming" = "清明";
+"solar.guyu" = "穀雨";
+"solar.lixia" = "立夏";
+"solar.xiaoman" = "小満";
+"solar.mangzhong" = "芒種";
+"solar.xiazhi" = "夏至";
+"solar.xiaoshu" = "小暑";
+"solar.dashu" = "大暑";
+"solar.liqiu" = "立秋";
+"solar.chushu" = "処暑";
+"solar.bailu" = "白露";
+"solar.qiufen" = "秋分";
+"solar.hanlu" = "寒露";
+"solar.shuangjang" = "霜降";
+"solar.lidong" = "立冬";
+"solar.xiaoxue" = "小雪";
+"solar.daxue" = "大雪";
+"solar.dongzhi" = "冬至";
+"solar.xiaohan" = "小寒";
+"solar.dahan" = "大寒";
+
+/* 24 Solar Terms — Climate */
+"solar.lichun.climate" = "春のはじまり。気温は上がりはじめますが、寒さが戻ることもあります。氷のように冷たい朝から、午後はだんだん暖かくなります。";
+"solar.yushui.climate" = "冬の氷が解け、雨が増える時期。湿度が上がり、空気は心地よくやわらかくなります。";
+"solar.jingzhe.climate" = "雷が冬眠する生き物を目覚めさせます。気温は着実に上がり、春の嵐が時折訪れます。";
+"solar.chunfen.climate" = "昼と夜の長さが等しくなる日。穏やかでバランスの取れた天候と、心地よいそよ風の時期です。";
+"solar.qingming.climate" = "澄み渡ったさわやかな空。暖かさが増し、草木が花開く気持ちの良い時期です。";
+"solar.guyu.climate" = "最後の霜が過ぎ去ります。たっぷりの雨が、植えたばかりの作物を育てます。";
+"solar.lixia.climate" = "夏の到来。昼間の暑さが増し、夕方の雷雨が多くなります。";
+"solar.xiaoman.climate" = "穀物が実りはじめる時期。温暖で湿った空気が支配し、にわか雨が頻繁になります。";
+"solar.mangzhong.climate" = "麦が実り、夏の植え付けが進む時期。蒸し暑い日々が続きます。";
+"solar.xiazhi.climate" = "一年で最も昼が長い日。太陽が最も高く昇り暑さは強まりますが、本格的な暑さはこれからです。";
+"solar.xiaoshu.climate" = "暑さが増していきます。高温多湿で、午後の雷雨が多い時期です。";
+"solar.dashu.climate" = "夏の暑さのピーク。一年で最も暑く湿気の多い時期です。";
+"solar.liqiu.climate" = "名の上では秋のはじまりですが、夏の暑さは続きます。朝は少し涼しく感じられることもあります。";
+"solar.chushu.climate" = "「暑さが去る」時期。昼間の暑さがやわらぎ、夕方には涼しい風が吹きはじめます。";
+"solar.bailu.climate" = "夜がぐっと涼しくなり、朝露が現れます。昼夜の気温差が大きくなります。";
+"solar.qiufen.climate" = "再び昼と夜の長さが等しくなる日。涼しく心地よい天候と澄んだ空が広がります。";
+"solar.hanlu.climate" = "冷たい露ができる時期。気温が目に見えて下がり、空気は乾燥してひんやりします。";
+"solar.shuangjang.climate" = "多くの地域で初霜が降ります。朝は冷え込み、紅葉が見頃を迎えます。";
+"solar.lidong.climate" = "冬のはじまり。冷たい空気が流れ込み、北部では初雪が見られることもあります。";
+"solar.xiaoxue.climate" = "北部で小雪が舞う時期。湿った寒さが広がります。";
+"solar.daxue.climate" = "大雪の可能性がある時期。気温が急落し、地面が凍ることもあります。";
+"solar.dongzhi.climate" = "一年で最も昼が短い日。最も深い寒さが始まりますが、ここから昼は少しずつ長くなります。";
+"solar.xiaohan.climate" = "最も寒い時期が近づいています。冷たい風と氷点下の気温が続きます。";
+"solar.dahan.climate" = "一年で最も寒い時期。乾燥した空気と時折の吹雪を伴う厳しい寒さです。";
+
+/* 24 Solar Terms — Wellness Tips */
+"solar.lichun.wellness" = "葉物野菜で肝をいたわりましょう。昇る陽の気を迎えるために、やさしいストレッチを始めて。";
+"solar.yushui.wellness" = "温かく消化の良い食べ物で脾を労わりましょう。湿気が増す時期なので、冷たいものや生ものは控えめに。";
+"solar.jingzhe.wellness" = "軽い運動で滞りを流しましょう。梨やはちみつが乾いた喉を潤します。";
+"solar.chunfen.wellness" = "食事と生活リズムのバランスを意識して。室内の静けさと屋外の活動、その両方がこの春分に合います。";
+"solar.qingming.wellness" = "外に出ましょう — ハイキングや自然の中の散歩は心を明るくします。ほうれん草など旬の緑の野菜を食べて。";
+"solar.guyu.wellness" = "水分とハーブティーをたっぷりと。緑豆スープや菊花茶が、増える湿気を整えるのに役立ちます。";
+"solar.lixia.wellness" = "心を穏やかに、無理をしすぎないように。ゴーヤなどの苦味のある食べ物で体内の熱を冷ましましょう。";
+"solar.xiaoman.wellness" = "きゅうり、すいか、緑豆など、軽く体を冷やす食べ物を。水分補給も忘れずに。";
+"solar.mangzhong.wellness" = "暑さの中ではペースを落として。昼間に少し休み、消化の良い食事をとりましょう。";
+"solar.xiazhi.wellness" = "心臓を守りましょう。氷のように冷たい飲み物は避け、トマトなどの赤い食べ物をとり、暑さのピーク時は休んで。";
+"solar.xiaoshu.wellness" = "涼しく過ごし、水分をしっかりと。あっさりしたお粥や新鮮な果物が夏の暑さとのバランスを助けます。";
+"solar.dashu.wellness" = "熱中症に気をつけて — 正午は室内で休み、白湯を飲み、激しい運動は避けましょう。";
+"solar.liqiu.wellness" = "肺を潤しはじめましょう。梨、百合根、はちみつが秋の乾燥をやわらげます。";
+"solar.chushu.wellness" = "食事を冷やすものから温めるものへ移行して。少しコクのある穀物や根菜を取り入れましょう。";
+"solar.bailu.wellness" = "朝の冷えには重ね着で対応を。体を労わるスープやお粥が肺を守ります。";
+"solar.qiufen.wellness" = "陰と陽のバランスを。穏やかな運動と温かく多様な食事で調和を保ちましょう。";
+"solar.hanlu.wellness" = "足と腰を温かく保って。生姜やシナモンなど温性のスパイスがこの冷えに合います。";
+"solar.shuangjang.wellness" = "胃をいたわりましょう — 温かくやわらかい食べ物を。柿や栗が旬です。";
+"solar.lidong.wellness" = "冬に備えてエネルギーを蓄えて。早めに寝て、羊肉や鶏肉の滋養のある煮込み料理を。";
+"solar.xiaoxue.wellness" = "スープなど温かくじっくり煮込んだ料理が体を支えます。適度な室内運動で気の流れを保ちましょう。";
+"solar.daxue.wellness" = "内側から温まることに意識を。黒ごま、くるみ、クコの実が腎のエネルギーを高めます。";
+"solar.dongzhi.wellness" = "養生と回復に最適な時期。餃子や羊肉の鍋を楽しみ、寒さから身を守りましょう。";
+"solar.xiaohan.wellness" = "温かくたんぱく質の多い食事を。やさしい太極拳やヨガで、体力を消耗せずに血行を保ちましょう。";
+"solar.dahan.wellness" = "最後の寒さに備えて。よく休み、具だくさんのお粥を食べ、温かい重ね着を。";
+
+/* HealthKit Workout Activities */
+"workout.activity.american_football" = "アメリカンフットボール";
+"workout.activity.archery" = "アーチェリー";
+"workout.activity.australian_football" = "オーストラリアンフットボール";
+"workout.activity.badminton" = "バドミントン";
+"workout.activity.baseball" = "野球";
+"workout.activity.basketball" = "バスケットボール";
+"workout.activity.bowling" = "ボウリング";
+"workout.activity.boxing" = "ボクシング";
+"workout.activity.climbing" = "クライミング";
+"workout.activity.cricket" = "クリケット";
+"workout.activity.cross_training" = "クロストレーニング";
+"workout.activity.curling" = "カーリング";
+"workout.activity.cycling" = "サイクリング";
+"workout.activity.dance" = "ダンス";
+"workout.activity.dance_inspired_training" = "ダンストレーニング";
+"workout.activity.elliptical" = "エリプティカル";
+"workout.activity.equestrian_sports" = "馬術";
+"workout.activity.fencing" = "フェンシング";
+"workout.activity.fishing" = "釣り";
+"workout.activity.functional_strength_training" = "ファンクショナル筋力トレーニング";
+"workout.activity.golf" = "ゴルフ";
+"workout.activity.gymnastics" = "体操";
+"workout.activity.handball" = "ハンドボール";
+"workout.activity.hiking" = "ハイキング";
+"workout.activity.hockey" = "ホッケー";
+"workout.activity.hunting" = "狩猟";
+"workout.activity.lacrosse" = "ラクロス";
+"workout.activity.martial_arts" = "武道";
+"workout.activity.mind_and_body" = "マインド&ボディ";
+"workout.activity.mixed_metabolic_cardio_training" = "混合代謝カーディオトレーニング";
+"workout.activity.paddle_sports" = "パドルスポーツ";
+"workout.activity.play" = "遊び";
+"workout.activity.preparation_and_recovery" = "準備と回復";
+"workout.activity.racquetball" = "ラケットボール";
+"workout.activity.rowing" = "ローイング";
+"workout.activity.rugby" = "ラグビー";
+"workout.activity.running" = "ランニング";
+"workout.activity.sailing" = "セーリング";
+"workout.activity.skating_sports" = "スケートスポーツ";
+"workout.activity.snow_sports" = "雪上スポーツ";
+"workout.activity.soccer" = "サッカー";
+"workout.activity.softball" = "ソフトボール";
+"workout.activity.squash" = "スカッシュ";
+"workout.activity.stair_climbing" = "階段登り";
+"workout.activity.surfing_sports" = "サーフィン";
+"workout.activity.swimming" = "水泳";
+"workout.activity.table_tennis" = "卓球";
+"workout.activity.tennis" = "テニス";
+"workout.activity.track_and_field" = "陸上競技";
+"workout.activity.traditional_strength_training" = "伝統的筋力トレーニング";
+"workout.activity.volleyball" = "バレーボール";
+"workout.activity.walking" = "ウォーキング";
+"workout.activity.water_fitness" = "水中フィットネス";
+"workout.activity.water_polo" = "水球";
+"workout.activity.water_sports" = "ウォータースポーツ";
+"workout.activity.wrestling" = "レスリング";
+"workout.activity.yoga" = "ヨガ";
+"workout.activity.barre" = "バレ";
+"workout.activity.core_training" = "コアトレーニング";
+"workout.activity.cross_country_skiing" = "クロスカントリースキー";
+"workout.activity.downhill_skiing" = "ダウンヒルスキー";
+"workout.activity.flexibility" = "柔軟性";
+"workout.activity.high_intensity_interval_training" = "HIIT";
+"workout.activity.jump_rope" = "縄跳び";
+"workout.activity.kickboxing" = "キックボクシング";
+"workout.activity.pilates" = "ピラティス";
+"workout.activity.snowboarding" = "スノーボード";
+"workout.activity.stairs" = "階段";
+"workout.activity.step_training" = "ステップトレーニング";
+"workout.activity.wheelchair_walk_pace" = "車椅子（歩行ペース）";
+"workout.activity.wheelchair_run_pace" = "車椅子（走行ペース）";
+"workout.activity.tai_chi" = "太極拳";
+"workout.activity.mixed_cardio" = "混合カーディオ";
+"workout.activity.hand_cycling" = "ハンドサイクリング";
+"workout.activity.disc_sports" = "ディスクスポーツ";
+"workout.activity.fitness_gaming" = "フィットネスゲーム";
+"workout.activity.cardio_dance" = "カーディオダンス";
+"workout.activity.social_dance" = "社交ダンス";
+"workout.activity.pickleball" = "ピックルボール";
+"workout.activity.cooldown" = "クールダウン";
+"workout.activity.swim_bike_run" = "スイム・バイク・ラン";
+"workout.activity.transition" = "トランジション";
+"workout.activity.underwater_diving" = "潜水";
+"workout.activity.other" = "その他のワークアウト";

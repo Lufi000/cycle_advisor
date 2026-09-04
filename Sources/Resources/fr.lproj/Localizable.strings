@@ -1,0 +1,575 @@
+/* Tabs */
+"tab.home" = "Bloom";
+"tab.settings" = "Réglages";
+"tab.workout" = "Entraînement";
+"tab.assistant" = "Assistant IA";
+"subscription.title" = "AI Pro";
+
+/* Common */
+"common.done" = "OK";
+
+/* Workout */
+"workout.empty.title" = "Le repos fait partie du rythme";
+"workout.empty.body" = "Aucune séance enregistrée pour l’instant — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.empty.suggestion.breathe" = "Respiration et méditation";
+"workout.empty.suggestion.walk" = "Marche au parc";
+"workout.empty.suggestion.stretch" = "Étirements en douceur";
+"workout.metric.exercise_minutes" = "Min d’exercice";
+"workout.metric.steps" = "Pas";
+"workout.metric.active_calories" = "Calories actives";
+"workout.metric.today_total_duration" = "Temps d’activité aujourd’hui";
+"workout.metric.weekly_total_duration" = "Temps d’activité hebdomadaire";
+"workout.metric.monthly_total_duration" = "Temps d’activité mensuel";
+"workout.metric.yearly_total_duration" = "Temps d’activité annuel";
+"workout.metric.recent_week_total_duration" = "Temps d’activité sur 7 jours";
+"workout.metric.recent_month_total_duration" = "Temps d’activité sur 30 jours";
+"workout.metric.recent_year_total_duration" = "Temps d’activité sur 365 jours";
+"workout.metric.workout_count" = "séances";
+"workout.period.day" = "Jour";
+"workout.period.week" = "Semaine";
+"workout.period.month" = "Mois";
+"workout.period.year" = "Année";
+"workout.period.recent_week" = "7 derniers jours";
+"workout.period.recent_month" = "30 derniers jours";
+"workout.period.recent_year" = "365 derniers jours";
+"workout.period_label.day" = "aujourd’hui";
+"workout.period_label.week" = "cette semaine";
+"workout.period_label.month" = "ce mois-ci";
+"workout.period_label.year" = "cette année";
+"workout.period_label.recent_week" = "les 7 derniers jours";
+"workout.period_label.recent_month" = "les 30 derniers jours";
+"workout.period_label.recent_year" = "les 365 derniers jours";
+"workout.share.label" = "Partager la carte d’entraînement";
+"workout.share.save_title" = "Enregistrer la carte d’entraînement";
+"workout.share.saved" = "Enregistrée dans votre photothèque.";
+"workout.share.save_failed" = "L’enregistrement a échoué. Veuillez réessayer.";
+"workout.share.photo_access_denied" = "L’accès aux photos est désactivé. Activez-le dans Réglages pour enregistrer la carte.";
+"workout.title.recovery" = "Le repos fait partie du rythme";
+"workout.title.activity_ace_format" = "%@ en or";
+"workout.title.climbing" = "Stratège de la paroi";
+"workout.title.walking" = "Marcheuse infatigable";
+"workout.title.running" = "Chasseuse de vent";
+"workout.title.yoga" = "Harmonie corps-esprit";
+"workout.title.cycling" = "Chevalière de la route";
+"workout.title.swimming" = "Dompteuse de vagues";
+"workout.title.strength" = "Forgeuse de force";
+"workout.title.flexibility" = "Reine de la souplesse";
+"workout.title.dance" = "Fée du rythme";
+"workout.title.ball_sports" = "Joueuse de terrain";
+"workout.title.tennis" = "Danseuse de fond de court";
+"workout.title.basketball" = "Chasseuse de paniers";
+"workout.title.badminton" = "Assassine du volant";
+"workout.title.soccer" = "Capitaine du terrain";
+"workout.title.volleyball" = "Canon du filet";
+"workout.title.table_tennis" = "Magicienne de l’effet";
+"workout.title.golf" = "Poétesse du swing";
+"workout.title.baseball" = "Frappeuse au marbre";
+"workout.title.cardio" = "Moteur cardio";
+"workout.title.light_activity" = "Mouvement doux";
+"workout.title.rhythm_building" = "Construction du rythme";
+"workout.title.steady_rhythm" = "Rythme de mouvement régulier";
+"workout.summary.no_workouts_day" = "Aucune séance enregistrée aujourd’hui — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.summary.no_workouts" = "Aucune séance enregistrée pour l’instant — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.summary.no_workouts_month" = "Aucune séance enregistrée ce mois-ci — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.summary.no_workouts_year" = "Aucune séance enregistrée cette année — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.summary.no_workouts_recent_week" = "Aucune séance enregistrée sur les 7 derniers jours — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.summary.no_workouts_recent_month" = "Aucune séance enregistrée sur les 30 derniers jours — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.summary.no_workouts_recent_year" = "Aucune séance enregistrée sur les 365 derniers jours — ce n’est pas grave. Asseyez-vous au parc, respirez, ou faites une marche tranquille. Un début en douceur reste un début.";
+"workout.summary.no_activity_type" = "Cette semaine, vous avez commencé à écrire votre rythme avec votre corps. Chaque séance est un petit exercice pour réaligner votre attention, votre énergie et vous-même.";
+"workout.summary.no_activity_type_month" = "Ce mois-ci, vous avez commencé à écrire votre rythme avec votre corps. Chaque séance est un petit exercice pour réaligner votre attention, votre énergie et vous-même.";
+"workout.summary.no_activity_type_year" = "Cette année, vous avez commencé à écrire votre rythme avec votre corps. Chaque séance est un petit exercice pour réaligner votre attention, votre énergie et vous-même.";
+"workout.summary.no_activity_type_recent_week" = "Ces 7 derniers jours, vous avez commencé à écrire votre rythme avec votre corps. Chaque séance est un petit exercice pour réaligner votre attention, votre énergie et vous-même.";
+"workout.summary.no_activity_type_recent_month" = "Ces 30 derniers jours, vous avez commencé à écrire votre rythme avec votre corps. Chaque séance est un petit exercice pour réaligner votre attention, votre énergie et vous-même.";
+"workout.summary.no_activity_type_recent_year" = "Ces 365 derniers jours, vous avez commencé à écrire votre rythme avec votre corps. Chaque séance est un petit exercice pour réaligner votre attention, votre énergie et vous-même.";
+"workout.summary.no_activity_type_day" = "Aujourd’hui, vous avez commencé à écrire votre rythme avec votre corps. Chaque séance est un petit exercice pour réaligner votre attention, votre énergie et vous-même.";
+"workout.category.count_format" = "%d x";
+"workout.category.total" = "Total";
+"workout.category.accessibility_format" = "%@, %d fois, %@";
+"workout.duration.hour_min_format" = "%dh %dm";
+"workout.duration.hour_format" = "%dh";
+"workout.duration.minute_format" = "%dm";
+
+/* Sidebar */
+"sidebar.title" = "Menu";
+"sidebar.open_a11y" = "Ouvrir le menu";
+"sidebar.close_a11y" = "Fermer le menu";
+
+/* Settings */
+"settings.section.ai" = "IA";
+"settings.section.profile" = "Profil";
+"settings.section.disclaimer" = "Avertissement";
+"settings.section.language" = "Langue";
+"settings.section.medical_sources" = "Sources médicales";
+"settings.profile.display_name" = "Nom affiché";
+"settings.profile.display_name.hint" = "Affiché dans les salutations ; laissez vide pour ne pas indiquer votre nom.";
+"onboarding.display_name.title" = "Comment dois-je vous appeler ?";
+"onboarding.display_name.subtitle" = "Ce nom est utilisé uniquement pour les salutations dans l’app.";
+"onboarding.display_name.skip" = "Plus tard";
+"onboarding.display_name.save" = "Enregistrer";
+"settings.thinking_mode" = "Mode de réflexion";
+"settings.thinking_mode.hint" = "Concerne les futures fonctionnalités de chat IA utilisant cette préférence.";
+"settings.language.title" = "Langue de l’app";
+"settings.language.hint" = "L’app suit la langue de votre système. Touchez pour la changer dans Réglages.";
+
+/* Billing */
+"billing.section.account" = "Compte de crédits";
+"billing.section.recharge" = "Recharger";
+"billing.section.subscription" = "Abonnement";
+"billing.section.metrics" = "Statistiques sur 7 jours";
+"billing.section.ledger" = "Journal";
+"billing.balance.title" = "Solde disponible";
+"billing.balance.value" = "%d crédits";
+"billing.balance.inline" = "Solde %d";
+"billing.subscription.title" = "Accès IA";
+"billing.subscription.badge_active" = "AI Pro";
+"billing.subscription.badge_inactive" = "Gratuit";
+"billing.subscription.inactive" = "AI Pro est inactif";
+"billing.subscription.active_until" = "AI Pro actif jusqu’au %@";
+"billing.subscription.active_title" = "AI Pro actif";
+"billing.subscription.active_detail" = "Votre abonnement est actif. Touchez pour le gérer.";
+"billing.subscription.chat_active" = "Chat AI Pro disponible";
+"billing.subscription.free_plan" = "Offre gratuite";
+"billing.subscription.required_hint" = "Abonnez-vous pour continuer le chat IA une fois les messages gratuits du jour épuisés.";
+"billing.subscription.monthly_price" = "AI Pro %@";
+"billing.subscription.monthly_detail" = "Abonnement mensuel avec renouvellement automatique. Débloque le chat AI Pro une fois les messages gratuits du jour épuisés.";
+"billing.chat.remaining_today" = "%d chats disponibles aujourd’hui";
+"billing.free_chat.remaining" = "%d chats gratuits restants aujourd’hui";
+"billing.free_chat.warning_low" = "Plus que %d chats gratuits aujourd’hui — abonnez-vous à AI Pro pour continuer ensuite.";
+"billing.free_chat.warning_dismiss_a11y" = "Fermer l’avis";
+"billing.low_balance.hint" = "Solde faible. Rechargez pour éviter toute interruption des chats.";
+"billing.package.credits" = "%d crédits";
+"billing.menu.buy_pack" = "Acheter %@ (%d crédits)";
+"billing.menu.subscribe" = "S’abonner à %@";
+"billing.menu.balance" = "%d crédits";
+"billing.metrics.chat_7d" = "Nombre de chats";
+"billing.metrics.consume_7d" = "Crédits consommés";
+"billing.metrics.revenue_7d" = "Montant payé";
+"billing.metrics.amount_cny" = "¥%.2f";
+"billing.tuning.keep" = "Suggestion tarifaire : conserver les offres actuelles.";
+"billing.tuning.decrease" = "Suggestion tarifaire : la marge est faible ; réduisez les crédits de chaque palier de 10 % à 15 %.";
+"billing.tuning.increase_entry" = "Suggestion tarifaire : la marge est élevée mais la conversion est faible ; augmentez les crédits du palier d’entrée d’environ 10 %.";
+"billing.tuning.mid_tier" = "Suggestion tarifaire : les achats de dépassement sont élevés ; améliorez la valeur de l’offre intermédiaire.";
+"billing.ledger.empty" = "Aucune écriture au journal pour l’instant";
+"billing.ledger.balance" = "Solde %d";
+"billing.ledger.hold" = "Pré-réservation du chat";
+"billing.ledger.rollback" = "Annulation en cas d’échec";
+"billing.ledger.refund" = "Remboursement de régularisation";
+"billing.ledger.consume_extra" = "Frais supplémentaires de régularisation";
+"billing.ledger.settle" = "Chat réglé (%d crédits)";
+"billing.ledger.recharge" = "Recharge %@";
+"billing.ledger.subscription" = "Abonnement AI Pro";
+"billing.error.insufficient_credits" = "Crédits insuffisants. Veuillez recharger.";
+"billing.error.rate_limited" = "Les requêtes sont trop fréquentes. Veuillez réessayer dans un instant.";
+"billing.error.daily_limit" = "Limite quotidienne de chats atteinte. Veuillez réessayer demain.";
+"billing.error.purchase_unavailable" = "L’achat est indisponible. Veuillez réessayer plus tard.";
+"billing.error.purchase_not_verified" = "L’achat n’a pas pu être vérifié. Veuillez réessayer.";
+"billing.error.subscription_required" = "Les chats gratuits du jour sont épuisés. Abonnez-vous à AI Pro pour continuer.";
+"billing.error.product_load_failed" = "Impossible de charger les détails de l’abonnement. Touchez pour réessayer.";
+
+/* Subscription actions & legal (App Store Guideline 3.1.1 / 3.1.2) */
+"billing.action.subscribe_aipro" = "S’abonner à AI Pro";
+"billing.action.purchasing_aipro" = "Achat d’AI Pro…";
+"billing.action.restore" = "Restaurer les achats";
+"billing.action.restoring" = "Restauration…";
+"billing.action.restored" = "Abonnement restauré.";
+"billing.action.no_purchases" = "Aucun abonnement actif trouvé sur cet identifiant Apple.";
+"billing.action.manage" = "Gérer l’abonnement";
+"billing.action.purchasing" = "Achat en cours…";
+"billing.action.purchase_cancelled" = "Achat annulé.";
+"billing.action.purchase_pending" = "Achat en attente. Votre abonnement sera mis à jour une fois l’achat terminé.";
+"billing.action.purchase_in_progress" = "Un achat est déjà en cours. Veuillez patienter.";
+"billing.subscription.loading" = "Chargement de l’abonnement…";
+"billing.subscription.info_a11y" = "Informations sur l’abonnement";
+"billing.subscription.disclosure" = "AI Pro est un abonnement mensuel avec renouvellement automatique qui débloque le chat AI Pro une fois les messages gratuits du jour épuisés. Le paiement est débité de votre identifiant Apple lors de la confirmation de l’achat. L’abonnement se renouvelle automatiquement au tarif indiqué, sauf résiliation au moins 24 heures avant la fin de la période en cours. L’accès à l’abonnement est disponible sur les appareils connectés avec le même identifiant Apple. Gérez ou annulez à tout moment dans les réglages d’abonnement de votre identifiant Apple.";
+"billing.legal.terms" = "Conditions d’utilisation";
+"billing.legal.privacy" = "Politique de confidentialité";
+
+/* AI Assistant tab */
+"assistant.intro.title" = "Votre assistante de cycle";
+"assistant.intro.body" = "Posez des questions sur votre cycle, votre mode de vie et votre bien-être — je vous donnerai des suggestions adaptées à votre phase actuelle.";
+"assistant.greeting %@ %@ %lld %@" = "Bonjour %1$@. Quel plaisir de vous voir. Vous êtes au jour %3$lld de votre phase « %2$@ » %4$@\nAllez-y doucement et prenez d’abord soin de votre corps aujourd’hui.";
+"assistant.greeting.predicted %@ %@ %lld %@" = "Bonjour %1$@. Quel plaisir de vous voir. Vous êtes probablement au jour %3$lld de votre phase « %2$@ » %4$@\nAllez-y doucement et prenez d’abord soin de votre corps aujourd’hui.";
+"assistant.greeting.no_name %@ %lld %@" = "Quel plaisir de vous voir. Vous êtes au jour %2$lld de votre phase « %1$@ » %3$@\nAllez-y doucement et prenez d’abord soin de votre corps aujourd’hui.";
+"assistant.greeting.predicted.no_name %@ %lld %@" = "Quel plaisir de vous voir. Vous êtes probablement au jour %2$lld de votre phase « %1$@ » %3$@\nAllez-y doucement et prenez d’abord soin de votre corps aujourd’hui.";
+"assistant.greeting.bubble %@" = "Bonjour %@ ! Quel plaisir de vous voir.";
+"assistant.greeting.bubble.no_name" = "Bonjour ! Quel plaisir de vous voir.";
+"assistant.suggested_questions_label" = "Vous voudrez peut-être demander :";
+"assistant.followup_label" = "Vous pouvez aussi demander :";
+"assistant.thinking.in_progress" = "Réflexion en cours…";
+"assistant.thinking.completed" = "Processus de réflexion";
+"assistant.new_chat" = "Nouveau chat";
+"assistant.clear_history" = "Effacer tous les chats";
+"assistant.history.title" = "Historique des chats";
+"assistant.history.untitled" = "Chat sans titre";
+"assistant.history.messages_count_suffix" = "messages";
+"assistant.error_fallback" = "Désolée, une erreur s’est produite. Veuillez réessayer 🙏";
+"assistant.input_placeholder" = "Demandez-moi ce que vous voulez…";
+"assistant.date.today" = "Aujourd’hui";
+"assistant.date.yesterday" = "Hier";
+"assistant.date.day_before_yesterday" = "Avant-hier";
+"assistant.message.copy" = "Copier";
+"assistant.message.refresh" = "Actualiser";
+"assistant.message.delete" = "Supprimer";
+
+"assistant.header.day_format %@ %lld" = "%1$@ · Jour %2$lld";
+"assistant.header.summary_title" = "Aperçu du jour";
+"assistant.header.exercise" = "Exercice";
+"assistant.header.daylight" = "Lumière du jour";
+"assistant.header.steps" = "Pas";
+"assistant.header.hrv" = "VRC";
+"assistant.header.sleep" = "Sommeil";
+"assistant.header.collapse_a11y" = "Réduire l’aperçu du jour";
+"assistant.header.expand_a11y" = "Développer l’aperçu du jour";
+
+/* Units (formatted health metrics) */
+"unit.duration.hour_minute %lld %lld" = "%1$lldh%2$lldm";
+"unit.duration.hour %lld" = "%1$lldh";
+"unit.duration.minute %lld" = "%1$lldm";
+"unit.duration.minute_zero" = "0m";
+"unit.steps.count %lld" = "%1$lld pas";
+"unit.hrv_ms %lld" = "%1$lldms";
+
+/* Home cycle ring */
+"home.cycle_ring.day_label" = "Jour";
+
+/* Thinking mode (DeepSeek) */
+"thinking.fast" = "Rapide";
+"thinking.deep" = "Approfondi";
+
+/* Home */
+"home.navigation.title" = "Bloom";
+"home.greeting %@" = "Bonjour, %@";
+"home.greeting.no_name" = "Bonjour";
+"home.cycle_stage.current" = "Phase actuelle";
+"home.cycle_stage.explore" = "Guide des phases";
+"home.cycle_stage.a11y %lld %@" = "Jour %1$lld du cycle, %2$@";
+"home.health_metrics.title" = "Données de santé";
+"home.health_metrics.today" = "Santé du jour";
+"home.health_metrics.daylight" = "Lumière du jour";
+"home.health_metrics.exercise" = "Exercice";
+"home.health_metrics.steps" = "Pas";
+"home.health_metrics.sleep" = "Sommeil";
+"home.health_metrics.refresh_a11y" = "Actualiser les données de santé";
+"health.metric.meaning.title" = "Ce que cela signifie";
+"health.metric.source.title" = "Source des données";
+"health.metric.hrv.meaning" = "La VRC est la variabilité de la fréquence cardiaque : la variation du temps entre les battements du cœur. Elle sert souvent de signal de tendance pour la récupération, le stress et l’état du système nerveux autonome. Une valeur quotidienne isolée n’est qu’une référence, pas un diagnostic.";
+"health.metric.hrv.source" = "Provient de la variabilité de la fréquence cardiaque dans Apple Santé, généralement mesurée en arrière-plan par l’Apple Watch ou des appareils compatibles.";
+"health.metric.daylight.meaning" = "Le temps passé à la lumière du jour est la durée enregistrée aujourd’hui à la lumière naturelle. Il peut vous aider à comprendre votre exposition à la lumière extérieure, liée au rythme circadien, à l’humeur et au moment du sommeil.";
+"health.metric.daylight.source" = "Provient du temps passé à la lumière du jour dans Apple Santé, généralement enregistré par les modèles d’Apple Watch prenant en charge cette mesure.";
+"health.metric.exercise.meaning" = "Les minutes d’exercice sont le temps d’aujourd’hui comptabilisé dans l’anneau Exercice d’Apple Activité, reflétant généralement une intensité d’activité plus marquée.";
+"health.metric.exercise.source" = "Provient des minutes d’exercice dans Apple Santé, enregistrées par l’Apple Watch, des entraînements ou des apps compatibles.";
+"health.metric.steps.meaning" = "Les pas sont le nombre total de pas enregistrés aujourd’hui. Ils sont utiles pour suivre les tendances d’activité quotidienne, sans décrire entièrement l’intensité de l’exercice.";
+"health.metric.steps.source" = "Provient des pas dans Apple Santé, enregistrés par l’iPhone, l’Apple Watch ou des appareils compatibles.";
+"health.metric.sleep.meaning" = "La durée du sommeil est le temps total de sommeil de votre dernière nuit. Un sommeil régulier est étroitement lié au rythme du cycle, à l’humeur et à la récupération ; une seule nuit n’est qu’une référence, pas un diagnostic.";
+"health.metric.sleep.source" = "Provient de l’analyse du sommeil dans Apple Santé, généralement enregistrée par l’Apple Watch ou des appareils compatibles de suivi du sommeil.";
+"home.cycle_detail.current_badge" = "Actuelle";
+"home.cycle_detail.duration_format" = "~%d jours";
+
+/* Disclaimer */
+"disclaimer.text" = "À titre indicatif uniquement, ne constitue pas un avis médical";
+
+/* Citations */
+"citation.sources.title" = "Sources";
+"citation.sources.count_format" = "%d éléments";
+"citation.toggle_sources_a11y" = "Développer ou réduire les sources";
+"citation.open_source_a11y" = "Ouvrir la source";
+"citation.owh.publisher" = "Office on Women's Health";
+"citation.owh_menstrual.title" = "Cycle menstruel";
+"citation.owh_menstrual.summary" = "Phases du cycle, symptômes des règles et quand consulter.";
+"citation.owh_pms.title" = "Syndrome prémenstruel (SPM)";
+"citation.owh_pms.summary" = "Symptômes courants du SPM et habitudes de vie qui peuvent aider.";
+"citation.cdc.publisher" = "Centers for Disease Control and Prevention";
+"citation.cdc_activity.title" = "Recommandations d’activité physique pour adultes";
+"citation.cdc_activity.summary" = "Objectifs d’activité fondés sur les données probantes et conseils d’intensité.";
+"citation.nih.publisher" = "National Institutes of Health";
+"citation.nih_sleep.title" = "Privation et manque de sommeil";
+"citation.nih_sleep.summary" = "Pourquoi un sommeil suffisant et de qualité compte pour la santé.";
+"citation.dga.publisher" = "U.S. Dietary Guidelines";
+"citation.dga_nutrition.title" = "Recommandations alimentaires pour les Américains";
+"citation.dga_nutrition.summary" = "Conseils nutritionnels fédéraux pour de saines habitudes alimentaires.";
+"citation.nccih.publisher" = "National Center for Complementary and Integrative Health";
+"citation.nccih_tcm.title" = "Médecine traditionnelle chinoise : ce qu’il faut savoir";
+"citation.nccih_tcm.summary" = "Contexte de sécurité des pratiques de bien-être traditionnelles et complémentaires.";
+
+/* Cycle Phases */
+"phase.menstrual" = "Menstruation";
+"phase.follicular" = "Phase folliculaire";
+"phase.ovulation" = "Ovulation";
+"phase.luteal" = "Phase lutéale";
+"phase.predicted_prefix" = "Est. ";
+"phase.predicted_label" = "Estimé";
+
+"phase.menstrual.desc" = "Les œstrogènes et la progestérone sont au plus bas ; votre corps récupère. Restez au chaud, reposez-vous bien, augmentez vos apports en fer et privilégiez des mouvements doux comme la marche ou le yoga.";
+"phase.follicular.desc" = "Désigne ici la période post-menstruelle (après la fin des règles, avant l’ovulation). Les follicules se développent et les œstrogènes augmentent — l’énergie et l’humeur sont à la hausse. Un excellent moment pour essayer de nouveaux entraînements ou faire avancer des projets importants.";
+"phase.ovulation.desc" = "Les œstrogènes atteignent leur pic ; l’endurance et la concentration sont au sommet du cycle. Idéal pour les entraînements intenses et le travail créatif.";
+"phase.luteal.desc" = "La progestérone augmente, élevant la température corporelle et le métabolisme. La deuxième moitié peut apporter des sautes d’humeur ou un SPM — gardez une routine stable et une alimentation équilibrée.";
+
+"phase.menstrual.overlay"  = "Restez au chaud (surtout le ventre) et privilégiez des aliments chauds et faciles à digérer.";
+"phase.follicular.overlay" = "L’énergie revient — misez sur le cardio et la musculation, et privilégiez des protéines de qualité.";
+"phase.ovulation.overlay"  = "Vous vous sentez probablement légère et capable — un bon moment pour des entraînements intenses ou des activités sociales. Hydratez-vous bien.";
+"phase.luteal.overlay"     = "Ballonnements et sautes d’humeur sont fréquents — réduisez le sel, gardez des mouvements doux et prévoyez du temps pour décompresser.";
+
+/* Suggestion Dimensions */
+"dim.diet" = "Alimentation";
+"dim.exercise" = "Exercice";
+"dim.mood" = "Humeur";
+"dim.sleep" = "Sommeil";
+
+/* Period Detail */
+"period.detail.title" = "Profil des règles";
+"period.detail.flow" = "Flux";
+"period.detail.symptoms" = "Symptômes récents";
+"period.detail.no_data" = "Aucun symptôme de règles enregistré — consignez-les dans l’app Santé";
+"period.symptoms.title" = "Symptômes des règles";
+"period.symptoms.summary %lld" = "%lld symptômes récents";
+
+/* Flow Level */
+"flow.unspecified" = "Non précisé";
+"flow.light" = "Léger";
+"flow.medium" = "Moyen";
+"flow.heavy" = "Abondant";
+"flow.none" = "Aucun";
+
+/* Symptom Severity */
+"severity.not_present" = "Aucune";
+"severity.mild" = "Légère";
+"severity.moderate" = "Modérée";
+"severity.severe" = "Sévère";
+
+/* Symptom Types */
+"symptom.abdominal_cramps" = "Crampes";
+"symptom.bloating" = "Ballonnements";
+"symptom.breast_pain" = "Douleurs mammaires";
+"symptom.headache" = "Maux de tête";
+"symptom.acne" = "Acné";
+"symptom.lower_back_pain" = "Douleurs lombaires";
+"symptom.pelvic_pain" = "Douleurs pelviennes";
+"symptom.mood_changes" = "Changements d’humeur";
+"symptom.fatigue" = "Fatigue";
+"symptom.appetite_changes" = "Changements d’appétit";
+
+/* Profile */
+"profile.title" = "Mon profil";
+"profile.empty" = "Aucune donnée de profil pour l’instant\nIl se construira automatiquement avec le temps";
+"profile.section.body" = "Informations corporelles";
+"profile.section.name" = "Nom";
+"profile.section.cycle" = "Statistiques du cycle";
+"profile.section.workout" = "Habitudes d’entraînement";
+"profile.section.symptoms" = "Journal des symptômes";
+"profile.section.lifestyle" = "Mode de vie";
+"profile.age" = "Âge";
+"profile.height" = "Taille";
+"profile.weight" = "Poids";
+"profile.avg_cycle" = "Cycle moyen";
+"profile.avg_period" = "Règles moyennes";
+"profile.days" = "jours";
+"profile.cycles_recorded" = "Cycles enregistrés";
+"profile.flow_pattern" = "Type de flux";
+"profile.weekly_freq" = "Fréq. hebdo";
+"profile.times_week" = "×/sem";
+"profile.avg_duration" = "Durée moyenne";
+"profile.minutes" = "min";
+"profile.sleep" = "Rythme de sommeil";
+"profile.diet" = "Préférences alimentaires";
+"profile.sensitivities" = "Sensibilités";
+"profile.conditions" = "Problèmes de santé";
+"profile.ai_source" = "Extrait des conversations IA";
+"profile.reset" = "Réinitialiser le profil";
+"profile.reset.confirm" = "Voulez-vous vraiment réinitialiser toutes les données du profil ?";
+"profile.reset.cancel" = "Annuler";
+"profile.reset.action" = "Réinitialiser";
+
+/* Errors */
+"error.empty_response" = "Aucune réponse de l’IA, veuillez réessayer";
+"error.invalid_response" = "Réponse réseau invalide";
+"error.http_format" = "Erreur serveur (%d), veuillez réessayer";
+"error.auth_failed" = "L’authentification du service IA a échoué. Veuillez vérifier le jeton de l’app.";
+"error.network_unavailable" = "Impossible de se connecter au service IA. Vérifiez votre réseau et réessayez.";
+"error.decoding" = "Échec de l’analyse de la réponse, veuillez réessayer";
+
+/* Widget */
+"widget.display_name" = "Santé du jour";
+"widget.description" = "Consultez le temps passé à la lumière du jour et la variabilité de la fréquence cardiaque du jour";
+"widget.today_health" = "Santé du jour";
+"widget.daylight" = "Lumière du jour";
+"widget.day_in_phase %lld" = "Jour %lld";
+"widget.cycle_day %lld %lld" = "Jour %1$lld · Jour %2$lld du cycle";
+"widget.hrv_avg %lld" = "moy. %lld";
+
+/* Solar Terms Tab */
+"tab.solar_terms" = "Termes solaires";
+
+/* Seasons */
+"season.spring" = "Printemps";
+"season.summer" = "Été";
+"season.autumn" = "Automne";
+"season.winter" = "Hiver";
+
+/* Solar Terms UI */
+"solar.current" = "Terme solaire actuel";
+"solar.next" = "Suivant";
+"solar.days_until %lld" = "%lld jours avant le prochain terme";
+
+/* 24 Solar Terms — Names */
+"solar.lichun" = "Début du printemps";
+"solar.yushui" = "Eaux de pluie";
+"solar.jingzhe" = "Éveil des insectes";
+"solar.chunfen" = "Équinoxe de printemps";
+"solar.qingming" = "Pure clarté";
+"solar.guyu" = "Pluie des grains";
+"solar.lixia" = "Début de l’été";
+"solar.xiaoman" = "Petite plénitude";
+"solar.mangzhong" = "Grains en épis";
+"solar.xiazhi" = "Solstice d’été";
+"solar.xiaoshu" = "Petite chaleur";
+"solar.dashu" = "Grande chaleur";
+"solar.liqiu" = "Début de l’automne";
+"solar.chushu" = "Fin des chaleurs";
+"solar.bailu" = "Rosée blanche";
+"solar.qiufen" = "Équinoxe d’automne";
+"solar.hanlu" = "Rosée froide";
+"solar.shuangjang" = "Descente du givre";
+"solar.lidong" = "Début de l’hiver";
+"solar.xiaoxue" = "Petite neige";
+"solar.daxue" = "Grande neige";
+"solar.dongzhi" = "Solstice d’hiver";
+"solar.xiaohan" = "Petit froid";
+"solar.dahan" = "Grand froid";
+
+/* 24 Solar Terms — Climate */
+"solar.lichun.climate" = "Le printemps commence. Les températures montent, mais le froid peut revenir. Les matinées glacées cèdent la place à des après-midi plus doux.";
+"solar.yushui.climate" = "Les précipitations augmentent à mesure que la glace de l’hiver fond. L’humidité s’accroît et l’air devient nettement plus doux.";
+"solar.jingzhe.climate" = "Le tonnerre réveille les créatures en hibernation. Les températures grimpent régulièrement avec des orages printaniers occasionnels.";
+"solar.chunfen.climate" = "Le jour et la nuit sont égaux. Un temps doux et équilibré, avec des brises légères.";
+"solar.qingming.climate" = "Un ciel clair et pur. Une période agréable, avec une chaleur croissante et une végétation en fleurs.";
+"solar.guyu.climate" = "La dernière gelée est passée. Des pluies généreuses nourrissent les cultures nouvellement plantées.";
+"solar.lixia.climate" = "L’été arrive. La chaleur diurne s’intensifie et les orages du soir deviennent fréquents.";
+"solar.xiaoman.climate" = "Les grains commencent à se remplir. Un air chaud et humide domine, avec des averses fréquentes.";
+"solar.mangzhong.climate" = "Le blé mûrit et les semis d’été battent leur plein. Une chaleur lourde et moite s’installe.";
+"solar.xiazhi.climate" = "Le jour le plus long. Le soleil est à son zénith ; la chaleur s’intensifie, bien que les journées les plus chaudes soient encore à venir.";
+"solar.xiaoshu.climate" = "La chaleur s’installe. Un temps chaud et humide avec des orages en après-midi.";
+"solar.dashu.climate" = "Le pic de la chaleur estivale. La période la plus chaude et la plus humide de l’année.";
+"solar.liqiu.climate" = "L’automne commence de nom, même si la chaleur estivale persiste. Les matinées peuvent être légèrement plus fraîches.";
+"solar.chushu.climate" = "La période de la « fin des chaleurs ». La chaleur diurne s’estompe et des brises plus fraîches arrivent le soir.";
+"solar.bailu.climate" = "La rosée du matin apparaît tandis que les nuits se rafraîchissent nettement. L’écart de température entre le jour et la nuit se creuse.";
+"solar.qiufen.climate" = "Le jour et la nuit sont à nouveau égaux. Un temps frais et confortable sous un ciel dégagé.";
+"solar.hanlu.climate" = "La rosée froide se forme. Les températures chutent sensiblement et l’air devient sec et vif.";
+"solar.shuangjang.climate" = "Premières gelées dans de nombreuses régions. Les matinées sont froides et le feuillage d’automne est à son apogée.";
+"solar.lidong.climate" = "L’hiver commence. Des masses d’air froid s’installent ; les régions du nord peuvent voir les premières neiges.";
+"solar.xiaoxue.climate" = "Légères chutes de neige dans le nord. Un temps humide et froid se généralise.";
+"solar.daxue.climate" = "Chutes de neige abondantes possibles. Les températures plongent et le sol peut geler.";
+"solar.dongzhi.climate" = "Le jour le plus court. Le froid le plus intense commence, même si les journées vont lentement rallonger.";
+"solar.xiaohan.climate" = "La période la plus froide approche. Vents mordants et températures glaciales.";
+"solar.dahan.climate" = "La période la plus froide de l’année. Froid extrême, air sec et tempêtes de neige occasionnelles.";
+
+/* 24 Solar Terms — Wellness Tips */
+"solar.lichun.wellness" = "Nourrissez votre foie avec des légumes verts feuillus. Commencez des étirements doux pour accueillir l’énergie yang ascendante.";
+"solar.yushui.wellness" = "Soutenez votre rate avec des aliments chauds et faciles à digérer. Évitez les plats froids et crus pendant que l’humidité s’installe.";
+"solar.jingzhe.wellness" = "Dissipez les stagnations par un exercice léger. Les poires et le miel apaisent la gorge sèche.";
+"solar.chunfen.wellness" = "Visez l’équilibre dans l’alimentation et la routine. Un mélange de calme intérieur et d’activité extérieure convient à cet équinoxe.";
+"solar.qingming.wellness" = "Sortez dehors — randonnées et promenades en nature élèvent l’esprit. Mangez des légumes verts de saison comme les épinards.";
+"solar.guyu.wellness" = "Buvez beaucoup d’eau et de tisanes. La soupe de haricots mungo et le thé au chrysanthème aident à gérer l’humidité croissante.";
+"solar.lixia.wellness" = "Restez calme et évitez le surmenage. Privilégiez les aliments amers comme la margose pour dissiper la chaleur interne.";
+"solar.xiaoman.wellness" = "Mangez léger et rafraîchissant — concombre, pastèque et haricots mungo. Restez bien hydratée.";
+"solar.mangzhong.wellness" = "Ménagez-vous dans la chaleur. Accordez-vous une pause à midi et mangez des repas faciles à digérer.";
+"solar.xiazhi.wellness" = "Protégez votre cœur : évitez les boissons glacées, mangez des aliments rouges comme les tomates et reposez-vous aux heures les plus chaudes.";
+"solar.xiaoshu.wellness" = "Restez au frais et hydratée. Des porridges légers et des fruits frais aident à équilibrer la chaleur estivale.";
+"solar.dashu.wellness" = "Prévenez les coups de chaleur — reposez-vous à l’intérieur à midi, buvez de l’eau tiède et évitez les efforts intenses.";
+"solar.liqiu.wellness" = "Commencez à humidifier vos poumons : poires, bulbes de lys et miel contre la sécheresse automnale.";
+"solar.chushu.wellness" = "Faites passer votre alimentation du rafraîchissant au réchauffant. Ajoutez des céréales un peu plus riches et des légumes-racines.";
+"solar.bailu.wellness" = "Habillez-vous en couches pour les matinées fraîches. Soupes et congees réconfortants protègent les poumons.";
+"solar.qiufen.wellness" = "Équilibrez le yin et le yang. Un exercice modéré et une alimentation chaude et variée maintiennent l’équilibre.";
+"solar.hanlu.wellness" = "Gardez les pieds et le bas du dos au chaud. Les épices réchauffantes comme le gingembre et la cannelle conviennent à cette fraîcheur.";
+"solar.shuangjang.wellness" = "Nourrissez votre estomac — mangez des aliments chauds et moelleux. Les kakis et les châtaignes sont de saison.";
+"solar.lidong.wellness" = "Stockez de l’énergie pour l’hiver : couchez-vous tôt et mangez des ragoûts nourrissants d’agneau ou de poulet.";
+"solar.xiaoxue.wellness" = "Les plats chauds mijotés comme les soupes vous soutiennent. Un exercice modéré en intérieur maintient la circulation du qi.";
+"solar.daxue.wellness" = "Concentrez-vous sur la chaleur intérieure. Le sésame noir, les noix et les baies de goji renforcent l’énergie des reins.";
+"solar.dongzhi.wellness" = "Le meilleur moment pour nourrir et restaurer. Savourez des raviolis et une fondue d’agneau ; protégez-vous du froid.";
+"solar.xiaohan.wellness" = "Mangez des repas chauds et riches en protéines. Un tai-chi ou un yoga doux maintient la circulation sans épuiser vos réserves.";
+"solar.dahan.wellness" = "Préparez-vous à la dernière vague de froid. Reposez-vous bien, mangez un porridge copieux et restez bien couverte.";
+
+/* HealthKit Workout Activities */
+"workout.activity.american_football" = "Football américain";
+"workout.activity.archery" = "Tir à l’arc";
+"workout.activity.australian_football" = "Football australien";
+"workout.activity.badminton" = "Badminton";
+"workout.activity.baseball" = "Baseball";
+"workout.activity.basketball" = "Basketball";
+"workout.activity.bowling" = "Bowling";
+"workout.activity.boxing" = "Boxe";
+"workout.activity.climbing" = "Escalade";
+"workout.activity.cricket" = "Cricket";
+"workout.activity.cross_training" = "Entraînement croisé";
+"workout.activity.curling" = "Curling";
+"workout.activity.cycling" = "Cyclisme";
+"workout.activity.dance" = "Danse";
+"workout.activity.dance_inspired_training" = "Entraînement inspiré de la danse";
+"workout.activity.elliptical" = "Vélo elliptique";
+"workout.activity.equestrian_sports" = "Sports équestres";
+"workout.activity.fencing" = "Escrime";
+"workout.activity.fishing" = "Pêche";
+"workout.activity.functional_strength_training" = "Renforcement musculaire fonctionnel";
+"workout.activity.golf" = "Golf";
+"workout.activity.gymnastics" = "Gymnastique";
+"workout.activity.handball" = "Handball";
+"workout.activity.hiking" = "Randonnée";
+"workout.activity.hockey" = "Hockey";
+"workout.activity.hunting" = "Chasse";
+"workout.activity.lacrosse" = "Lacrosse";
+"workout.activity.martial_arts" = "Arts martiaux";
+"workout.activity.mind_and_body" = "Esprit et corps";
+"workout.activity.mixed_metabolic_cardio_training" = "Cardio métabolique mixte";
+"workout.activity.paddle_sports" = "Sports de pagaie";
+"workout.activity.play" = "Jeu";
+"workout.activity.preparation_and_recovery" = "Préparation et récupération";
+"workout.activity.racquetball" = "Racquetball";
+"workout.activity.rowing" = "Aviron";
+"workout.activity.rugby" = "Rugby";
+"workout.activity.running" = "Course à pied";
+"workout.activity.sailing" = "Voile";
+"workout.activity.skating_sports" = "Sports de patinage";
+"workout.activity.snow_sports" = "Sports de neige";
+"workout.activity.soccer" = "Football";
+"workout.activity.softball" = "Softball";
+"workout.activity.squash" = "Squash";
+"workout.activity.stair_climbing" = "Montée d’escaliers";
+"workout.activity.surfing_sports" = "Sports de surf";
+"workout.activity.swimming" = "Natation";
+"workout.activity.table_tennis" = "Tennis de table";
+"workout.activity.tennis" = "Tennis";
+"workout.activity.track_and_field" = "Athlétisme";
+"workout.activity.traditional_strength_training" = "Renforcement musculaire traditionnel";
+"workout.activity.volleyball" = "Volleyball";
+"workout.activity.walking" = "Marche";
+"workout.activity.water_fitness" = "Aquagym";
+"workout.activity.water_polo" = "Water-polo";
+"workout.activity.water_sports" = "Sports nautiques";
+"workout.activity.wrestling" = "Lutte";
+"workout.activity.yoga" = "Yoga";
+"workout.activity.barre" = "Barre";
+"workout.activity.core_training" = "Gainage";
+"workout.activity.cross_country_skiing" = "Ski de fond";
+"workout.activity.downhill_skiing" = "Ski alpin";
+"workout.activity.flexibility" = "Souplesse";
+"workout.activity.high_intensity_interval_training" = "HIIT";
+"workout.activity.jump_rope" = "Corde à sauter";
+"workout.activity.kickboxing" = "Kick-boxing";
+"workout.activity.pilates" = "Pilates";
+"workout.activity.snowboarding" = "Snowboard";
+"workout.activity.stairs" = "Escaliers";
+"workout.activity.step_training" = "Step";
+"workout.activity.wheelchair_walk_pace" = "Fauteuil roulant, allure marche";
+"workout.activity.wheelchair_run_pace" = "Fauteuil roulant, allure course";
+"workout.activity.tai_chi" = "Tai-chi";
+"workout.activity.mixed_cardio" = "Cardio mixte";
+"workout.activity.hand_cycling" = "Handbike";
+"workout.activity.disc_sports" = "Sports de disque";
+"workout.activity.fitness_gaming" = "Jeux vidéo fitness";
+"workout.activity.cardio_dance" = "Cardio-danse";
+"workout.activity.social_dance" = "Danse de société";
+"workout.activity.pickleball" = "Pickleball";
+"workout.activity.cooldown" = "Retour au calme";
+"workout.activity.swim_bike_run" = "Natation, vélo, course";
+"workout.activity.transition" = "Transition";
+"workout.activity.underwater_diving" = "Plongée sous-marine";
+"workout.activity.other" = "Autre entraînement";

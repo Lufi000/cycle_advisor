@@ -47,7 +47,10 @@ struct MainTabView: View {
         }
         // 同步 HomeViewModel 的 context 和推荐问题到 AssistantViewModel
         .onChange(of: homeViewModel.context) { _, newContext in
-            assistantViewModel.context = newContext
+            // DEBUG-REPRO: keep mock metrics in assistant header
+            if ProcessInfo.processInfo.environment["CA_MOCK_CONTEXT"] != "1" {
+                assistantViewModel.context = newContext
+            }
         }
         .onChange(of: homeViewModel.suggestedQuestions) { _, newQuestions in
             assistantViewModel.suggestedQuestions = newQuestions

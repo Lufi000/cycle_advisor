@@ -109,10 +109,7 @@
 "settings.thinking_mode" = "思考模式";
 "settings.thinking_mode.hint" = "影响后续使用该偏好的 AI 对话能力。";
 "settings.language.title" = "应用语言";
-"settings.language.hint" = "覆盖应用内的系统语言，切换后立即生效。";
-"settings.language.system" = "跟随系统";
-"settings.language.english" = "English";
-"settings.language.chinese" = "简体中文";
+"settings.language.hint" = "App 语言跟随系统。点击前往系统设置修改。";
 
 /* Billing */
 "billing.section.account" = "Credits 账户";

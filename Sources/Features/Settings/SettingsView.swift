@@ -3,20 +3,20 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("displayName") private var displayName = ""
     @AppStorage("thinkingMode") private var thinkingModeRaw: String = ThinkingMode.fast.rawValue
-    private let languageManager = LanguageManager.shared
-
-    private var languageBinding: Binding<LanguageManager.AppLanguage> {
-        Binding(
-            get: { languageManager.current },
-            set: { languageManager.current = $0 }
-        )
-    }
 
     private var thinkingModeBinding: Binding<ThinkingMode> {
         Binding(
             get: { ThinkingMode(rawValue: thinkingModeRaw) ?? .fast },
             set: { thinkingModeRaw = $0.rawValue }
         )
+    }
+
+    /// 当前 App 实际生效的语言名(以其自身语言显示,如 "Español")。
+    /// `Bundle.main.preferredLocalizations` 是系统按用户语言偏好从我们的 lproj 里挑出来的结果。
+    private var currentSystemLanguageName: String {
+        let code = Bundle.main.preferredLocalizations.first ?? "en"
+        let name = Locale(identifier: code).localizedString(forLanguageCode: code) ?? code
+        return name.capitalized
     }
 
     var body: some View {
@@ -52,13 +52,22 @@ struct SettingsView: View {
             }
 
             Section {
-                Picker(String(localized: "settings.language.title"), selection: languageBinding) {
-                    ForEach(LanguageManager.AppLanguage.allCases) { language in
-                        Text(language.displayName)
-                            .tag(language)
+                // 语言跟随系统(iOS 13+ per-app 语言),这里只展示当前生效语言并跳到系统设置。
+                Button {
+                    guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                    UIApplication.shared.open(url)
+                } label: {
+                    HStack {
+                        Text("settings.language.title")
+                            .foregroundStyle(Theme.textPrimary)
+                        Spacer()
+                        Text(currentSystemLanguageName)
+                            .foregroundStyle(Theme.textSecondary)
+                        Image(systemName: "arrow.up.forward.app")
+                            .font(.system(size: Theme.captionSize))
+                            .foregroundStyle(Theme.textSecondary)
                     }
                 }
-                .pickerStyle(.inline)
 
                 Text("settings.language.hint")
                     .font(.system(size: Theme.captionSize))

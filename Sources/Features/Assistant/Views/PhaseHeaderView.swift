@@ -59,7 +59,8 @@ struct PhaseHeaderView: View {
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .padding(.bottom, 14)
-        .transition(.opacity.combined(with: .move(edge: .top)))
+        // 只用淡入淡出：.move(edge:) 在 VStack 高度动画中会让下方 ScrollView 拿到过期布局，内容被裁切且无法滚动
+        .transition(.opacity)
     }
 
     /// 今日具体运动（来自 HealthKit 运动记录），例如「跑步 30分钟 · 瑜伽 45分钟」。
@@ -151,7 +152,7 @@ struct PhaseHeaderView: View {
         .accessibilityLabel(String(localized: "assistant.header.expand_a11y"))
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .transition(.opacity.combined(with: .move(edge: .top)))
+        .transition(.opacity)
     }
 
     @ViewBuilder

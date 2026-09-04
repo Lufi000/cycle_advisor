@@ -109,10 +109,7 @@
 "settings.thinking_mode" = "Thinking mode";
 "settings.thinking_mode.hint" = "Affects future AI chat features that use this preference.";
 "settings.language.title" = "App language";
-"settings.language.hint" = "Overrides the system language inside the app. The change applies immediately.";
-"settings.language.system" = "Follow system";
-"settings.language.english" = "English";
-"settings.language.chinese" = "简体中文";
+"settings.language.hint" = "The app follows your system language. Tap to change it in Settings.";
 
 /* Billing */
 "billing.section.account" = "Credits Account";
