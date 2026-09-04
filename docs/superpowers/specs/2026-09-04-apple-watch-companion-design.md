@@ -11,12 +11,13 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 本次目标：
 
 1. 新增 watchOS 配套 app：周期速览 + 运动完成插图庆祝。
-2. iPhone 端新增三类本地通知：经期预测提醒、每周最爱运动、每月最爱运动。
+2. iPhone 端：主页周期模块内显示月经预测（日期 + 倒计时）；每周/每月最爱运动通知。
 
 核心产品理念：**插图 = 奖励**。运动完成后、周期总结时，给用户对应运动的精美插图，形成正反馈闭环。所有素材（20 张 WorkoutPoster 插图）与"运动类型 → 插图"映射均已存在，本次零新增素材。
 
 ### 明确不做
 
+- 不做 iPhone 端经期预测通知（系统"健康"app 已提供该能力，不重复造）
 - 不做运动打卡/记录系统（记录归 Apple 体能训练）
 - 不做 `HKWorkoutSession`（手表端不发起运动）
 - 不做手表端 AI 聊天、文献引用、设置页
@@ -61,13 +62,19 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 - 同一运动只庆祝一次（记录 UUID 去重，存 watch 端本地）
 - 用户未授权 HealthKit 运动数据 → 庆祝功能静默关闭，周期速览不受影响（经期类型单独授权）
 
-### 2.4 iPhone：经期预测提醒
+### 2.4 iPhone：主页周期模块显示月经预测
 
-- 两条本地通知：预测经期**前 2 天**（「可以提前准备了」）、**当天**（各一条）
-- 时间：上午 9:00
-- 预测日期来源：`CyclePhaseEngine.nextPeriodDate(lastPeriodStart:cycleLength:)`（现有）
-- 每次 app 启动且周期数据变化时重算并重排通知；经期实际来临（HealthKit 出现新 menstrualFlow 记录）时取消当天未发的预测通知
-- iPhone 通知自动镜像到配对的手表，无需手表端单独实现
+现状：`CycleRingView` 只显示阶段 emoji、阶段名、阶段持续天数、周期第几天，**没有预测信息**。
+
+改动（只动主页周期模块，不加通知）：
+
+- 周期环下方新增一行预测信息：
+  - 「预计 9 月 12 日 · 还有 8 天」——预测开始日期 + 倒计时
+  - 经期进行中显示「经期第 2 天」
+  - 预测日期已过但 HealthKit 无新经期记录：「可能推迟了 X 天」
+- 数据来源：`CyclePhaseEngine.nextPeriodDate` / `daysUntilNextPeriod`（现有），输入复用 `HomeViewModel` 已取的 `lastPeriodStart` 与 `avgCycleLength`，无新数据请求
+- 与 Watch 速览（§2.1）共用同一套文案 key 与计算逻辑，两端显示一致
+- 视觉遵循现有暖色纸质主题，样式对齐环内现有小字（`Theme.captionSize`、次要色），不抢阶段主信息
 
 ### 2.5 iPhone：每周 / 每月最爱运动通知
 
@@ -80,7 +87,7 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 
 ## 3. 本地化
 
-所有新增文案（Watch UI、庆祝文案、三类通知）进现有 7 语言 lproj：zh-Hans、zh-Hant、en、ja、ko、es、fr。key 前缀约定：`watch.*`、`notify.period.*`、`notify.workout.*`。
+所有新增文案（Watch UI、庆祝文案、主页预测行、周/月通知）进现有 7 语言 lproj：zh-Hans、zh-Hant、en、ja、ko、es、fr。key 前缀约定：`watch.*`、`home.prediction.*`、`notify.workout.*`。
 
 ## 4. 技术架构
 
@@ -110,7 +117,7 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 ### 4.4 权限与能力
 
 - Watch target：HealthKit capability（读 workout、menstrualFlow）；无网络需求，不加 App Transport 例外
-- iPhone：通知权限（首次启动时请求，拒绝则 §2.4/§2.5 静默关闭）；Background Modes 增加 App Refresh（供 §2.5 内容刷新）
+- iPhone：通知权限（首次启动时请求，拒绝则 §2.5 静默关闭）；Background Modes 增加 App Refresh（供 §2.5 内容刷新）
 - 隐私清单 `PrivacyInfo.xcprivacy`：HealthKit 读取与本地通知均为系统能力，无需新增声明条目（实现时按 Apple 当前要求核对一次）
 
 ### 4.5 错误处理
@@ -144,7 +151,7 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 | 共享代码抽取（mapper、engine、查询）+ 单元测试 | 1–2 天 |
 | Watch target：速览页 + complication | 3–4 天 |
 | Watch：运动庆祝（observer + 前台/后台两路径） | 3–4 天 |
-| iPhone：经期预测通知 | 1 天 |
+| iPhone：主页周期模块预测显示 | 1 天 |
 | iPhone：周/月最爱运动通知（含 BGAppRefresh） | 2 天 |
 | 7 语言文案 + 插图资产处理 | 1–2 天 |
 | 真机联调 + 修坑 | 2–3 天 |
@@ -154,7 +161,7 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 ## 7. 里程碑顺序
 
 1. 共享代码抽取（iPhone 行为不变，纯重构，先行合并）
-2. iPhone 经期预测通知（独立可发）
+2. iPhone 主页周期模块预测显示（独立可发）
 3. Watch target：速览 + complication
 4. Watch：运动完成庆祝
 5. iPhone 周/月通知
