@@ -76,6 +76,27 @@
 		W5000001 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
 		W6000001 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
 		WCP00002 /* CycleAdvisorWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = WB000007 /* CycleAdvisorWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		KA000001 /* CycleAdvisorWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000001 /* CycleAdvisorWatchApp.swift */; };
+		KA000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000002 /* ContentView.swift */; };
+		KA000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = KB000003 /* Assets.xcassets */; };
+		KA000010 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		KA000011 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
+		KA000012 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
+		KA000013 /* CyclePhaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000003 /* CyclePhaseEngine.swift */; };
+		KA000014 /* WorkoutPosterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001 /* WorkoutPosterMapper.swift */; };
+		KA000015 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
+		KA000016 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
+		KA000017 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
+		KCP00002 /* CycleAdvisorWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = KB000005 /* CycleAdvisorWatch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		MA000001 /* CycleAdvisorComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = MB000001 /* CycleAdvisorComplication.swift */; };
+		MA000010 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
+		MA000011 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
+		MA000012 /* CyclePhaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000003 /* CyclePhaseEngine.swift */; };
+		MA000013 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
+		MA000014 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
+		MA000015 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
+		MA000016 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		MCP00002 /* CycleAdvisorWatchComplication.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = MB000004 /* CycleAdvisorWatchComplication.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +114,20 @@
 			remoteGlobalIDString = WE000001;
 			remoteInfo = CycleAdvisorWidget;
 		};
+		KC000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = KW000001;
+			remoteInfo = CycleAdvisorWatch;
+		};
+		MC000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = MW000001;
+			remoteInfo = CycleAdvisorWatchComplication;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -103,6 +138,28 @@
 			dstSubfolderSpec = 13;
 			files = (
 				WCP00002 /* CycleAdvisorWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		KCP00001 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				KCP00002 /* CycleAdvisorWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		MCP00001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				MCP00002 /* CycleAdvisorWatchComplication.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,6 +240,15 @@
 		WB000006 /* Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widget.entitlements; sourceTree = "<group>"; };
 		WB000007 /* CycleAdvisorWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CycleAdvisorWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		WB000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		KB000001 /* CycleAdvisorWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorWatchApp.swift; sourceTree = "<group>"; };
+		KB000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		KB000003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		KB000004 /* CycleAdvisorWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisorWatch.entitlements; sourceTree = "<group>"; };
+		KB000005 /* CycleAdvisorWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisorWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		MB000001 /* CycleAdvisorComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorComplication.swift; sourceTree = "<group>"; };
+		MB000002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		MB000003 /* CycleAdvisorWatchComplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisorWatchComplication.entitlements; sourceTree = "<group>"; };
+		MB000004 /* CycleAdvisorWatchComplication.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CycleAdvisorWatchComplication.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +273,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		KF000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		MF000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -217,6 +297,8 @@
 				9C7F89722FADA3BF007F5968 /* CycleAdvisor.storekit */,
 				G1000002 /* Sources */,
 				G100000A /* CycleAdvisorTests */,
+				KG000001 /* CycleAdvisorWatch */,
+				MG000001 /* CycleAdvisorWatchComplication */,
 				G100000B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -327,6 +409,8 @@
 				B100000F /* CycleAdvisor.app */,
 				B1000010 /* CycleAdvisorTests.xctest */,
 				WB000007 /* CycleAdvisorWidget.appex */,
+				KB000005 /* CycleAdvisorWatch.app */,
+				MB000004 /* CycleAdvisorWatchComplication.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -427,6 +511,27 @@
 			path = Widget;
 			sourceTree = "<group>";
 		};
+		KG000001 /* CycleAdvisorWatch */ = {
+			isa = PBXGroup;
+			children = (
+				KB000001 /* CycleAdvisorWatchApp.swift */,
+				KB000002 /* ContentView.swift */,
+				KB000003 /* Assets.xcassets */,
+				KB000004 /* CycleAdvisorWatch.entitlements */,
+			);
+			path = CycleAdvisorWatch;
+			sourceTree = "<group>";
+		};
+		MG000001 /* CycleAdvisorWatchComplication */ = {
+			isa = PBXGroup;
+			children = (
+				MB000001 /* CycleAdvisorComplication.swift */,
+				MB000002 /* Info.plist */,
+				MB000003 /* CycleAdvisorWatchComplication.entitlements */,
+			);
+			path = CycleAdvisorWatchComplication;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -438,11 +543,13 @@
 				S1000001 /* Sources */,
 				F1000001 /* Frameworks */,
 				WCP00001 /* Embed Foundation Extensions */,
+				KCP00001 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				WT000001 /* PBXTargetDependency */,
+				KT000001 /* PBXTargetDependency */,
 			);
 			name = CycleAdvisor;
 			productName = CycleAdvisor;
@@ -483,6 +590,41 @@
 			productReference = WB000007 /* CycleAdvisorWidget.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		KW000001 /* CycleAdvisorWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = KL000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatch" */;
+			buildPhases = (
+				KR000001 /* Resources */,
+				KS000001 /* Sources */,
+				KF000001 /* Frameworks */,
+				MCP00001 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				MT000001 /* PBXTargetDependency */,
+			);
+			name = CycleAdvisorWatch;
+			productName = CycleAdvisorWatch;
+			productReference = KB000005 /* CycleAdvisorWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		MW000001 /* CycleAdvisorWatchComplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ML000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatchComplication" */;
+			buildPhases = (
+				MS000001 /* Sources */,
+				MF000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CycleAdvisorWatchComplication;
+			productName = CycleAdvisorWatchComplication;
+			productReference = MB000004 /* CycleAdvisorWatchComplication.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -515,6 +657,8 @@
 				E1000001 /* CycleAdvisor */,
 				E1000002 /* CycleAdvisorTests */,
 				WE000001 /* CycleAdvisorWidget */,
+				KW000001 /* CycleAdvisorWatch */,
+				MW000001 /* CycleAdvisorWatchComplication */,
 			);
 		};
 /* End PBXProject section */
@@ -537,6 +681,14 @@
 			files = (
 				W100000B /* WidgetAssets.xcassets in Resources */,
 				W100000D /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		KR000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				KA000003 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +778,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		KS000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				KA000001 /* CycleAdvisorWatchApp.swift in Sources */,
+				KA000002 /* ContentView.swift in Sources */,
+				KA000010 /* Theme.swift in Sources */,
+				KA000011 /* CyclePhase.swift in Sources */,
+				KA000012 /* PeriodPrediction.swift in Sources */,
+				KA000013 /* CyclePhaseEngine.swift in Sources */,
+				KA000014 /* WorkoutPosterMapper.swift in Sources */,
+				KA000015 /* HealthKitManager.swift in Sources */,
+				KA000016 /* UserProfile.swift in Sources */,
+				KA000017 /* MenstrualSymptoms.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		MS000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				MA000001 /* CycleAdvisorComplication.swift in Sources */,
+				MA000010 /* CyclePhase.swift in Sources */,
+				MA000011 /* PeriodPrediction.swift in Sources */,
+				MA000012 /* CyclePhaseEngine.swift in Sources */,
+				MA000013 /* HealthKitManager.swift in Sources */,
+				MA000014 /* UserProfile.swift in Sources */,
+				MA000015 /* MenstrualSymptoms.swift in Sources */,
+				MA000016 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -638,6 +822,16 @@
 			isa = PBXTargetDependency;
 			target = WE000001 /* CycleAdvisorWidget */;
 			targetProxy = WC000001 /* PBXContainerItemProxy */;
+		};
+		KT000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = KW000001 /* CycleAdvisorWatch */;
+			targetProxy = KC000001 /* PBXContainerItemProxy */;
+		};
+		MT000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = MW000001 /* CycleAdvisorWatchComplication */;
+			targetProxy = MC000001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -816,6 +1010,7 @@
 		X1000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYSEMBEDSWIFTSTANDARDLIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Sources/CycleAdvisor.entitlements;
@@ -844,6 +1039,7 @@
 		X1000004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYSEMBEDSWIFTSTANDARDLIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Sources/CycleAdvisor.entitlements;
@@ -909,6 +1105,110 @@
 			};
 			name = Release;
 		};
+		KX000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatch/CycleAdvisorWatch.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.cycleadvisor.app;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		KX000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatch/CycleAdvisorWatch.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.cycleadvisor.app;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		MX000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatchComplication/CycleAdvisorWatchComplication.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CycleAdvisorWatchComplication/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp.complication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		MX000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatchComplication/CycleAdvisorWatchComplication.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CycleAdvisorWatchComplication/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp.complication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -944,6 +1244,24 @@
 			buildConfigurations = (
 				WX000001 /* Debug */,
 				WX000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		KL000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				KX000001 /* Debug */,
+				KX000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ML000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatchComplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				MX000001 /* Debug */,
+				MX000002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
