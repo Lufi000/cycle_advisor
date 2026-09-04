@@ -579,3 +579,9 @@
 "home.prediction.today" = "Prévu aujourd'hui";
 "home.prediction.in_period %lld" = "Jour %lld des règles";
 "home.prediction.overdue %lld" = "Retard possible de %lld jours";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "Règles à venir";
+"notify.period.reminder.body %@" = "Prévu le %@ — prépare-toi à l'avance";
+"notify.period.dayof.title" = "Tes règles pourraient arriver aujourd'hui";
+"notify.period.dayof.body" = "Écoute ton corps et ménage-toi aujourd'hui";

@@ -579,3 +579,9 @@
 "home.prediction.today" = "오늘이 예정일입니다";
 "home.prediction.in_period %lld" = "생리 %lld일차";
 "home.prediction.overdue %lld" = "%lld일 늦어질 수 있습니다";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "생리 예정 알림";
+"notify.period.reminder.body %@" = "%@ 예정입니다. 미리 준비하세요";
+"notify.period.dayof.title" = "오늘 생리가 시작될 수 있습니다";
+"notify.period.dayof.body" = "몸의 신호에 귀 기울이며 오늘은 편하게 보내세요";

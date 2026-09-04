@@ -123,6 +123,13 @@ final class HomeViewModel {
                 menstrualSymptoms: symptoms,
                 isPredicted:    base.isPredicted
             )
+            let prediction = PeriodPrediction.make(
+                lastPeriodStart: periodStart,
+                cycleLength: cycleLength,
+                isInPeriod: base.phase == .menstrual && !base.isPredicted,
+                periodDay: base.cycleDay
+            )
+            await PeriodNotificationScheduler.reschedule(predictedDate: prediction.predictedDate)
         } else {
             // 还没有经期数据（首次使用）— 保留 mock 阶段，但填入真实健康指标
             usingMockData = true
@@ -136,6 +143,7 @@ final class HomeViewModel {
                 healthMetrics:  metrics,
                 menstrualSymptoms: symptoms
             )
+            await PeriodNotificationScheduler.reschedule(predictedDate: nil)
         }
 
         // 积累用户档案（身体信息 + 运动 + 周期历史）

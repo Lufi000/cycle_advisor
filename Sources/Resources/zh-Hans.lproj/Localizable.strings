@@ -580,3 +580,9 @@
 "home.prediction.today" = "预计今天来潮";
 "home.prediction.in_period %lld" = "经期第 %lld 天";
 "home.prediction.overdue %lld" = "可能推迟了 %lld 天";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "经期预告";
+"notify.period.reminder.body %@" = "预计 %@ 来潮，可以提前准备啦";
+"notify.period.dayof.title" = "今天可能是经期第一天";
+"notify.period.dayof.body" = "留意身体信号，今天对自己温柔一点";

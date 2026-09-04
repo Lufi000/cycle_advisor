@@ -579,3 +579,9 @@
 "home.prediction.today" = "Expected today";
 "home.prediction.in_period %lld" = "Period day %lld";
 "home.prediction.overdue %lld" = "May be %lld days late";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "Period coming up";
+"notify.period.reminder.body %@" = "Expected %@ — time to prepare";
+"notify.period.dayof.title" = "Your period may start today";
+"notify.period.dayof.body" = "Listen to your body and take it easy today";

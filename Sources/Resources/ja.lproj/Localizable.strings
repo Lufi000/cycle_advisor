@@ -579,3 +579,9 @@
 "home.prediction.today" = "今日が予定日です";
 "home.prediction.in_period %lld" = "生理 %lld 日目";
 "home.prediction.overdue %lld" = "%lld 日遅れている可能性があります";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "生理予定のお知らせ";
+"notify.period.reminder.body %@" = "%@ の予定です。早めに準備を";
+"notify.period.dayof.title" = "今日が生理予定日かもしれません";
+"notify.period.dayof.body" = "体のサインに気をつけて、今日はやさしく過ごしましょう";

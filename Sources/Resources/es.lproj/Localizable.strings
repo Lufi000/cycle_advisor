@@ -579,3 +579,9 @@
 "home.prediction.today" = "Previsto para hoy";
 "home.prediction.in_period %lld" = "Día %lld del periodo";
 "home.prediction.overdue %lld" = "Podría retrasarse %lld días";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "Periodo próximo";
+"notify.period.reminder.body %@" = "Previsto para el %@ — prepárate con tiempo";
+"notify.period.dayof.title" = "Tu periodo podría empezar hoy";
+"notify.period.dayof.body" = "Escucha a tu cuerpo y tómate el día con calma";

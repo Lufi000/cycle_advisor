@@ -16,6 +16,7 @@ struct CycleAdvisorApp: App {
             UserDefaults.standard.removeObject(forKey: "appLanguagePreference")
             UserDefaults.standard.removeObject(forKey: "AppleLanguages")
         }
+        PeriodNotificationScheduler.requestAuthorization()
     }
 
     var body: some Scene {
