@@ -28,6 +28,7 @@
 		AC000001 /* ConceptionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000001 /* ConceptionModels.swift */; };
 		AC000002 /* ConceptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000002 /* ConceptionStore.swift */; };
 		AC000003 /* ConceptionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000003 /* ConceptionStoreTests.swift */; };
+		AF000001 /* UserProfileConceptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000001 /* UserProfileConceptionTests.swift */; };
 		AD000002 /* OvulationLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000002 /* OvulationLocatorTests.swift */; };
 		AE000002 /* PregnancyInsightEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000002 /* PregnancyInsightEngineTests.swift */; };
 		AD000001 /* OvulationLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000001 /* OvulationLocator.swift */; };
@@ -245,6 +246,7 @@
 		BC000001 /* ConceptionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionModels.swift; sourceTree = "<group>"; };
 		BC000002 /* ConceptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionStore.swift; sourceTree = "<group>"; };
 		BC000003 /* ConceptionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionStoreTests.swift; sourceTree = "<group>"; };
+		BF000001 /* UserProfileConceptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileConceptionTests.swift; sourceTree = "<group>"; };
 		BD000002 /* OvulationLocatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvulationLocatorTests.swift; sourceTree = "<group>"; };
 		BE000002 /* PregnancyInsightEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PregnancyInsightEngineTests.swift; sourceTree = "<group>"; };
 		BD000001 /* OvulationLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvulationLocator.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 			children = (
 				B100000C /* CyclePhaseEngineTests.swift */,
 				BC000003 /* ConceptionStoreTests.swift */,
+				BF000001 /* UserProfileConceptionTests.swift */,
 				BD000002 /* OvulationLocatorTests.swift */,
 				BE000002 /* PregnancyInsightEngineTests.swift */,
 				B3000007 /* SolarTermEngineTests.swift */,
@@ -815,6 +818,7 @@
 				A9000002 /* PeriodNotificationSchedulerTests.swift in Sources */,
 				AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */,
 				AC000003 /* ConceptionStoreTests.swift in Sources */,
+				AF000001 /* UserProfileConceptionTests.swift in Sources */,
 				AD000002 /* OvulationLocatorTests.swift in Sources */,
 				AE000002 /* PregnancyInsightEngineTests.swift in Sources */,
 			);
