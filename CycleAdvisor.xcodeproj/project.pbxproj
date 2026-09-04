@@ -25,6 +25,9 @@
 		A8000002 /* PeriodPredictionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000002 /* PeriodPredictionTests.swift */; };
 		A9000002 /* PeriodNotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000002 /* PeriodNotificationSchedulerTests.swift */; };
 		AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000002 /* WorkoutCelebrationPlannerTests.swift */; };
+		AC000001 /* ConceptionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000001 /* ConceptionModels.swift */; };
+		AC000002 /* ConceptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000002 /* ConceptionStore.swift */; };
+		AC000003 /* ConceptionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000003 /* ConceptionStoreTests.swift */; };
 		AA000001 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
 		A9000001 /* PeriodNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001 /* PeriodNotificationScheduler.swift */; };
 		A8000001 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
@@ -235,6 +238,9 @@
 		B6000002 /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		B6000003 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B6000004 /* WorkoutDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDashboardView.swift; sourceTree = "<group>"; };
+		BC000001 /* ConceptionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionModels.swift; sourceTree = "<group>"; };
+		BC000002 /* ConceptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionStore.swift; sourceTree = "<group>"; };
+		BC000003 /* ConceptionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionStoreTests.swift; sourceTree = "<group>"; };
 		VR000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		VR000002 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		VR000003 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -340,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				B1000003 /* CyclePhaseEngine.swift */,
+				BC000002 /* ConceptionStore.swift */,
 				B1000013 /* HealthKitManager.swift */,
 				B1000020 /* LLMService.swift */,
 				B1000021 /* Secrets.swift */,
@@ -355,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				B1000004 /* CyclePhase.swift */,
+				BC000001 /* ConceptionModels.swift */,
 				B5000001 /* MenstrualSymptoms.swift */,
 				B8000001 /* PeriodPrediction.swift */,
 				B1000005 /* ResearchReference.swift */,
@@ -409,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				B100000C /* CyclePhaseEngineTests.swift */,
+				BC000003 /* ConceptionStoreTests.swift */,
 				B3000007 /* SolarTermEngineTests.swift */,
 				B1000016 /* ThinkingModeTokenBudgetTests.swift */,
 				T6000001 /* ResponseLanguageTests.swift */,
@@ -774,6 +783,8 @@
 				A6000004 /* WorkoutDashboardView.swift in Sources */,
 				A7000001 /* WorkoutPosterMapper.swift in Sources */,
 				AA000001 /* WorkoutCelebrationPlanner.swift in Sources */,
+				AC000001 /* ConceptionModels.swift in Sources */,
+				AC000002 /* ConceptionStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +800,7 @@
 				A8000002 /* PeriodPredictionTests.swift in Sources */,
 				A9000002 /* PeriodNotificationSchedulerTests.swift in Sources */,
 				AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */,
+				AC000003 /* ConceptionStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
