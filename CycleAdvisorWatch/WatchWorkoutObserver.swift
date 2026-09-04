@@ -41,6 +41,7 @@ import UIKit
 final class WatchWorkoutObserver: NSObject {
     private let store = HKHealthStore()
     private let celebrationStore = CelebrationStore()
+    private var didStart = false
     private var anchor: HKQueryAnchor? {
         get {
             guard let data = UserDefaults.standard.data(forKey: "watch.workoutAnchor") else { return nil }
@@ -57,6 +58,9 @@ final class WatchWorkoutObserver: NSObject {
     }
 
     func start() {
+        // onAppear 会在 fullScreenCover 关闭后重复触发——observer query 只需注册一次
+        guard !didStart else { return }
+        didStart = true
         let type = HKWorkoutType.workoutType()
         store.enableBackgroundDelivery(for: type, frequency: .immediate) { _, _ in }
         let query = HKObserverQuery(sampleType: type, predicate: nil) { [weak self] _, completionHandler, _ in
