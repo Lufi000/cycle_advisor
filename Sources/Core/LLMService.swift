@@ -1,4 +1,5 @@
 import Foundation
+import NaturalLanguage
 
 // MARK: - API Types (OpenAI-compatible)
 
@@ -573,7 +574,16 @@ actor LLMService {
         }
 
         if latinCount > 0 {
-            return .english
+            // 拉丁字母无法靠字符区间区分语种（Bonjour ≠ Hello），
+            // 用 NLLanguageRecognizer 做语义级识别；不支持/认不出的语种回退系统偏好。
+            let recognizer = NLLanguageRecognizer()
+            recognizer.processString(text)
+            switch recognizer.dominantLanguage {
+            case .english?: return .english
+            case .spanish?: return .spanish
+            case .french?: return .french
+            default: return fallback
+            }
         }
         return fallback
     }

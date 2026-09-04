@@ -20,6 +20,7 @@
 		A100000B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
 		A100000C /* CyclePhaseEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000C /* CyclePhaseEngineTests.swift */; };
 		A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000016 /* ThinkingModeTokenBudgetTests.swift */; };
+		T5000001 /* ResponseLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T6000001 /* ResponseLanguageTests.swift */; };
 		A100000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1000011 /* Assets.xcassets */; };
 		A100000E /* GrainOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012 /* GrainOverlay.swift */; };
 		A100000F /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
@@ -118,6 +119,7 @@
 		B100000B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B100000C /* CyclePhaseEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePhaseEngineTests.swift; sourceTree = "<group>"; };
 		B1000016 /* ThinkingModeTokenBudgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingModeTokenBudgetTests.swift; sourceTree = "<group>"; };
+		T6000001 /* ResponseLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseLanguageTests.swift; sourceTree = "<group>"; };
 		B100000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B100000E /* CycleAdvisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisor.entitlements; sourceTree = "<group>"; };
 		B100000F /* CycleAdvisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -296,6 +298,7 @@
 				B100000C /* CyclePhaseEngineTests.swift */,
 				B3000007 /* SolarTermEngineTests.swift */,
 				B1000016 /* ThinkingModeTokenBudgetTests.swift */,
+				T6000001 /* ResponseLanguageTests.swift */,
 			);
 			path = CycleAdvisorTests;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				A100000C /* CyclePhaseEngineTests.swift in Sources */,
 				A3000007 /* SolarTermEngineTests.swift in Sources */,
 				A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */,
+				T5000001 /* ResponseLanguageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
