@@ -588,3 +588,4 @@
 
 /* Watch */
 "watch.no_data" = "iPhone의 건강 app에서 생리를 기록하면 예측이 시작됩니다";
+"watch.complication.days_left %lld" = "%lld일 남음";

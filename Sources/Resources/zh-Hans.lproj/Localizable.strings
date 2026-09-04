@@ -589,3 +589,4 @@
 
 /* Watch */
 "watch.no_data" = "在 iPhone 健康 app 记录经期后开始预测";
+"watch.complication.days_left %lld" = "还有 %lld 天";

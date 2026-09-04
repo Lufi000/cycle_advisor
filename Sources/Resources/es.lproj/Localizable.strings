@@ -588,3 +588,4 @@
 
 /* Watch */
 "watch.no_data" = "Registra tu periodo en la app Salud del iPhone para ver predicciones";
+"watch.complication.days_left %lld" = "en %lld días";

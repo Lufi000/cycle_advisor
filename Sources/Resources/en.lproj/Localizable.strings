@@ -588,3 +588,4 @@
 
 /* Watch */
 "watch.no_data" = "Log your period in the Health app on iPhone to start predictions";
+"watch.complication.days_left %lld" = "in %lld days";

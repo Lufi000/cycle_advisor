@@ -81,6 +81,7 @@
 		KA000018 /* WatchCycleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000006 /* WatchCycleViewModel.swift */; };
 		KA000019 /* WatchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000007 /* WatchHomeView.swift */; };
 		KA000020 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
+		M7000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
 		KA000010 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
 		KA000011 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
 		KA000012 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
@@ -619,6 +620,7 @@
 			buildPhases = (
 				MS000001 /* Sources */,
 				MF000001 /* Frameworks */,
+				M7000002 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -694,6 +696,14 @@
 			files = (
 				KA000003 /* Assets.xcassets in Resources */,
 				KA000020 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		M7000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				M7000001 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

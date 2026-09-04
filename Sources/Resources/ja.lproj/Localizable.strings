@@ -588,3 +588,4 @@
 
 /* Watch */
 "watch.no_data" = "iPhone のヘルスケア app で生理を記録すると予測が始まります";
+"watch.complication.days_left %lld" = "あと %lld 日";
