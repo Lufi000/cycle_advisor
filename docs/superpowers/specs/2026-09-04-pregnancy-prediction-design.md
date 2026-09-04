@@ -67,6 +67,14 @@ HealthKit 症状 / 手动打卡 ──▶ 症状库 ─────────�
 - HealthKit 授权被拒绝时纯本地运行，功能不阻塞；仅失去与其他 App 的数据互通
 - 读取侧仍走 HealthKitManager 已有的 `fetchMenstrualSymptoms` 拉取系统症状并入症状库
 
+### 第三方手表的覆盖边界
+
+iOS 上所有第三方设备数据必须经 HealthKit 到达本 App，而通路是收窄的：
+
+- **温度主信号只有两条路**：Apple Watch 腕温（`appleSleepingWristTemperature` 为 Apple 私有类型，第三方设备无法写入），或手动 BBT。Garmin / 华为 / 小米等用户的皮肤温度数据只留在厂商自家 App，本功能视角下他们等同无手表用户，只能手动测温
+- **佐证信号天然兼容第三方**：引擎读 HealthKit 数据类型而非设备品牌——任何设备/App 只要向 Apple 健康写入 `restingHeartRate` 或 `heartRateVariabilitySDNN`，佐证层零改动自动受益；未写入则自动降级为仅症状佐证（见模块 7）
+- 直连厂商 API（Garmin Health API、华为运动健康开放平台等）本期不做，见范围外
+
 ## 模块 2：备孕模式开关
 
 - `UserProfile` 新增 `isTryingToConceive: Bool`（默认 false）
@@ -183,6 +191,7 @@ HealthKit 症状 / 手动打卡 ──▶ 症状库 ─────────�
 ## 范围外（本期不做）
 
 - 睡眠呼吸率、皮肤灌注等更多手表信号的接入（预留 DailyVitals 扩展位，未来可加）
+- 第三方厂商 API 直连（Garmin Health API / 华为运动健康等）：需厂商平台审核与服务端 OAuth，成本与收益不匹配
 - 完整孕期模式（阳性后的孕期追踪）
 - 排卵预测窗口（本产品已有的周期预测不改动）
 - 排卵试纸（LH）录入
