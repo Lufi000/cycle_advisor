@@ -29,7 +29,9 @@
 		AC000002 /* ConceptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000002 /* ConceptionStore.swift */; };
 		AC000003 /* ConceptionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000003 /* ConceptionStoreTests.swift */; };
 		AD000002 /* OvulationLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000002 /* OvulationLocatorTests.swift */; };
+		AE000002 /* PregnancyInsightEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000002 /* PregnancyInsightEngineTests.swift */; };
 		AD000001 /* OvulationLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000001 /* OvulationLocator.swift */; };
+		AE000001 /* PregnancyInsightEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000001 /* PregnancyInsightEngine.swift */; };
 		AA000001 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
 		A9000001 /* PeriodNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001 /* PeriodNotificationScheduler.swift */; };
 		A8000001 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
@@ -244,7 +246,9 @@
 		BC000002 /* ConceptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionStore.swift; sourceTree = "<group>"; };
 		BC000003 /* ConceptionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionStoreTests.swift; sourceTree = "<group>"; };
 		BD000002 /* OvulationLocatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvulationLocatorTests.swift; sourceTree = "<group>"; };
+		BE000002 /* PregnancyInsightEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PregnancyInsightEngineTests.swift; sourceTree = "<group>"; };
 		BD000001 /* OvulationLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvulationLocator.swift; sourceTree = "<group>"; };
+		BE000001 /* PregnancyInsightEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PregnancyInsightEngine.swift; sourceTree = "<group>"; };
 		VR000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		VR000002 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		VR000003 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -353,6 +357,7 @@
 				BC000002 /* ConceptionStore.swift */,
 				B1000013 /* HealthKitManager.swift */,
 				BD000001 /* OvulationLocator.swift */,
+				BE000001 /* PregnancyInsightEngine.swift */,
 				B1000020 /* LLMService.swift */,
 				B1000021 /* Secrets.swift */,
 				B9000001 /* PeriodNotificationScheduler.swift */,
@@ -424,6 +429,7 @@
 				B100000C /* CyclePhaseEngineTests.swift */,
 				BC000003 /* ConceptionStoreTests.swift */,
 				BD000002 /* OvulationLocatorTests.swift */,
+				BE000002 /* PregnancyInsightEngineTests.swift */,
 				B3000007 /* SolarTermEngineTests.swift */,
 				B1000016 /* ThinkingModeTokenBudgetTests.swift */,
 				T6000001 /* ResponseLanguageTests.swift */,
@@ -792,6 +798,7 @@
 				AC000001 /* ConceptionModels.swift in Sources */,
 				AC000002 /* ConceptionStore.swift in Sources */,
 				AD000001 /* OvulationLocator.swift in Sources */,
+				AE000001 /* PregnancyInsightEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -809,6 +816,7 @@
 				AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */,
 				AC000003 /* ConceptionStoreTests.swift in Sources */,
 				AD000002 /* OvulationLocatorTests.swift in Sources */,
+				AE000002 /* PregnancyInsightEngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
