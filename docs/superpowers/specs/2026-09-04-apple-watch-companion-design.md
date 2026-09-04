@@ -51,9 +51,10 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 1. 用户在手表"体能训练"（或任何写 HealthKit 的 app）结束一次运动
 2. Watch 端 `HKObserverQuery`（`HKWorkoutType`，后台投递）发现新记录
 3. 按 `workoutActivityType` 查共享映射表 → 对应 WorkoutPoster 插图
-4. 呈现庆祝：
-   - **App 在前台**：全屏插图 + `WKHapticType.success` 震动 + 一句鼓励文案（如「你今天照顾好了自己」）
-   - **App 在后台**：发手表本地通知（带插图附件），点开通知进入全屏庆祝页
+4. **错开 Apple 体能训练的结束总结**：检测到完成后**不立即弹出**，延迟约 5 分钟再触达——此刻用户通常已看完 Apple 的总结界面，庆祝才不与之抢屏
+   - 到时后：发手表本地通知（带插图附件），点开通知进入全屏庆祝页（插图 + `WKHapticType.success` 震动 + 鼓励文案，如「你今天照顾好了自己」）
+   - 若延迟期间用户主动打开了本 app：直接在前台展示庆祝页，并取消未发的通知
+   - 5 分钟内连续完成多次运动：合并为最后一次的通知，避免轰炸
 5. 映射表未覆盖的运动类型 → `WorkoutPosterPark` 兜底（与 iPhone 端现有逻辑一致）
 
 **边界**：
@@ -133,7 +134,7 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
   - `WorkoutPosterMapper`：覆盖全部映射 case + 兜底
   - 预测日期/倒计时边界：跨月、周期第 1 天、推迟场景
   - 经期预测通知调度：数据变化重排、经期来临取消未发通知、权限拒绝时不调度
-  - 去重逻辑：同一 workout UUID 不重复触发庆祝
+  - 去重与合并：同一 workout UUID 不重复触发；5 分钟内多次完成只保留最后一次的通知
 - **手动测试清单**（模拟器配对 iPhone + Watch）：
   - 健康 app 里手动录入一条 workout → 手表收到庆祝
   - 前台/后台两种触发路径
