@@ -55,6 +55,19 @@ final class ConceptionStoreTests: XCTestCase {
         XCTAssertEqual(dayMinus1?.source, .wristTemperature)
     }
 
+    /// 腕温记录带时分秒时仍按日归并，同日以手表为准且不产生重复条目
+    func testWristTemperatureWithTimeComponentStillWinsSameDay() {
+        XCTAssertTrue(store.upsertManualTemperature(date: day(0), celsius: 36.3, disturbances: []))
+        // 手表采样时间带时分秒（如早晨 6 点），归并前须归一化到 startOfDay
+        let wristDate = calendar.date(byAdding: .hour, value: 6, to: day(0))!
+        let wrist = [BasalTemperatureEntry(date: wristDate, celsius: 37.1, disturbances: [], source: .wristTemperature)]
+        let merged = store.mergedTemperatures(wrist: wrist)
+        XCTAssertEqual(merged.count, 1)
+        XCTAssertEqual(merged[0].celsius, 37.1)
+        XCTAssertEqual(merged[0].source, .wristTemperature)
+        XCTAssertTrue(calendar.isDate(merged[0].date, inSameDayAs: day(0)))
+    }
+
     /// 症状按 (日, 类型) 去重，冲突时保留高优先级来源 manual > healthKit > chatExtracted
     func testSymptomDedupPriority() {
         store.addSymptoms([SymptomRecord(date: day(0), type: .nausea, source: .chatExtracted)])

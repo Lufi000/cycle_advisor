@@ -45,10 +45,15 @@ final class ConceptionStore {
     }
 
     /// 合并手表腕温与手动 BBT：同日以手表为准（夜间多次采样取均值，稳定性优于单次口温）。
+    /// 腕温采样时间带时分秒，归并前先归一化到 startOfDay，否则与同日手动记录无法碰撞。
     func mergedTemperatures(wrist: [BasalTemperatureEntry]) -> [BasalTemperatureEntry] {
         var byDay: [Date: BasalTemperatureEntry] = [:]
         for entry in manualTemperatures { byDay[entry.date] = entry }
-        for entry in wrist { byDay[entry.date] = entry }
+        for entry in wrist {
+            var normalized = entry
+            normalized.date = Calendar.current.startOfDay(for: entry.date)
+            byDay[normalized.date] = normalized
+        }
         return byDay.values.sorted { $0.date < $1.date }
     }
 
