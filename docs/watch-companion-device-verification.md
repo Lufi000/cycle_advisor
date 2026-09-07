@@ -72,4 +72,4 @@
 ## 已知未完成项
 
 - Watch AppIcon 已替换为真实图标（复用 iOS 1024×1024），如需 watch 专用圆形留白版可后续补。
-- watch target 版本号仍为 1.0.6（iOS app 已 1.0.7），发布前需对齐。
+- 版本号已统一为 1.0.8（build 1），全部 5 个 target（app/widget/tests/watch/complication）一致。
