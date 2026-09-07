@@ -717,6 +717,12 @@ final class HealthKitManager {
         return lhs.descriptor.key < rhs.descriptor.key
     }
 
+    /// 供 Watch 端使用：HKWorkoutActivityType → 内部运动 key（与统计同一映射表）
+    static func workoutKey(for type: HKWorkoutActivityType) -> String {
+        if let known = knownWorkoutActivities[type.rawValue] { return known.key }
+        return "unknown_\(type.rawValue)"
+    }
+
     private static func workoutDescriptor(for type: HKWorkoutActivityType) -> WorkoutActivityDescriptor {
         let rawValue = type.rawValue
         if let known = knownWorkoutActivities[rawValue] {

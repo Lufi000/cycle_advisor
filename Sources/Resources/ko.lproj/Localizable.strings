@@ -573,3 +573,23 @@
 "workout.activity.transition" = "전환";
 "workout.activity.underwater_diving" = "수중 다이빙";
 "workout.activity.other" = "기타 운동";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "예정일 %@ · %lld일 남음";
+"home.prediction.today" = "오늘이 예정일입니다";
+"home.prediction.in_period %lld" = "생리 %lld일차";
+"home.prediction.overdue %lld" = "%lld일 늦어질 수 있습니다";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "생리 예정 알림";
+"notify.period.reminder.body %@" = "%@ 예정입니다. 미리 준비하세요";
+"notify.period.dayof.title" = "오늘 생리가 시작될 수 있습니다";
+"notify.period.dayof.body" = "몸의 신호에 귀 기울이며 오늘은 편하게 보내세요";
+
+/* Watch */
+"watch.no_data" = "iPhone의 건강 app에서 생리를 기록하면 예측이 시작됩니다";
+"watch.complication.days_left %lld" = "%lld일 남음";
+"watch.celebration.title" = "운동 완료 👏";
+"watch.celebration.body" = "탭해서 운동 기념을 확인하세요";
+"watch.celebration.message" = "오늘 스스로를 잘 돌봤어요";
+"watch.celebration.done" = "받기";

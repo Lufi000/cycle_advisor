@@ -21,6 +21,14 @@
 		A100000C /* CyclePhaseEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000C /* CyclePhaseEngineTests.swift */; };
 		A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000016 /* ThinkingModeTokenBudgetTests.swift */; };
 		T5000001 /* ResponseLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T6000001 /* ResponseLanguageTests.swift */; };
+		A7000002 /* WorkoutPosterMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000002 /* WorkoutPosterMapperTests.swift */; };
+		A8000002 /* PeriodPredictionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000002 /* PeriodPredictionTests.swift */; };
+		A9000002 /* PeriodNotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000002 /* PeriodNotificationSchedulerTests.swift */; };
+		AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000002 /* WorkoutCelebrationPlannerTests.swift */; };
+		AA000001 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
+		A9000001 /* PeriodNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001 /* PeriodNotificationScheduler.swift */; };
+		A8000001 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
+		A7000001 /* WorkoutPosterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001 /* WorkoutPosterMapper.swift */; };
 		A100000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1000011 /* Assets.xcassets */; };
 		A100000E /* GrainOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012 /* GrainOverlay.swift */; };
 		A100000F /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
@@ -70,6 +78,34 @@
 		W5000001 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
 		W6000001 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
 		WCP00002 /* CycleAdvisorWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = WB000007 /* CycleAdvisorWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		KA000001 /* CycleAdvisorWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000001 /* CycleAdvisorWatchApp.swift */; };
+		KA000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = KB000003 /* Assets.xcassets */; };
+		KA000018 /* WatchCycleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000006 /* WatchCycleViewModel.swift */; };
+		KA000019 /* WatchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000007 /* WatchHomeView.swift */; };
+		KA000020 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
+		KA000024 /* WatchAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = KB000010 /* WatchAssets.xcassets */; };
+		M7000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
+		KA000010 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		KA000011 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
+		KA000012 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
+		KA000013 /* CyclePhaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000003 /* CyclePhaseEngine.swift */; };
+		KA000014 /* WorkoutPosterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001 /* WorkoutPosterMapper.swift */; };
+		KA000015 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
+		KA000016 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
+		KA000017 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
+		KA000021 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
+		KA000022 /* WatchWorkoutObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000008 /* WatchWorkoutObserver.swift */; };
+		KA000023 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = KB000009 /* CelebrationView.swift */; };
+		KCP00002 /* CycleAdvisorWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = KB000005 /* CycleAdvisorWatch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		MA000001 /* CycleAdvisorComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = MB000001 /* CycleAdvisorComplication.swift */; };
+		MA000010 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
+		MA000011 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
+		MA000012 /* CyclePhaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000003 /* CyclePhaseEngine.swift */; };
+		MA000013 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000013 /* HealthKitManager.swift */; };
+		MA000014 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001 /* UserProfile.swift */; };
+		MA000015 /* MenstrualSymptoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001 /* MenstrualSymptoms.swift */; };
+		MA000016 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		MCP00002 /* CycleAdvisorWatchComplication.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = MB000004 /* CycleAdvisorWatchComplication.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +123,20 @@
 			remoteGlobalIDString = WE000001;
 			remoteInfo = CycleAdvisorWidget;
 		};
+		KC000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = KW000001;
+			remoteInfo = CycleAdvisorWatch;
+		};
+		MC000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = MW000001;
+			remoteInfo = CycleAdvisorWatchComplication;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +147,28 @@
 			dstSubfolderSpec = 13;
 			files = (
 				WCP00002 /* CycleAdvisorWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		KCP00001 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				KCP00002 /* CycleAdvisorWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		MCP00001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				MCP00002 /* CycleAdvisorWatchComplication.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +192,14 @@
 		B100000C /* CyclePhaseEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePhaseEngineTests.swift; sourceTree = "<group>"; };
 		B1000016 /* ThinkingModeTokenBudgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingModeTokenBudgetTests.swift; sourceTree = "<group>"; };
 		T6000001 /* ResponseLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseLanguageTests.swift; sourceTree = "<group>"; };
+		B7000002 /* WorkoutPosterMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPosterMapperTests.swift; sourceTree = "<group>"; };
+		B8000002 /* PeriodPredictionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPredictionTests.swift; sourceTree = "<group>"; };
+		B9000002 /* PeriodNotificationSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodNotificationSchedulerTests.swift; sourceTree = "<group>"; };
+		B9000001 /* PeriodNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodNotificationScheduler.swift; sourceTree = "<group>"; };
+		BA000002 /* WorkoutCelebrationPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCelebrationPlannerTests.swift; sourceTree = "<group>"; };
+		BA000001 /* WorkoutCelebrationPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCelebrationPlanner.swift; sourceTree = "<group>"; };
+		B8000001 /* PeriodPrediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPrediction.swift; sourceTree = "<group>"; };
+		B7000001 /* WorkoutPosterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPosterMapper.swift; sourceTree = "<group>"; };
 		B100000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B100000E /* CycleAdvisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisor.entitlements; sourceTree = "<group>"; };
 		B100000F /* CycleAdvisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +251,19 @@
 		WB000006 /* Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widget.entitlements; sourceTree = "<group>"; };
 		WB000007 /* CycleAdvisorWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CycleAdvisorWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		WB000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		KB000001 /* CycleAdvisorWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorWatchApp.swift; sourceTree = "<group>"; };
+		KB000003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		KB000010 /* WatchAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WatchAssets.xcassets; sourceTree = "<group>"; };
+		KB000004 /* CycleAdvisorWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisorWatch.entitlements; sourceTree = "<group>"; };
+		KB000005 /* CycleAdvisorWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleAdvisorWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		KB000006 /* WatchCycleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCycleViewModel.swift; sourceTree = "<group>"; };
+		KB000007 /* WatchHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHomeView.swift; sourceTree = "<group>"; };
+		KB000008 /* WatchWorkoutObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutObserver.swift; sourceTree = "<group>"; };
+		KB000009 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
+		MB000001 /* CycleAdvisorComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAdvisorComplication.swift; sourceTree = "<group>"; };
+		MB000002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		MB000003 /* CycleAdvisorWatchComplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycleAdvisorWatchComplication.entitlements; sourceTree = "<group>"; };
+		MB000004 /* CycleAdvisorWatchComplication.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CycleAdvisorWatchComplication.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +288,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		KF000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		MF000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -205,6 +312,8 @@
 				9C7F89722FADA3BF007F5968 /* CycleAdvisor.storekit */,
 				G1000002 /* Sources */,
 				G100000A /* CycleAdvisorTests */,
+				KG000001 /* CycleAdvisorWatch */,
+				MG000001 /* CycleAdvisorWatchComplication */,
 				G100000B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -234,6 +343,7 @@
 				B1000013 /* HealthKitManager.swift */,
 				B1000020 /* LLMService.swift */,
 				B1000021 /* Secrets.swift */,
+				B9000001 /* PeriodNotificationScheduler.swift */,
 				B3000002 /* SolarTermEngine.swift */,
 				B6000002 /* UserProfileManager.swift */,
 				G1000004 /* Models */,
@@ -246,6 +356,7 @@
 			children = (
 				B1000004 /* CyclePhase.swift */,
 				B5000001 /* MenstrualSymptoms.swift */,
+				B8000001 /* PeriodPrediction.swift */,
 				B1000005 /* ResearchReference.swift */,
 				B3000001 /* SolarTerm.swift */,
 				B1000006 /* Suggestion.swift */,
@@ -288,6 +399,8 @@
 				B1000015 /* TypingIndicatorView.swift */,
 				B1000041 /* DisplayName.swift */,
 				B2000008 /* MarkdownTextView.swift */,
+				B7000001 /* WorkoutPosterMapper.swift */,
+				BA000001 /* WorkoutCelebrationPlanner.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -299,6 +412,10 @@
 				B3000007 /* SolarTermEngineTests.swift */,
 				B1000016 /* ThinkingModeTokenBudgetTests.swift */,
 				T6000001 /* ResponseLanguageTests.swift */,
+				B7000002 /* WorkoutPosterMapperTests.swift */,
+				B8000002 /* PeriodPredictionTests.swift */,
+				B9000002 /* PeriodNotificationSchedulerTests.swift */,
+				BA000002 /* WorkoutCelebrationPlannerTests.swift */,
 			);
 			path = CycleAdvisorTests;
 			sourceTree = "<group>";
@@ -309,6 +426,8 @@
 				B100000F /* CycleAdvisor.app */,
 				B1000010 /* CycleAdvisorTests.xctest */,
 				WB000007 /* CycleAdvisorWidget.appex */,
+				KB000005 /* CycleAdvisorWatch.app */,
+				MB000004 /* CycleAdvisorWatchComplication.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -409,6 +528,31 @@
 			path = Widget;
 			sourceTree = "<group>";
 		};
+		KG000001 /* CycleAdvisorWatch */ = {
+			isa = PBXGroup;
+			children = (
+				KB000001 /* CycleAdvisorWatchApp.swift */,
+				KB000006 /* WatchCycleViewModel.swift */,
+				KB000007 /* WatchHomeView.swift */,
+				KB000008 /* WatchWorkoutObserver.swift */,
+				KB000009 /* CelebrationView.swift */,
+				KB000003 /* Assets.xcassets */,
+				KB000010 /* WatchAssets.xcassets */,
+				KB000004 /* CycleAdvisorWatch.entitlements */,
+			);
+			path = CycleAdvisorWatch;
+			sourceTree = "<group>";
+		};
+		MG000001 /* CycleAdvisorWatchComplication */ = {
+			isa = PBXGroup;
+			children = (
+				MB000001 /* CycleAdvisorComplication.swift */,
+				MB000002 /* Info.plist */,
+				MB000003 /* CycleAdvisorWatchComplication.entitlements */,
+			);
+			path = CycleAdvisorWatchComplication;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -420,11 +564,13 @@
 				S1000001 /* Sources */,
 				F1000001 /* Frameworks */,
 				WCP00001 /* Embed Foundation Extensions */,
+				KCP00001 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				WT000001 /* PBXTargetDependency */,
+				KT000001 /* PBXTargetDependency */,
 			);
 			name = CycleAdvisor;
 			productName = CycleAdvisor;
@@ -465,6 +611,42 @@
 			productReference = WB000007 /* CycleAdvisorWidget.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		KW000001 /* CycleAdvisorWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = KL000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatch" */;
+			buildPhases = (
+				KR000001 /* Resources */,
+				KS000001 /* Sources */,
+				KF000001 /* Frameworks */,
+				MCP00001 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				MT000001 /* PBXTargetDependency */,
+			);
+			name = CycleAdvisorWatch;
+			productName = CycleAdvisorWatch;
+			productReference = KB000005 /* CycleAdvisorWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		MW000001 /* CycleAdvisorWatchComplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ML000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatchComplication" */;
+			buildPhases = (
+				MS000001 /* Sources */,
+				MF000001 /* Frameworks */,
+				M7000002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CycleAdvisorWatchComplication;
+			productName = CycleAdvisorWatchComplication;
+			productReference = MB000004 /* CycleAdvisorWatchComplication.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -497,6 +679,8 @@
 				E1000001 /* CycleAdvisor */,
 				E1000002 /* CycleAdvisorTests */,
 				WE000001 /* CycleAdvisorWidget */,
+				KW000001 /* CycleAdvisorWatch */,
+				MW000001 /* CycleAdvisorWatchComplication */,
 			);
 		};
 /* End PBXProject section */
@@ -522,6 +706,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		KR000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				KA000003 /* Assets.xcassets in Resources */,
+				KA000024 /* WatchAssets.xcassets in Resources */,
+				KA000020 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		M7000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				M7000001 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -533,6 +735,8 @@
 				A1000002 /* MainTabView.swift in Sources */,
 				A1000003 /* CyclePhaseEngine.swift in Sources */,
 				A1000004 /* CyclePhase.swift in Sources */,
+				A8000001 /* PeriodPrediction.swift in Sources */,
+				A9000001 /* PeriodNotificationScheduler.swift in Sources */,
 				A1000005 /* ResearchReference.swift in Sources */,
 				A1000006 /* Suggestion.swift in Sources */,
 				A1000007 /* CycleRingView.swift in Sources */,
@@ -568,6 +772,8 @@
 				A6000002 /* UserProfileManager.swift in Sources */,
 				A6000003 /* ProfileView.swift in Sources */,
 				A6000004 /* WorkoutDashboardView.swift in Sources */,
+				A7000001 /* WorkoutPosterMapper.swift in Sources */,
+				AA000001 /* WorkoutCelebrationPlanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +785,10 @@
 				A3000007 /* SolarTermEngineTests.swift in Sources */,
 				A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */,
 				T5000001 /* ResponseLanguageTests.swift in Sources */,
+				A7000002 /* WorkoutPosterMapperTests.swift in Sources */,
+				A8000002 /* PeriodPredictionTests.swift in Sources */,
+				A9000002 /* PeriodNotificationSchedulerTests.swift in Sources */,
+				AA000002 /* WorkoutCelebrationPlannerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +812,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		KS000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				KA000001 /* CycleAdvisorWatchApp.swift in Sources */,
+				KA000018 /* WatchCycleViewModel.swift in Sources */,
+				KA000019 /* WatchHomeView.swift in Sources */,
+				KA000022 /* WatchWorkoutObserver.swift in Sources */,
+				KA000023 /* CelebrationView.swift in Sources */,
+				KA000010 /* Theme.swift in Sources */,
+				KA000011 /* CyclePhase.swift in Sources */,
+				KA000012 /* PeriodPrediction.swift in Sources */,
+				KA000013 /* CyclePhaseEngine.swift in Sources */,
+				KA000014 /* WorkoutPosterMapper.swift in Sources */,
+				KA000021 /* WorkoutCelebrationPlanner.swift in Sources */,
+				KA000015 /* HealthKitManager.swift in Sources */,
+				KA000016 /* UserProfile.swift in Sources */,
+				KA000017 /* MenstrualSymptoms.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		MS000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				MA000001 /* CycleAdvisorComplication.swift in Sources */,
+				MA000010 /* CyclePhase.swift in Sources */,
+				MA000011 /* PeriodPrediction.swift in Sources */,
+				MA000012 /* CyclePhaseEngine.swift in Sources */,
+				MA000013 /* HealthKitManager.swift in Sources */,
+				MA000014 /* UserProfile.swift in Sources */,
+				MA000015 /* MenstrualSymptoms.swift in Sources */,
+				MA000016 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -614,6 +860,16 @@
 			isa = PBXTargetDependency;
 			target = WE000001 /* CycleAdvisorWidget */;
 			targetProxy = WC000001 /* PBXContainerItemProxy */;
+		};
+		KT000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = KW000001 /* CycleAdvisorWatch */;
+			targetProxy = KC000001 /* PBXContainerItemProxy */;
+		};
+		MT000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = MW000001 /* CycleAdvisorWatchComplication */;
+			targetProxy = MC000001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -792,6 +1048,7 @@
 		X1000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYSEMBEDSWIFTSTANDARDLIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Sources/CycleAdvisor.entitlements;
@@ -820,6 +1077,7 @@
 		X1000004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYSEMBEDSWIFTSTANDARDLIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Sources/CycleAdvisor.entitlements;
@@ -885,6 +1143,112 @@
 			};
 			name = Release;
 		};
+		KX000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatch/CycleAdvisorWatch.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bunlet needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.cycleadvisor.app;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		KX000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatch/CycleAdvisorWatch.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Bunlet;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bunlet needs access to your health data (menstrual cycles, heart rate, time in daylight, exercise, and activity) to provide personalized cycle phase suggestions.";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.cycleadvisor.app;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		MX000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatchComplication/CycleAdvisorWatchComplication.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CycleAdvisorWatchComplication/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp.complication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		MX000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CycleAdvisorWatchComplication/CycleAdvisorWatchComplication.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 3488U99HV8;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CycleAdvisorWatchComplication/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cycleadvisor.app.watchkitapp.complication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -920,6 +1284,24 @@
 			buildConfigurations = (
 				WX000001 /* Debug */,
 				WX000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		KL000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				KX000001 /* Debug */,
+				KX000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ML000001 /* Build configuration list for PBXNativeTarget "CycleAdvisorWatchComplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				MX000001 /* Debug */,
+				MX000002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

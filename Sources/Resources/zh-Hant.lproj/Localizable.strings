@@ -573,3 +573,23 @@
 "workout.activity.transition" = "轉換區";
 "workout.activity.underwater_diving" = "潛水";
 "workout.activity.other" = "其他運動";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "預計 %@ · 還有 %lld 天";
+"home.prediction.today" = "預計今天來潮";
+"home.prediction.in_period %lld" = "經期第 %lld 天";
+"home.prediction.overdue %lld" = "可能推遲了 %lld 天";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "經期預告";
+"notify.period.reminder.body %@" = "預計 %@ 來潮，可以提前準備啦";
+"notify.period.dayof.title" = "今天可能是經期第一天";
+"notify.period.dayof.body" = "留意身體信號，今天對自己溫柔一點";
+
+/* Watch */
+"watch.no_data" = "在 iPhone 健康 app 記錄經期後開始預測";
+"watch.complication.days_left %lld" = "還有 %lld 天";
+"watch.celebration.title" = "運動完成 👏";
+"watch.celebration.body" = "點開看看屬於你的運動紀念";
+"watch.celebration.message" = "你今天照顧好了自己";
+"watch.celebration.done" = "收下";

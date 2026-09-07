@@ -573,3 +573,23 @@
 "workout.activity.transition" = "トランジション";
 "workout.activity.underwater_diving" = "潜水";
 "workout.activity.other" = "その他のワークアウト";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "予定日 %@ · あと %lld 日";
+"home.prediction.today" = "今日が予定日です";
+"home.prediction.in_period %lld" = "生理 %lld 日目";
+"home.prediction.overdue %lld" = "%lld 日遅れている可能性があります";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "生理予定のお知らせ";
+"notify.period.reminder.body %@" = "%@ の予定です。早めに準備を";
+"notify.period.dayof.title" = "今日が生理予定日かもしれません";
+"notify.period.dayof.body" = "体のサインに気をつけて、今日はやさしく過ごしましょう";
+
+/* Watch */
+"watch.no_data" = "iPhone のヘルスケア app で生理を記録すると予測が始まります";
+"watch.complication.days_left %lld" = "あと %lld 日";
+"watch.celebration.title" = "ワークアウト完了 👏";
+"watch.celebration.body" = "タップして運動の記念を見る";
+"watch.celebration.message" = "今日の自分をいたわりましたね";
+"watch.celebration.done" = "受け取る";

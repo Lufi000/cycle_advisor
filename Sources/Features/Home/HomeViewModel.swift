@@ -35,6 +35,17 @@ final class HomeViewModel {
     private var lastPeriodStart: Date?
     private var lastCycleLength: Int?
 
+    /// 经期预测（主页周期模块与通知调度共用）
+    var periodPrediction: PeriodPrediction? {
+        guard let lastPeriodStart, let lastCycleLength else { return nil }
+        return PeriodPrediction.make(
+            lastPeriodStart: lastPeriodStart,
+            cycleLength: lastCycleLength,
+            isInPeriod: context.phase == .menstrual && !context.isPredicted,
+            periodDay: context.cycleDay
+        )
+    }
+
     /// - Parameter force: `true` 时忽略「已成功加载」门禁，用于用户主动刷新健康数据。
     @MainActor
     func load(force: Bool = false) async {
@@ -112,6 +123,13 @@ final class HomeViewModel {
                 menstrualSymptoms: symptoms,
                 isPredicted:    base.isPredicted
             )
+            let prediction = PeriodPrediction.make(
+                lastPeriodStart: periodStart,
+                cycleLength: cycleLength,
+                isInPeriod: base.phase == .menstrual && !base.isPredicted,
+                periodDay: base.cycleDay
+            )
+            await PeriodNotificationScheduler.reschedule(predictedDate: prediction.predictedDate)
         } else {
             // 还没有经期数据（首次使用）— 保留 mock 阶段，但填入真实健康指标
             usingMockData = true
@@ -125,6 +143,7 @@ final class HomeViewModel {
                 healthMetrics:  metrics,
                 menstrualSymptoms: symptoms
             )
+            await PeriodNotificationScheduler.reschedule(predictedDate: nil)
         }
 
         // 积累用户档案（身体信息 + 运动 + 周期历史）

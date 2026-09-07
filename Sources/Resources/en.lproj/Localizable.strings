@@ -573,3 +573,23 @@
 "workout.activity.transition" = "Transition";
 "workout.activity.underwater_diving" = "Underwater Diving";
 "workout.activity.other" = "Other Workout";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "Expected %@ · in %lld days";
+"home.prediction.today" = "Expected today";
+"home.prediction.in_period %lld" = "Period day %lld";
+"home.prediction.overdue %lld" = "May be %lld days late";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "Period coming up";
+"notify.period.reminder.body %@" = "Expected %@ — time to prepare";
+"notify.period.dayof.title" = "Your period may start today";
+"notify.period.dayof.body" = "Listen to your body and take it easy today";
+
+/* Watch */
+"watch.no_data" = "Log your period in the Health app on iPhone to start predictions";
+"watch.complication.days_left %lld" = "in %lld days";
+"watch.celebration.title" = "Workout complete 👏";
+"watch.celebration.body" = "Tap to see your workout keepsake";
+"watch.celebration.message" = "You took good care of yourself today";
+"watch.celebration.done" = "Keep it";

@@ -573,3 +573,23 @@
 "workout.activity.transition" = "Transición";
 "workout.activity.underwater_diving" = "Buceo";
 "workout.activity.other" = "Otro entrenamiento";
+
+/* Home prediction */
+"home.prediction.upcoming %@ %lld" = "Previsto: %@ · faltan %lld días";
+"home.prediction.today" = "Previsto para hoy";
+"home.prediction.in_period %lld" = "Día %lld del periodo";
+"home.prediction.overdue %lld" = "Podría retrasarse %lld días";
+
+/* Period prediction notification */
+"notify.period.reminder.title" = "Periodo próximo";
+"notify.period.reminder.body %@" = "Previsto para el %@ — prepárate con tiempo";
+"notify.period.dayof.title" = "Tu periodo podría empezar hoy";
+"notify.period.dayof.body" = "Escucha a tu cuerpo y tómate el día con calma";
+
+/* Watch */
+"watch.no_data" = "Registra tu periodo en la app Salud del iPhone para ver predicciones";
+"watch.complication.days_left %lld" = "en %lld días";
+"watch.celebration.title" = "Entrenamiento completado 👏";
+"watch.celebration.body" = "Toca para ver tu recuerdo deportivo";
+"watch.celebration.message" = "Hoy te cuidaste bien";
+"watch.celebration.done" = "Quedármelo";
