@@ -52,6 +52,41 @@ struct LLMDelta: Decodable {
     }
 }
 
+/// 聊天症状抽取结果（备孕模式）
+struct ExtractedSymptom: Equatable {
+    let type: PregnancySymptomType
+    /// "today" / "yesterday" / nil（视为 today）
+    let dateRef: String?
+
+    /// 转换为症状库记录，来源固定 chatExtracted
+    func record(now: Date = .now) -> SymptomRecord {
+        let day: Date
+        if dateRef == "yesterday" {
+            day = Calendar.current.date(byAdding: .day, value: -1, to: now) ?? now
+        } else {
+            day = now
+        }
+        return SymptomRecord(
+            date: Calendar.current.startOfDay(for: day),
+            type: type,
+            source: .chatExtracted
+        )
+    }
+}
+
+private struct SymptomExtractionResponse: Decodable {
+    struct Item: Decodable {
+        let type: String
+        let dateRef: String?
+
+        enum CodingKeys: String, CodingKey {
+            case type
+            case dateRef = "date_ref"
+        }
+    }
+    let symptoms: [Item]
+}
+
 struct LLMTokenUsage: Equatable {
     let inputTokens: Int
     let outputTokens: Int
@@ -1125,6 +1160,48 @@ actor LLMService {
             throw LLMError.decodingFailed("Cannot convert to data")
         }
         return try JSONDecoder().decode(ExtractedProfileFields.self, from: data)
+    }
+
+    // MARK: - Symptom Extraction (备孕模式)
+
+    private static let symptomExtractionMaxTokens = 300
+
+    /// 从用户单条消息抽取早孕相关症状。独立请求，不侵入主聊天链路。
+    func extractSymptoms(from message: String) async throws -> [ExtractedSymptom] {
+        let request = LLMRequest(
+            model: Self.utilityModelName,
+            messages: [
+                LLMMessage(role: "system", content: """
+                从用户消息中抽取早孕相关症状。只抽取用户明确提到的症状，不要推测。
+                输出 JSON：{"symptoms": [{"type": "<症状>", "date_ref": "today" | "yesterday" | null}]}
+                type 只能是：nausea, vomiting, fatigue, breastTenderness, bloating, abdominalCramps, headache, spotting, appetiteChange, moodChange, dizziness
+                没有提到任何症状时输出 {"symptoms": []}
+                """),
+                LLMMessage(role: "user", content: message)
+            ],
+            stream: false,
+            temperature: 0,
+            maxTokens: Self.symptomExtractionMaxTokens,
+            responseFormat: .init(type: "json_object")
+        )
+
+        let response: LLMResponse = try await sendRequest(request, timeout: 15)
+        guard let content = response.choices.first?.message?.content else {
+            throw LLMError.emptyResponse
+        }
+        return Self.parseExtractedSymptoms(from: content)
+    }
+
+    /// 解析抽取响应；畸形 JSON / 未知类型一律容错为空数组
+    nonisolated static func parseExtractedSymptoms(from content: String) -> [ExtractedSymptom] {
+        let cleaned = cleanContent(content)
+        guard let data = cleaned.data(using: .utf8),
+              let parsed = try? JSONDecoder().decode(SymptomExtractionResponse.self, from: data)
+        else { return [] }
+        return parsed.symptoms.compactMap { item in
+            guard let type = PregnancySymptomType(rawValue: item.type) else { return nil }
+            return ExtractedSymptom(type: type, dateRef: item.dateRef)
+        }
     }
 
     // MARK: - Token Estimation (for billing settlement)

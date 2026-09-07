@@ -60,6 +60,9 @@ final class HomeViewModel {
         await performHealthKitUpdate()
         loadSolarTerms()
 
+        // 备孕洞察刷新（未开启备孕模式时内部直接短路，代价极低）
+        await ConceptionInsightManager.shared.refresh()
+
         hasLoaded = true
         persistWidgetSnapshot()
     }

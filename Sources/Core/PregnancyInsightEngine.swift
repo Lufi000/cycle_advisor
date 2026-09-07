@@ -14,7 +14,7 @@ enum PregnancyInsight: Equatable {
 }
 
 /// 提示触发原因（用于 UI 解释展示）
-enum InsightReason: Equatable {
+enum InsightReason: Hashable {
     case sustainedHighTemperature(days: Int)
     case periodLate(days: Int)
     case elevatedRestingHeartRate(deltaBPM: Int)

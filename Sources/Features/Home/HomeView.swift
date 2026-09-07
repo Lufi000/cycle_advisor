@@ -30,6 +30,7 @@ struct HomeView: View {
                         cycleStageHeader
                         healthDashboard
                         periodSymptomsEntry
+                        conceptionEntry
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
@@ -104,6 +105,16 @@ struct HomeView: View {
             }
         }
         .animation(.easeOut(duration: 0.28), value: isSideMenuOpen)
+    }
+
+    // MARK: - Conception Tracking Entry
+
+    /// 备孕卡片：仅备孕模式可见；关闭时不占布局
+    @ViewBuilder
+    private var conceptionEntry: some View {
+        if UserProfileManager.shared.profile.isTryingToConceive {
+            ConceptionCardView()
+        }
     }
 
     // MARK: - Period Symptoms Entry

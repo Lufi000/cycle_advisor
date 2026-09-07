@@ -97,6 +97,14 @@ final class AssistantViewModel {
         // 1. 添加用户消息
         messages.append(ChatMessage(role: .user, content: trimmed, sessionDate: today))
 
+        // 备孕模式：异步抽取用户消息中的早孕症状（fire-and-forget，静默失败，不阻塞对话）
+        if UserProfileManager.shared.profile.isTryingToConceive {
+            let capturedMessage = trimmed
+            Task {
+                await SymptomExtractor.shared.extractAndStore(message: capturedMessage)
+            }
+        }
+
         // 2. 构建 API 历史（包含刚刚加入的用户消息，不含即将添加的占位符）
         // 截取最近 maxHistoryMessages 条，避免对话越长、每次请求越慢
         let apiHistory: [LLMMessage] = messages

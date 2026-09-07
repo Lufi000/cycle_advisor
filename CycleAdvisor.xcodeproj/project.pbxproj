@@ -33,6 +33,14 @@
 		AE000002 /* PregnancyInsightEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000002 /* PregnancyInsightEngineTests.swift */; };
 		AD000001 /* OvulationLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000001 /* OvulationLocator.swift */; };
 		AE000001 /* PregnancyInsightEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000001 /* PregnancyInsightEngine.swift */; };
+		AG000001 /* ConceptionReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BG000001 /* ConceptionReminderScheduler.swift */; };
+		AH000001 /* ConceptionInsightManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BH000001 /* ConceptionInsightManager.swift */; };
+		AI000001 /* SymptomExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BI000001 /* SymptomExtractor.swift */; };
+		AJ000001 /* BBTEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BJ000001 /* BBTEntryView.swift */; };
+		AK000001 /* TemperatureSparkline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BK000001 /* TemperatureSparkline.swift */; };
+		AL000001 /* ConceptionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BL000001 /* ConceptionCardView.swift */; };
+		AM000001 /* ConceptionReminderSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BM000001 /* ConceptionReminderSchedulerTests.swift */; };
+		AN000001 /* SymptomExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BN000001 /* SymptomExtractorTests.swift */; };
 		AA000001 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
 		A9000001 /* PeriodNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001 /* PeriodNotificationScheduler.swift */; };
 		A8000001 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
@@ -251,6 +259,14 @@
 		BE000002 /* PregnancyInsightEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PregnancyInsightEngineTests.swift; sourceTree = "<group>"; };
 		BD000001 /* OvulationLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvulationLocator.swift; sourceTree = "<group>"; };
 		BE000001 /* PregnancyInsightEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PregnancyInsightEngine.swift; sourceTree = "<group>"; };
+		BG000001 /* ConceptionReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionReminderScheduler.swift; sourceTree = "<group>"; };
+		BH000001 /* ConceptionInsightManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionInsightManager.swift; sourceTree = "<group>"; };
+		BI000001 /* SymptomExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomExtractor.swift; sourceTree = "<group>"; };
+		BJ000001 /* BBTEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBTEntryView.swift; sourceTree = "<group>"; };
+		BK000001 /* TemperatureSparkline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureSparkline.swift; sourceTree = "<group>"; };
+		BL000001 /* ConceptionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionCardView.swift; sourceTree = "<group>"; };
+		BM000001 /* ConceptionReminderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionReminderSchedulerTests.swift; sourceTree = "<group>"; };
+		BN000001 /* SymptomExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomExtractorTests.swift; sourceTree = "<group>"; };
 		VR000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		VR000002 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		VR000003 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -357,6 +373,9 @@
 			children = (
 				B1000003 /* CyclePhaseEngine.swift */,
 				BC000002 /* ConceptionStore.swift */,
+				BG000001 /* ConceptionReminderScheduler.swift */,
+				BH000001 /* ConceptionInsightManager.swift */,
+				BI000001 /* SymptomExtractor.swift */,
 				B1000013 /* HealthKitManager.swift */,
 				BD000001 /* OvulationLocator.swift */,
 				BE000001 /* PregnancyInsightEngine.swift */,
@@ -389,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				G1000007 /* Home */,
+				G100000F /* Conception */,
 				G6000001 /* Profile */,
 				G100000D /* Settings */,
 				G3000001 /* SolarTerms */,
@@ -407,6 +427,16 @@
 				B5000002 /* PeriodDetailView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		G100000F /* Conception */ = {
+			isa = PBXGroup;
+			children = (
+				BJ000001 /* BBTEntryView.swift */,
+				BK000001 /* TemperatureSparkline.swift */,
+				BL000001 /* ConceptionCardView.swift */,
+			);
+			path = Conception;
 			sourceTree = "<group>";
 		};
 		G1000009 /* Shared */ = {
@@ -433,6 +463,8 @@
 				BF000001 /* UserProfileConceptionTests.swift */,
 				BD000002 /* OvulationLocatorTests.swift */,
 				BE000002 /* PregnancyInsightEngineTests.swift */,
+				BM000001 /* ConceptionReminderSchedulerTests.swift */,
+				BN000001 /* SymptomExtractorTests.swift */,
 				B3000007 /* SolarTermEngineTests.swift */,
 				B1000016 /* ThinkingModeTokenBudgetTests.swift */,
 				T6000001 /* ResponseLanguageTests.swift */,
@@ -802,6 +834,12 @@
 				AC000002 /* ConceptionStore.swift in Sources */,
 				AD000001 /* OvulationLocator.swift in Sources */,
 				AE000001 /* PregnancyInsightEngine.swift in Sources */,
+				AG000001 /* ConceptionReminderScheduler.swift in Sources */,
+				AH000001 /* ConceptionInsightManager.swift in Sources */,
+				AI000001 /* SymptomExtractor.swift in Sources */,
+				AJ000001 /* BBTEntryView.swift in Sources */,
+				AK000001 /* TemperatureSparkline.swift in Sources */,
+				AL000001 /* ConceptionCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +859,8 @@
 				AF000001 /* UserProfileConceptionTests.swift in Sources */,
 				AD000002 /* OvulationLocatorTests.swift in Sources */,
 				AE000002 /* PregnancyInsightEngineTests.swift in Sources */,
+				AM000001 /* ConceptionReminderSchedulerTests.swift in Sources */,
+				AN000001 /* SymptomExtractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
