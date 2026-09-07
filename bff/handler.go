@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net"
@@ -17,6 +18,7 @@ const (
 	upstreamURL              = "https://api.deepseek.com/v1/chat/completions"
 	maxBodySize              = 64 * 1024 // 64 KB
 	requestTimeout           = 180 * time.Second
+	extractTimeout           = 30 * time.Second
 	defaultUnauthRatePerMin  = 12
 	unauthRateWindowDuration = time.Minute
 )
@@ -44,19 +46,9 @@ func (p *Proxy) HandleCompletions(w http.ResponseWriter, r *http.Request) {
 
 	// Authenticate. Static app tokens are optional only when explicitly enabled for
 	// TestFlight/public clients; unauthenticated traffic is rate-limited by IP.
-	token := r.Header.Get("X-App-Token")
-	appLabel, ok := p.AppTokens[token]
-	if !ok || token == "" {
-		if !p.AllowUnauthenticated {
-			http.Error(w, `{"error":"unauthorized"}`, http.StatusUnauthorized)
-			return
-		}
-		clientIP := clientIPFromRequest(r)
-		if !p.allowUnauthenticatedRequest(clientIP) {
-			http.Error(w, `{"error":"rate limited"}`, http.StatusTooManyRequests)
-			return
-		}
-		appLabel = "unauthenticated:" + clientIP
+	appLabel, ok := p.authorize(w, r)
+	if !ok {
+		return
 	}
 
 	// Read request body with size limit
@@ -128,6 +120,26 @@ func (p *Proxy) HandleCompletions(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// authorize validates X-App-Token (or rate-limited unauthenticated access) and
+// returns the app label. On failure it writes the error response and returns ok=false.
+func (p *Proxy) authorize(w http.ResponseWriter, r *http.Request) (appLabel string, ok bool) {
+	token := r.Header.Get("X-App-Token")
+	appLabel, ok = p.AppTokens[token]
+	if !ok || token == "" {
+		if !p.AllowUnauthenticated {
+			http.Error(w, `{"error":"unauthorized"}`, http.StatusUnauthorized)
+			return "", false
+		}
+		clientIP := clientIPFromRequest(r)
+		if !p.allowUnauthenticatedRequest(clientIP) {
+			http.Error(w, `{"error":"rate limited"}`, http.StatusTooManyRequests)
+			return "", false
+		}
+		appLabel = "unauthenticated:" + clientIP
+	}
+	return appLabel, true
+}
+
 // peekStream checks if the JSON body contains "stream":true without full parsing.
 func peekStream(body []byte) bool {
 	var peek struct {
@@ -179,4 +191,180 @@ func (p *Proxy) allowUnauthenticatedRequest(clientIP string) bool {
 	counter.count++
 	p.unauthCounts[clientIP] = counter
 	return true
+}
+
+// MARK: - Symptom Extraction (备孕模式)
+
+// symptomExtractionRequest is the client's request body for /v1/extract/symptoms.
+type symptomExtractionRequest struct {
+	Message  string `json:"message"`
+	Language string `json:"language"`
+}
+
+// symptomItem is a single extracted early-pregnancy symptom.
+type symptomItem struct {
+	Type    string  `json:"type"`
+	DateRef *string `json:"date_ref"` // "today" | "yesterday" | null
+}
+
+// symptomExtractionResponse is returned to the client. Symptoms is always a
+// non-nil slice so it marshals as [] rather than null.
+type symptomExtractionResponse struct {
+	Symptoms []symptomItem `json:"symptoms"`
+}
+
+// deepseekResponse is the subset of DeepSeek's chat completion we need.
+type deepseekResponse struct {
+	Choices []struct {
+		Message struct {
+			Content string `json:"content"`
+		} `json:"message"`
+	} `json:"choices"`
+}
+
+// allowedSymptomTypes is the whitelist of early-pregnancy symptom types.
+var allowedSymptomTypes = map[string]struct{}{
+	"nausea": {}, "vomiting": {}, "fatigue": {}, "breastTenderness": {},
+	"bloating": {}, "abdominalCramps": {}, "headache": {}, "spotting": {},
+	"appetiteChange": {}, "moodChange": {}, "dizziness": {},
+}
+
+// HandleExtractSymptoms runs the symptom extraction pipeline: authenticate →
+// call DeepSeek with a fixed extraction prompt → parse and whitelist-filter.
+// Any failure returns {"symptoms":[]} so the client never blocks on it.
+func (p *Proxy) HandleExtractSymptoms(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	if r.Method != http.MethodPost {
+		http.Error(w, `{"error":"method not allowed"}`, http.StatusMethodNotAllowed)
+		return
+	}
+
+	appLabel, ok := p.authorize(w, r)
+	if !ok {
+		return
+	}
+
+	body, err := io.ReadAll(io.LimitReader(r.Body, maxBodySize+1))
+	if err != nil {
+		http.Error(w, `{"error":"failed to read request body"}`, http.StatusBadRequest)
+		return
+	}
+	if len(body) > maxBodySize {
+		http.Error(w, `{"error":"request body too large"}`, http.StatusRequestEntityTooLarge)
+		return
+	}
+
+	var req symptomExtractionRequest
+	if err := json.Unmarshal(body, &req); err != nil {
+		writeJSON(w, symptomExtractionResponse{Symptoms: []symptomItem{}})
+		return
+	}
+
+	// 与客户端节流一致：少于 4 个字符的消息不抽取
+	if len([]rune(strings.TrimSpace(req.Message))) < 4 {
+		writeJSON(w, symptomExtractionResponse{Symptoms: []symptomItem{}})
+		return
+	}
+
+	symptoms, err := p.extractSymptomsUpstream(r, strings.TrimSpace(req.Message))
+	if err != nil {
+		log.Printf("extract symptoms upstream error (app=%s): %v", appLabel, err)
+		writeJSON(w, symptomExtractionResponse{Symptoms: []symptomItem{}})
+		return
+	}
+	writeJSON(w, symptomExtractionResponse{Symptoms: symptoms})
+}
+
+func (p *Proxy) extractSymptomsUpstream(r *http.Request, message string) ([]symptomItem, error) {
+	const (
+		modelName = "deepseek-chat"
+		maxTokens = 300
+	)
+	systemPrompt := `从用户消息中抽取早孕相关症状。只抽取用户明确提到的症状，不要推测。
+输出 JSON：{"symptoms": [{"type": "<症状>", "date_ref": "today" | "yesterday" | null}]}
+type 只能是：nausea, vomiting, fatigue, breastTenderness, bloating, abdominalCramps, headache, spotting, appetiteChange, moodChange, dizziness
+没有提到任何症状时输出 {"symptoms": []}`
+
+	reqBody, err := json.Marshal(map[string]any{
+		"model": modelName,
+		"messages": []map[string]string{
+			{"role": "system", "content": systemPrompt},
+			{"role": "user", "content": message},
+		},
+		"stream":          false,
+		"temperature":     0,
+		"max_tokens":      maxTokens,
+		"response_format": map[string]string{"type": "json_object"},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	upReq, err := http.NewRequestWithContext(r.Context(), http.MethodPost, upstreamURL, bytes.NewReader(reqBody))
+	if err != nil {
+		return nil, err
+	}
+	upReq.Header.Set("Content-Type", "application/json")
+	upReq.Header.Set("Authorization", "Bearer "+p.APIKey)
+
+	client := &http.Client{Timeout: extractTimeout}
+	upResp, err := client.Do(upReq)
+	if err != nil {
+		return nil, err
+	}
+	defer upResp.Body.Close()
+
+	respBody, err := io.ReadAll(io.LimitReader(upResp.Body, maxBodySize))
+	if err != nil {
+		return nil, err
+	}
+	if upResp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("upstream status %d: %s", upResp.StatusCode, string(respBody))
+	}
+
+	var ds deepseekResponse
+	if err := json.Unmarshal(respBody, &ds); err != nil {
+		return nil, err
+	}
+	if len(ds.Choices) == 0 {
+		return nil, fmt.Errorf("upstream returned no choices")
+	}
+	return parseExtractedSymptoms(ds.Choices[0].Message.Content), nil
+}
+
+// parseExtractedSymptoms cleans the DeepSeek content and returns only whitelisted
+// symptom types. Malformed JSON yields an empty (non-nil) slice, never an error.
+func parseExtractedSymptoms(content string) []symptomItem {
+	cleaned := cleanLLMContent(content)
+	var parsed struct {
+		Symptoms []symptomItem `json:"symptoms"`
+	}
+	if err := json.Unmarshal([]byte(cleaned), &parsed); err != nil {
+		return []symptomItem{}
+	}
+	out := make([]symptomItem, 0, len(parsed.Symptoms))
+	for _, item := range parsed.Symptoms {
+		if _, ok := allowedSymptomTypes[item.Type]; ok {
+			out = append(out, item)
+		}
+	}
+	return out
+}
+
+// cleanLLMContent strips DeepSeek reasoning blocks and markdown code fences.
+func cleanLLMContent(raw string) string {
+	s := raw
+	if idx := strings.Index(s, "</think>"); idx >= 0 {
+		s = s[idx+len("</think>"):]
+	}
+	s = strings.ReplaceAll(s, "```json", "")
+	s = strings.ReplaceAll(s, "```", "")
+	return strings.TrimSpace(s)
+}
+
+func writeJSON(w http.ResponseWriter, v any) {
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(v); err != nil {
+		log.Printf("writeJSON: %v", err)
+	}
 }

@@ -1164,29 +1164,35 @@ actor LLMService {
 
     // MARK: - Symptom Extraction (备孕模式)
 
-    private static let symptomExtractionMaxTokens = 300
-
-    /// 从用户单条消息抽取早孕相关症状。独立请求，不侵入主聊天链路。
+    /// 从用户单条消息抽取早孕相关症状。走 BFF 独立端点 /v1/extract/symptoms，
+    /// 不侵入主聊天链路；服务端固定 system prompt + JSON mode + 类型白名单校验。
     func extractSymptoms(from message: String) async throws -> [ExtractedSymptom] {
-        let request = LLMRequest(
-            model: Self.utilityModelName,
-            messages: [
-                LLMMessage(role: "system", content: """
-                从用户消息中抽取早孕相关症状。只抽取用户明确提到的症状，不要推测。
-                输出 JSON：{"symptoms": [{"type": "<症状>", "date_ref": "today" | "yesterday" | null}]}
-                type 只能是：nausea, vomiting, fatigue, breastTenderness, bloating, abdominalCramps, headache, spotting, appetiteChange, moodChange, dizziness
-                没有提到任何症状时输出 {"symptoms": []}
-                """),
-                LLMMessage(role: "user", content: message)
-            ],
-            stream: false,
-            temperature: 0,
-            maxTokens: Self.symptomExtractionMaxTokens,
-            responseFormat: .init(type: "json_object")
-        )
+        struct Body: Encodable {
+            let message: String
+            let language: String
+        }
+        let url = URL(string: Secrets.extractSymptomsURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(Secrets.appToken, forHTTPHeaderField: "X-App-Token")
+        request.timeoutInterval = 15
+        request.httpBody = try JSONEncoder().encode(Body(
+            message: message,
+            language: Locale.current.identifier
+        ))
 
-        let response: LLMResponse = try await sendRequest(request, timeout: 15)
-        guard let content = response.choices.first?.message?.content else {
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch {
+            throw LLMError.networkUnavailable
+        }
+        guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+            let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+            throw LLMError.httpError(statusCode: code)
+        }
+        guard let content = String(data: data, encoding: .utf8) else {
             throw LLMError.emptyResponse
         }
         return Self.parseExtractedSymptoms(from: content)

@@ -4,6 +4,9 @@ enum Secrets {
     /// BFF proxy server URL (e.g. "https://api.yourdomain.com/v1/chat/completions")
     static let baseURL = "https://api.smallbeebee.com/v1/chat/completions"
 
+    /// BFF symptom-extraction endpoint (备孕模式)
+    static let extractSymptomsURL = "https://api.smallbeebee.com/v1/extract/symptoms"
+
     /// Shared secret for authenticating with the BFF proxy
     static let appToken = "<YOUR_APP_TOKEN>"
 }
