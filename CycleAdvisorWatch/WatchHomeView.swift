@@ -46,6 +46,8 @@ struct WatchHomeView: View {
                 ProgressView()
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Theme.warmShell)
         .containerBackground(Theme.warmShell, for: .navigation)
         .task { await viewModel.load() }
     }
