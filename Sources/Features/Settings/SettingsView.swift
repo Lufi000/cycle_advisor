@@ -5,6 +5,7 @@ struct SettingsView: View {
     @AppStorage("thinkingMode") private var thinkingModeRaw: String = ThinkingMode.fast.rawValue
     @AppStorage("hasShownConceptionOnboarding") private var hasShownConceptionOnboarding = false
     @AppStorage("conception.reminderTimeMinutes") private var reminderTimeMinutes = 420
+    @AppStorage("conception.reminderEnabled") private var reminderEnabled = false
     @State private var showConceptionOnboarding = false
     private var profileManager = UserProfileManager.shared
 
@@ -90,11 +91,19 @@ struct SettingsView: View {
                     .tint(Theme.accent)
 
                 if profileManager.profile.isTryingToConceive {
-                    DatePicker(
-                        String(localized: "conception.reminder.time"),
-                        selection: reminderTimeBinding,
-                        displayedComponents: .hourAndMinute
-                    )
+                    Toggle(String(localized: "conception.reminder.enabled"), isOn: $reminderEnabled)
+                        .tint(Theme.accent)
+                        .onChange(of: reminderEnabled) { _, _ in
+                            Task { await ConceptionInsightManager.shared.refresh() }
+                        }
+
+                    if reminderEnabled {
+                        DatePicker(
+                            String(localized: "conception.reminder.time"),
+                            selection: reminderTimeBinding,
+                            displayedComponents: .hourAndMinute
+                        )
+                    }
                 }
 
                 Text("settings.conception.hint")

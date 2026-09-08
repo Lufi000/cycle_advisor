@@ -8,20 +8,23 @@ enum ConceptionReminderScheduler {
     static let notificationID = "conception.morningReminder"
     /// UserDefaults key：提醒时间（距午夜分钟数），默认 7:00 = 420
     static let timeDefaultsKey = "conception.reminderTimeMinutes"
+    /// UserDefaults key：测温提醒开关（默认关，手动开启）
+    static let enabledDefaultsKey = "conception.reminderEnabled"
 
-    /// 备孕模式开启且近 3 天无腕温数据覆盖时才需要手动测温提醒
-    static func shouldSchedule(isTryingToConceive: Bool, hasWristCoverage: Bool) -> Bool {
-        isTryingToConceive && !hasWristCoverage
+    /// 备孕模式开启、近 3 天无腕温数据覆盖、且用户手动开启了测温提醒时才调度
+    static func shouldSchedule(isTryingToConceive: Bool, hasWristCoverage: Bool, reminderEnabled: Bool) -> Bool {
+        isTryingToConceive && !hasWristCoverage && reminderEnabled
     }
 
     /// 重排提醒：先清后排，条件不满足时只清不排
-    static func refresh(isTryingToConceive: Bool, hasWristCoverage: Bool) {
+    static func refresh(isTryingToConceive: Bool, hasWristCoverage: Bool, reminderEnabled: Bool) {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [notificationID])
 
         guard shouldSchedule(
             isTryingToConceive: isTryingToConceive,
-            hasWristCoverage: hasWristCoverage
+            hasWristCoverage: hasWristCoverage,
+            reminderEnabled: reminderEnabled
         ) else { return }
 
         let minutes = UserDefaults.standard.object(forKey: timeDefaultsKey) as? Int ?? 420

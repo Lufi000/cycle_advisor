@@ -624,6 +624,7 @@
 "conception.bbt.entry" = "手動で体温を記録";
 "conception.bbt.save" = "保存";
 "conception.reminder.time" = "朝の計測リマインダー";
+"conception.reminder.enabled" = "計測リマインダー";
 "conception.reminder.body" = "体温を測りましょう";
 "conception.reason.high_temp" = "高温期 %lld 日継続";
 "conception.reason.period_late" = "生理が %lld 日遅れています";

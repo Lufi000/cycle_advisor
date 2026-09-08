@@ -624,6 +624,7 @@
 "conception.bbt.entry" = "Saisir la température manuellement";
 "conception.bbt.save" = "Enregistrer";
 "conception.reminder.time" = "Rappel de prise de température";
+"conception.reminder.enabled" = "Rappel de température";
 "conception.reminder.body" = "C'est l'heure de prendre votre température";
 "conception.reason.high_temp" = "Température élevée depuis %lld jours";
 "conception.reason.period_late" = "Règles en retard de %lld jours";

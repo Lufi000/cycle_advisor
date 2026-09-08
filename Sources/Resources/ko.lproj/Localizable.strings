@@ -624,6 +624,7 @@
 "conception.bbt.entry" = "수동으로 체온 입력";
 "conception.bbt.save" = "저장";
 "conception.reminder.time" = "아침 체온 알림";
+"conception.reminder.enabled" = "체온 알림";
 "conception.reminder.body" = "체온을 측정할 시간이에요";
 "conception.reason.high_temp" = "고온 상태 %lld일 지속";
 "conception.reason.period_late" = "생리가 %lld일 늦어졌어요";

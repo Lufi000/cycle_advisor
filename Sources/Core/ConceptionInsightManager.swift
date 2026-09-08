@@ -30,9 +30,11 @@ final class ConceptionInsightManager {
             insight = .insufficient
             recentTemperatures = []
             hasWristCoverage = false
-            ConceptionReminderScheduler.refresh(isTryingToConceive: false, hasWristCoverage: false)
+            ConceptionReminderScheduler.refresh(isTryingToConceive: false, hasWristCoverage: false, reminderEnabled: false)
             return
         }
+
+        let reminderEnabled = UserDefaults.standard.bool(forKey: ConceptionReminderScheduler.enabledDefaultsKey)
 
         async let wristTask = healthKit.fetchWristTemperatureSeries(daysBack: 60)
         async let vitalsTask = healthKit.fetchDailyVitals(daysBack: 60)
@@ -78,7 +80,8 @@ final class ConceptionInsightManager {
         hasWristCoverage = wrist.contains { $0.date >= coverageCutoff }
         ConceptionReminderScheduler.refresh(
             isTryingToConceive: true,
-            hasWristCoverage: hasWristCoverage
+            hasWristCoverage: hasWristCoverage,
+            reminderEnabled: reminderEnabled
         )
     }
 

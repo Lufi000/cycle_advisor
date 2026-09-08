@@ -624,6 +624,7 @@
 "conception.bbt.entry" = "手動錄入體溫";
 "conception.bbt.save" = "儲存";
 "conception.reminder.time" = "晨間測溫提醒";
+"conception.reminder.enabled" = "測溫提醒";
 "conception.reminder.body" = "該測體溫啦";
 "conception.reason.high_temp" = "體溫持續高位 %lld 天";
 "conception.reason.period_late" = "月經推遲 %lld 天";
