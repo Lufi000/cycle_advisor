@@ -251,6 +251,7 @@ enum MockData {
             lastExtractedAt: Date()
         ),
         knownConditions: ["轻度痛经"],
+        isTryingToConceive: false,
         lastUpdated: Date(),
         version: 1
     )

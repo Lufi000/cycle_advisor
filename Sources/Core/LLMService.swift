@@ -52,6 +52,41 @@ struct LLMDelta: Decodable {
     }
 }
 
+/// 聊天症状抽取结果（备孕模式）
+struct ExtractedSymptom: Equatable {
+    let type: PregnancySymptomType
+    /// "today" / "yesterday" / nil（视为 today）
+    let dateRef: String?
+
+    /// 转换为症状库记录，来源固定 chatExtracted
+    func record(now: Date = .now) -> SymptomRecord {
+        let day: Date
+        if dateRef == "yesterday" {
+            day = Calendar.current.date(byAdding: .day, value: -1, to: now) ?? now
+        } else {
+            day = now
+        }
+        return SymptomRecord(
+            date: Calendar.current.startOfDay(for: day),
+            type: type,
+            source: .chatExtracted
+        )
+    }
+}
+
+private struct SymptomExtractionResponse: Decodable {
+    struct Item: Decodable {
+        let type: String
+        let dateRef: String?
+
+        enum CodingKeys: String, CodingKey {
+            case type
+            case dateRef = "date_ref"
+        }
+    }
+    let symptoms: [Item]
+}
+
 struct LLMTokenUsage: Equatable {
     let inputTokens: Int
     let outputTokens: Int
@@ -1125,6 +1160,54 @@ actor LLMService {
             throw LLMError.decodingFailed("Cannot convert to data")
         }
         return try JSONDecoder().decode(ExtractedProfileFields.self, from: data)
+    }
+
+    // MARK: - Symptom Extraction (备孕模式)
+
+    /// 从用户单条消息抽取早孕相关症状。走 BFF 独立端点 /v1/extract/symptoms，
+    /// 不侵入主聊天链路；服务端固定 system prompt + JSON mode + 类型白名单校验。
+    func extractSymptoms(from message: String) async throws -> [ExtractedSymptom] {
+        struct Body: Encodable {
+            let message: String
+            let language: String
+        }
+        let url = URL(string: Secrets.extractSymptomsURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(Secrets.appToken, forHTTPHeaderField: "X-App-Token")
+        request.timeoutInterval = 15
+        request.httpBody = try JSONEncoder().encode(Body(
+            message: message,
+            language: Locale.current.identifier
+        ))
+
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch {
+            throw LLMError.networkUnavailable
+        }
+        guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+            let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+            throw LLMError.httpError(statusCode: code)
+        }
+        guard let content = String(data: data, encoding: .utf8) else {
+            throw LLMError.emptyResponse
+        }
+        return Self.parseExtractedSymptoms(from: content)
+    }
+
+    /// 解析抽取响应；畸形 JSON / 未知类型一律容错为空数组
+    nonisolated static func parseExtractedSymptoms(from content: String) -> [ExtractedSymptom] {
+        let cleaned = cleanContent(content)
+        guard let data = cleaned.data(using: .utf8),
+              let parsed = try? JSONDecoder().decode(SymptomExtractionResponse.self, from: data)
+        else { return [] }
+        return parsed.symptoms.compactMap { item in
+            guard let type = PregnancySymptomType(rawValue: item.type) else { return nil }
+            return ExtractedSymptom(type: type, dateRef: item.dateRef)
+        }
     }
 
     // MARK: - Token Estimation (for billing settlement)

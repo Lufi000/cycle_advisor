@@ -13,6 +13,8 @@ struct UserProfile: Codable, Equatable {
     var lifestyle: Lifestyle
     /// 已知健康状况（AI 对话提取，如 PCOS、痛经史）
     var knownConditions: [String]
+    /// 备孕模式开关（默认 false）
+    var isTryingToConceive: Bool
     var lastUpdated: Date
     var version: Int
 
@@ -22,6 +24,7 @@ struct UserProfile: Codable, Equatable {
         workoutStats: .empty,
         lifestyle: .empty,
         knownConditions: [],
+        isTryingToConceive: false,
         lastUpdated: .distantPast,
         version: 1
     )
@@ -50,6 +53,26 @@ struct UserProfile: Codable, Equatable {
         if knownConditions.isEmpty { fields.append("已知健康状况") }
         if lifestyle.knownSensitivities.isEmpty { fields.append("特殊敏感因素") }
         return fields
+    }
+}
+
+// 自定义解码放在 extension 中，以保留编译器合成的成员wise init（encode 仍自动合成）。
+extension UserProfile {
+    private enum CodingKeys: String, CodingKey {
+        case bodyInfo, accumulatedStats, workoutStats, lifestyle
+        case knownConditions, lastUpdated, version, isTryingToConceive
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        bodyInfo = try container.decode(BodyInfo.self, forKey: .bodyInfo)
+        accumulatedStats = try container.decode(AccumulatedCycleStats.self, forKey: .accumulatedStats)
+        workoutStats = try container.decode(WorkoutStats.self, forKey: .workoutStats)
+        lifestyle = try container.decode(Lifestyle.self, forKey: .lifestyle)
+        knownConditions = try container.decode([String].self, forKey: .knownConditions)
+        lastUpdated = try container.decode(Date.self, forKey: .lastUpdated)
+        version = try container.decode(Int.self, forKey: .version)
+        isTryingToConceive = try container.decodeIfPresent(Bool.self, forKey: .isTryingToConceive) ?? false
     }
 }
 

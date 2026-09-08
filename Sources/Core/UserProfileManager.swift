@@ -63,6 +63,12 @@ final class UserProfileManager {
         persistWidgetSnapshot()
     }
 
+    /// 备孕模式开关；关闭时已有数据保留，仅停止提醒与提示
+    func setTryingToConceive(_ value: Bool) {
+        profile.isTryingToConceive = value
+        save()
+    }
+
     // MARK: - HealthKit Accumulation
 
     /// 从 HealthKit 数据积累档案信息。由 HomeViewModel 在 HealthKit 更新后调用。

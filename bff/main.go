@@ -36,6 +36,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/v1/chat/completions", proxy.HandleCompletions)
+	mux.HandleFunc("/v1/extract/symptoms", proxy.HandleExtractSymptoms)
 	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{"status":"ok"}`))
