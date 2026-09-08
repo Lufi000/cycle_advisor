@@ -19,6 +19,21 @@ struct ConceptionCardView: View {
 
             content
 
+            NavigationLink {
+                TemperatureLogView()
+            } label: {
+                HStack {
+                    Text("conception.log.title")
+                        .font(.system(size: Theme.captionSize))
+                        .foregroundStyle(Theme.accent)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(Theme.textSecondary)
+                }
+            }
+            .buttonStyle(.plain)
+
             Text("conception.card.disclaimer")
                 .font(.system(size: Theme.captionSize))
                 .foregroundStyle(Theme.textSecondary)

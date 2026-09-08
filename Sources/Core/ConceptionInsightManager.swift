@@ -10,6 +10,8 @@ final class ConceptionInsightManager {
     private(set) var insight: PregnancyInsight = .insufficient
     /// 近 14 天合并体温（供首页迷你趋势图）
     private(set) var recentTemperatures: [BasalTemperatureEntry] = []
+    /// 全部合并体温（近 60 天，含手表 + 手动），供温度记录列表页展示
+    private(set) var mergedTemperatures: [BasalTemperatureEntry] = []
     /// 近 3 天有手表腕温数据（决定是否需要晨间测温提醒）
     private(set) var hasWristCoverage = false
     /// 手表基线是否已建立（腕温数据 ≥ 14 天才参与判定）
@@ -29,6 +31,7 @@ final class ConceptionInsightManager {
         guard isTryingToConceive else {
             insight = .insufficient
             recentTemperatures = []
+            mergedTemperatures = []
             hasWristCoverage = false
             ConceptionReminderScheduler.refresh(isTryingToConceive: false, hasWristCoverage: false, reminderEnabled: false)
             return
@@ -53,16 +56,18 @@ final class ConceptionInsightManager {
         store.clearFeedbackIfNewPeriod(lastPeriodStart: periodStart)
         lastPeriodStart = periodStart
 
-        // 手表基线未建立（佩戴 < 14 天）→ 腕温暂不参与判定，走手动 BBT 过渡
+        // 手表基线未建立（佩戴 < 14 天）→ 腕温暂不参与判定，走手动 BBT 过渡；
+        // 展示层（趋势图 / 记录列表）仍显示全部腕温数据，不受基线门槛限制
         wristBaselineReady = wrist.count >= 14
-        let merged = store.mergedTemperatures(wrist: wristBaselineReady ? wrist : [])
+        let mergedForEngine = store.mergedTemperatures(wrist: wristBaselineReady ? wrist : [])
+        let mergedForDisplay = store.mergedTemperatures(wrist: wrist)
 
         let expectedPeriod = periodStart.map {
             phaseEngine.nextPeriodDate(lastPeriodStart: $0, cycleLength: cycleLength)
         }
 
         insight = engine.evaluate(PregnancyInsightEngine.Input(
-            temperatures: merged,
+            temperatures: mergedForEngine,
             vitals: vitals,
             symptoms: store.symptomRecords,
             lastPeriodStart: periodStart,
@@ -74,7 +79,8 @@ final class ConceptionInsightManager {
 
         let calendar = Calendar.current
         let chartCutoff = calendar.date(byAdding: .day, value: -14, to: Date())!
-        recentTemperatures = merged.filter { $0.date >= chartCutoff }
+        mergedTemperatures = mergedForDisplay
+        recentTemperatures = mergedForDisplay.filter { $0.date >= chartCutoff }
 
         let coverageCutoff = calendar.date(byAdding: .day, value: -3, to: Date())!
         hasWristCoverage = wrist.contains { $0.date >= coverageCutoff }

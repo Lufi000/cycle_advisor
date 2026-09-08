@@ -625,6 +625,10 @@
 "conception.bbt.save" = "Save";
 "conception.reminder.time" = "Morning temperature reminder";
 "conception.reminder.enabled" = "Temperature reminder";
+"conception.log.source.manual" = "Manual";
+"conception.log.source.wrist" = "Watch";
+"conception.log.empty" = "No temperature data yet";
+"conception.log.title" = "Temperature Log";
 "conception.reminder.body" = "Time to take your temperature";
 "conception.reason.high_temp" = "Temperature elevated for %lld days";
 "conception.reason.period_late" = "Period %lld days late";

@@ -625,6 +625,10 @@
 "conception.bbt.save" = "Guardar";
 "conception.reminder.time" = "Recordatorio matutino";
 "conception.reminder.enabled" = "Recordatorio de temperatura";
+"conception.log.source.manual" = "Manual";
+"conception.log.source.wrist" = "Reloj";
+"conception.log.empty" = "Aún no hay datos de temperatura";
+"conception.log.title" = "Registro de temperatura";
 "conception.reminder.body" = "Es hora de medir tu temperatura";
 "conception.reason.high_temp" = "Temperatura alta desde hace %lld días";
 "conception.reason.period_late" = "Regla con %lld días de retraso";

@@ -39,6 +39,7 @@
 		AJ000001 /* BBTEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BJ000001 /* BBTEntryView.swift */; };
 		AK000001 /* TemperatureSparkline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BK000001 /* TemperatureSparkline.swift */; };
 		AL000001 /* ConceptionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BL000001 /* ConceptionCardView.swift */; };
+		AO000001 /* TemperatureLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BO000001 /* TemperatureLogView.swift */; };
 		AM000001 /* ConceptionReminderSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BM000001 /* ConceptionReminderSchedulerTests.swift */; };
 		AN000001 /* SymptomExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BN000001 /* SymptomExtractorTests.swift */; };
 		AA000001 /* WorkoutCelebrationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001 /* WorkoutCelebrationPlanner.swift */; };
@@ -265,6 +266,7 @@
 		BJ000001 /* BBTEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBTEntryView.swift; sourceTree = "<group>"; };
 		BK000001 /* TemperatureSparkline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureSparkline.swift; sourceTree = "<group>"; };
 		BL000001 /* ConceptionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionCardView.swift; sourceTree = "<group>"; };
+		BO000001 /* TemperatureLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureLogView.swift; sourceTree = "<group>"; };
 		BM000001 /* ConceptionReminderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionReminderSchedulerTests.swift; sourceTree = "<group>"; };
 		BN000001 /* SymptomExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomExtractorTests.swift; sourceTree = "<group>"; };
 		VR000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 				BJ000001 /* BBTEntryView.swift */,
 				BK000001 /* TemperatureSparkline.swift */,
 				BL000001 /* ConceptionCardView.swift */,
+				BO000001 /* TemperatureLogView.swift */,
 			);
 			path = Conception;
 			sourceTree = "<group>";
@@ -840,6 +843,7 @@
 				AJ000001 /* BBTEntryView.swift in Sources */,
 				AK000001 /* TemperatureSparkline.swift in Sources */,
 				AL000001 /* ConceptionCardView.swift in Sources */,
+				AO000001 /* TemperatureLogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
