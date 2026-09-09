@@ -601,12 +601,10 @@
 "conception.onboarding.title" = "妊娠準備モードについて";
 "conception.onboarding.body" = "この機能は体温などの周期サインから検査の適切な時期を提案するもので、医療診断ではありません。妊娠の確認は検査薬または医師にご相談ください。";
 "conception.onboarding.ok" = "了解しました";
-"conception.card.title" = "妊娠準備トラッキング";
+"conception.card.title" = "体温";
 "conception.card.luteal_day" = "黄体期 %lld 日目";
-"conception.card.insufficient" = "データがまだ不足しています——毎日の計測（または睡眠時の腕時計着用）で精度が上がります";
 "conception.card.possible" = "妊娠検査薬で確認できます";
 "conception.card.likely" = "早めの妊娠検査をおすすめします";
-"conception.card.disclaimer" = "この機能は医療診断ではありません";
 "conception.card.record_result" = "検査結果を記録";
 "conception.card.positive_recorded" = "陽性を記録しました。医療機関での確認をおすすめします";
 "conception.feedback.positive" = "陽性";

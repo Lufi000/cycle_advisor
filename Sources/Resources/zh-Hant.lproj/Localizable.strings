@@ -601,12 +601,10 @@
 "conception.onboarding.title" = "備孕模式說明";
 "conception.onboarding.body" = "此功能透過體溫等週期訊號提示合適的驗孕時機，不構成醫療診斷。確認懷孕請以驗孕棒檢測或就醫為準。";
 "conception.onboarding.ok" = "我知道了";
-"conception.card.title" = "備孕追蹤";
+"conception.card.title" = "體溫";
 "conception.card.luteal_day" = "黃體期第 %lld 天";
-"conception.card.insufficient" = "資料還不足——堅持每日測溫（或佩戴手錶睡眠）會讓判斷更準";
 "conception.card.possible" = "現在可以用驗孕棒檢測了";
 "conception.card.likely" = "建議盡快驗孕確認";
-"conception.card.disclaimer" = "此功能不構成醫療診斷";
 "conception.card.record_result" = "記錄驗孕結果";
 "conception.card.positive_recorded" = "已記錄陽性結果，建議就醫確認";
 "conception.feedback.positive" = "陽性";

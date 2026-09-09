@@ -33,10 +33,6 @@ struct ConceptionCardView: View {
                 }
             }
             .buttonStyle(.plain)
-
-            Text("conception.card.disclaimer")
-                .font(.system(size: Theme.captionSize))
-                .foregroundStyle(Theme.textSecondary)
         }
         .padding(Theme.cardPadding)
         .grainCardStyle(seed: 701)
@@ -49,15 +45,19 @@ struct ConceptionCardView: View {
 
     private var header: some View {
         HStack {
-            Label(String(localized: "conception.card.title"), systemImage: "heart.circle")
+            Label(String(localized: "conception.card.title"), systemImage: "thermometer.medium")
                 .font(.system(size: Theme.cardTitleSize, weight: .semibold))
                 .foregroundStyle(Theme.textPrimary)
             Spacer()
-            Button(String(localized: "conception.bbt.entry")) {
+            Button {
                 isBBTEntryPresented = true
+            } label: {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 20))
+                    .foregroundStyle(Theme.accent)
             }
-            .font(.system(size: Theme.captionSize))
-            .foregroundStyle(Theme.textSecondary)
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "conception.bbt.entry"))
         }
     }
 
@@ -70,7 +70,7 @@ struct ConceptionCardView: View {
                     .font(.system(size: Theme.bodySize))
                     .foregroundStyle(Theme.textPrimary)
             } else {
-                Text("conception.card.insufficient")
+                Text("-")
                     .font(.system(size: Theme.bodySize))
                     .foregroundStyle(Theme.textSecondary)
             }

@@ -601,12 +601,10 @@
 "conception.onboarding.title" = "About Trying to Conceive";
 "conception.onboarding.body" = "This feature uses signals like body temperature to suggest when to take a pregnancy test. It is not a medical diagnosis — confirm pregnancy with a test or your doctor.";
 "conception.onboarding.ok" = "Got it";
-"conception.card.title" = "Conception Tracking";
+"conception.card.title" = "Temperature";
 "conception.card.luteal_day" = "Luteal phase day %lld";
-"conception.card.insufficient" = "Not enough data yet — daily temperature readings (or wearing your watch to sleep) improve accuracy";
 "conception.card.possible" = "You can take a pregnancy test now";
 "conception.card.likely" = "Take a pregnancy test soon to confirm";
-"conception.card.disclaimer" = "This feature is not a medical diagnosis";
 "conception.card.record_result" = "Record Test Result";
 "conception.card.positive_recorded" = "Positive result recorded — consider confirming with your doctor";
 "conception.feedback.positive" = "Positive";

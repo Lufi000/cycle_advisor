@@ -602,12 +602,10 @@
 "conception.onboarding.title" = "备孕模式说明";
 "conception.onboarding.body" = "此功能通过体温等周期信号提示合适的验孕时机，不构成医疗诊断。确认怀孕请以验孕棒检测或就医为准。";
 "conception.onboarding.ok" = "我知道了";
-"conception.card.title" = "备孕追踪";
+"conception.card.title" = "体温";
 "conception.card.luteal_day" = "黄体期第 %lld 天";
-"conception.card.insufficient" = "数据还不足——坚持每日测温（或佩戴手表睡眠）会让判断更准";
 "conception.card.possible" = "现在可以用验孕棒检测了";
 "conception.card.likely" = "建议尽快验孕确认";
-"conception.card.disclaimer" = "此功能不构成医疗诊断";
 "conception.card.record_result" = "记录验孕结果";
 "conception.card.positive_recorded" = "已记录阳性结果，建议就医确认";
 "conception.feedback.positive" = "阳性";

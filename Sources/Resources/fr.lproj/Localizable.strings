@@ -601,12 +601,10 @@
 "conception.onboarding.title" = "À propos du mode conception";
 "conception.onboarding.body" = "Cette fonction utilise des signaux comme la température pour suggérer quand faire un test. Ce n'est pas un diagnostic médical : confirmez avec un test ou votre médecin.";
 "conception.onboarding.ok" = "J'ai compris";
-"conception.card.title" = "Suivi de conception";
+"conception.card.title" = "Température";
 "conception.card.luteal_day" = "Jour %lld de phase lutéale";
-"conception.card.insufficient" = "Données insuffisantes — mesurez votre température chaque jour (ou portez votre montre la nuit) pour plus de précision";
 "conception.card.possible" = "Vous pouvez faire un test de grossesse";
 "conception.card.likely" = "Faites bientôt un test de grossesse pour confirmer";
-"conception.card.disclaimer" = "Cette fonction ne constitue pas un diagnostic médical";
 "conception.card.record_result" = "Enregistrer le résultat";
 "conception.card.positive_recorded" = "Résultat positif enregistré — confirmez avec votre médecin";
 "conception.feedback.positive" = "Positif";
