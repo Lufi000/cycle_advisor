@@ -153,3 +153,37 @@ final class ConceptionStore {
         }
     }
 }
+
+#if DEBUG
+extension ConceptionStore {
+    /// 调试：灌入「低温 8 天 + 高温 highDays 天（截至今天）」的手动体温，
+    /// 用于在模拟器预览 possible / likely 验孕提示。
+    /// 36.3°C 基线、36.7°C 高温（+0.4°C，满足升温判定的 +0.2°C 阈值）。
+    /// 同时清掉反馈/忽略状态并开启备孕模式，保证提示一定出现。
+    func debugSeedTemperatures(highDays: Int) {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        manualTemperatures.removeAll()
+        for offset in (-highDays - 7)...(-highDays) {
+            let day = calendar.date(byAdding: .day, value: offset, to: today)!
+            _ = upsertManualTemperature(date: day, celsius: 36.3, disturbances: [])
+        }
+        for offset in (-highDays + 1)...0 {
+            let day = calendar.date(byAdding: .day, value: offset, to: today)!
+            _ = upsertManualTemperature(date: day, celsius: 36.7, disturbances: [])
+        }
+        testFeedback = nil
+        dismissedUntil = nil
+        saveFeedback()
+    }
+
+    /// 调试：清空手动体温与反馈状态
+    func debugClearTemperatures() {
+        manualTemperatures.removeAll()
+        saveTemperatures()
+        testFeedback = nil
+        dismissedUntil = nil
+        saveFeedback()
+    }
+}
+#endif

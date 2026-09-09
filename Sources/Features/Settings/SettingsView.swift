@@ -28,6 +28,15 @@ struct SettingsView: View {
         )
     }
 
+    #if DEBUG
+    /// 调试：灌模拟体温并开启备孕模式（不开则洞察永远停在 insufficient）
+    private func debugSeedAndRefresh(highDays: Int) {
+        ConceptionStore.shared.debugSeedTemperatures(highDays: highDays)
+        profileManager.setTryingToConceive(true)
+        Task { await ConceptionInsightManager.shared.refresh() }
+    }
+    #endif
+
     /// 晨间提醒时间（UserDefaults 存"距午夜分钟数"，默认 7:00 = 420）
     private var reminderTimeBinding: Binding<Date> {
         Binding(
@@ -113,6 +122,19 @@ struct SettingsView: View {
             } header: {
                 Text("settings.section.conception")
             }
+
+            #if DEBUG
+            Section {
+                Button("模拟 possible（高温 12 天）") { debugSeedAndRefresh(highDays: 12) }
+                Button("模拟 likely（高温 17 天）") { debugSeedAndRefresh(highDays: 17) }
+                Button("清除模拟数据", role: .destructive) {
+                    ConceptionStore.shared.debugClearTemperatures()
+                    Task { await ConceptionInsightManager.shared.refresh() }
+                }
+            } header: {
+                Text("调试 · 验孕提示预览")
+            }
+            #endif
 
             Section {
                 // 语言跟随系统(iOS 13+ per-app 语言),这里只展示当前生效语言并跳到系统设置。
