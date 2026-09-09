@@ -618,7 +618,6 @@
 "conception.bbt.disturbance.illness" = "Maladie";
 "conception.bbt.disturbance.insomnia" = "Insomnie";
 "conception.bbt.measured_today" = "Mesurée ce matin ✓";
-"conception.bbt.invalid" = "Saisissez une température entre 35,0 et 38,0";
 "conception.bbt.entry" = "Saisir la température manuellement";
 "conception.bbt.save" = "Enregistrer";
 "conception.reminder.time" = "Rappel de prise de température";

@@ -619,7 +619,6 @@
 "conception.bbt.disturbance.illness" = "生病";
 "conception.bbt.disturbance.insomnia" = "失眠";
 "conception.bbt.measured_today" = "今早已测 ✓";
-"conception.bbt.invalid" = "请输入 35.0–38.0 之间的体温";
 "conception.bbt.entry" = "手动录入体温";
 "conception.bbt.save" = "保存";
 "conception.reminder.time" = "晨间测温提醒";

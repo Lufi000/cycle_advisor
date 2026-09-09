@@ -618,7 +618,6 @@
 "conception.bbt.disturbance.illness" = "生病";
 "conception.bbt.disturbance.insomnia" = "失眠";
 "conception.bbt.measured_today" = "今早已測 ✓";
-"conception.bbt.invalid" = "請輸入 35.0–38.0 之間的體溫";
 "conception.bbt.entry" = "手動錄入體溫";
 "conception.bbt.save" = "儲存";
 "conception.reminder.time" = "晨間測溫提醒";

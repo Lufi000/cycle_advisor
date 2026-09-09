@@ -7,6 +7,7 @@ struct ConceptionCardView: View {
     private var manager = ConceptionInsightManager.shared
     private var store = ConceptionStore.shared
     @State private var isBBTEntryPresented = false
+    @State private var showTemperatureLog = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -18,24 +19,14 @@ struct ConceptionCardView: View {
             }
 
             content
-
-            NavigationLink {
-                TemperatureLogView()
-            } label: {
-                HStack {
-                    Text("conception.log.title")
-                        .font(.system(size: Theme.captionSize))
-                        .foregroundStyle(Theme.accent)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(Theme.textSecondary)
-                }
-            }
-            .buttonStyle(.plain)
         }
         .padding(Theme.cardPadding)
         .grainCardStyle(seed: 701)
+        .contentShape(Rectangle())
+        .onTapGesture { showTemperatureLog = true }
+        .navigationDestination(isPresented: $showTemperatureLog) {
+            TemperatureLogView()
+        }
         .sheet(isPresented: $isBBTEntryPresented) {
             BBTEntryView()
                 .presentationDetents([.medium])

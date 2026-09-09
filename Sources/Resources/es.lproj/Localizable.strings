@@ -618,7 +618,6 @@
 "conception.bbt.disturbance.illness" = "Enfermedad";
 "conception.bbt.disturbance.insomnia" = "Insomnio";
 "conception.bbt.measured_today" = "Medida esta mañana ✓";
-"conception.bbt.invalid" = "Introduce una temperatura entre 35,0 y 38,0";
 "conception.bbt.entry" = "Registrar temperatura manualmente";
 "conception.bbt.save" = "Guardar";
 "conception.reminder.time" = "Recordatorio matutino";

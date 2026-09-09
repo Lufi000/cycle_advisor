@@ -618,7 +618,6 @@
 "conception.bbt.disturbance.illness" = "아픔";
 "conception.bbt.disturbance.insomnia" = "불면";
 "conception.bbt.measured_today" = "오늘 아침 측정 완료 ✓";
-"conception.bbt.invalid" = "35.0–38.0 사이의 체온을 입력하세요";
 "conception.bbt.entry" = "수동으로 체온 입력";
 "conception.bbt.save" = "저장";
 "conception.reminder.time" = "아침 체온 알림";

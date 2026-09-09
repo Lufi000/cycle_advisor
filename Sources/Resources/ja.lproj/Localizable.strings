@@ -618,7 +618,6 @@
 "conception.bbt.disturbance.illness" = "体調不良";
 "conception.bbt.disturbance.insomnia" = "不眠";
 "conception.bbt.measured_today" = "今朝計測済み ✓";
-"conception.bbt.invalid" = "35.0〜38.0 の体温を入力してください";
 "conception.bbt.entry" = "手動で体温を記録";
 "conception.bbt.save" = "保存";
 "conception.reminder.time" = "朝の計測リマインダー";

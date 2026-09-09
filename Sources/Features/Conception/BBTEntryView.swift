@@ -1,22 +1,25 @@
 import SwiftUI
 
-/// 手动基础体温录入（无手表用户的主路径）：数字输入 + 干扰标记多选 + 今日已测状态
+/// 手动基础体温录入（无手表用户的主路径）：滚轮选温 + 干扰标记多选 + 今日已测状态
 struct BBTEntryView: View {
 
     @Environment(\.dismiss) private var dismiss
-    @State private var celsiusText: String
+    @State private var whole: Int
+    @State private var tenth: Int
     @State private var disturbances: Set<Disturbance>
-    @State private var showInvalidAlert = false
 
     private let store = ConceptionStore.shared
 
     init() {
-        // 已录过今日体温时预填，便于修改
+        // 已录过今日体温时预填，便于修改；默认 36.5
         if let existing = ConceptionStore.shared.manualEntry(for: Date()) {
-            _celsiusText = State(initialValue: String(format: "%.1f", existing.celsius))
+            let totalTenths = Int((existing.celsius * 10).rounded())
+            _whole = State(initialValue: min(max(totalTenths / 10, 35), 38))
+            _tenth = State(initialValue: totalTenths % 10)
             _disturbances = State(initialValue: existing.disturbances)
         } else {
-            _celsiusText = State(initialValue: "")
+            _whole = State(initialValue: 36)
+            _tenth = State(initialValue: 5)
             _disturbances = State(initialValue: [])
         }
     }
@@ -25,8 +28,30 @@ struct BBTEntryView: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("36.5", text: $celsiusText)
-                        .keyboardType(.decimalPad)
+                    HStack(spacing: 0) {
+                        Picker("", selection: $whole) {
+                            ForEach(35...38, id: \.self) { Text("\($0)").tag($0) }
+                        }
+                        .pickerStyle(.wheel)
+                        .accessibilityLabel(String(localized: "conception.bbt.celsius"))
+
+                        Text(".")
+                            .font(.system(size: Theme.bodySize, weight: .semibold))
+                            .foregroundStyle(Theme.textPrimary)
+
+                        Picker("", selection: $tenth) {
+                            ForEach(0...9, id: \.self) { Text("\($0)").tag($0) }
+                        }
+                        .pickerStyle(.wheel)
+                        .accessibilityLabel(String(localized: "conception.bbt.celsius"))
+
+                        Text("°C")
+                            .font(.system(size: Theme.bodySize))
+                            .foregroundStyle(Theme.textSecondary)
+                            .padding(.leading, 4)
+                    }
+                    .frame(height: 120)
+                    .listRowSeparator(.hidden)
 
                     if store.manualEntry(for: Date()) != nil {
                         Label(
@@ -60,9 +85,6 @@ struct BBTEntryView: View {
                         .fontWeight(.semibold)
                 }
             }
-            .alert(String(localized: "conception.bbt.invalid"), isPresented: $showInvalidAlert) {
-                Button(String(localized: "conception.onboarding.ok")) {}
-            }
         }
     }
 
@@ -77,14 +99,9 @@ struct BBTEntryView: View {
     }
 
     private func save() {
-        // 兼容逗号小数点（部分语言键盘）
-        let normalized = celsiusText.replacingOccurrences(of: ",", with: ".")
-        guard let value = Double(normalized),
-              store.upsertManualTemperature(date: Date(), celsius: value, disturbances: disturbances)
-        else {
-            showInvalidAlert = true
-            return
-        }
+        // 滚轮取值恒在 35.0–38.0 合法区间内，无需校验失败路径
+        let value = Double(whole) + Double(tenth) / 10
+        _ = store.upsertManualTemperature(date: Date(), celsius: value, disturbances: disturbances)
         Task { await ConceptionInsightManager.shared.refresh() }
         dismiss()
     }
