@@ -632,3 +632,5 @@
 "conception.reason.rhr" = "安静時心拍数がベースラインより %lld bpm 上昇";
 "conception.reason.hrv" = "HRV がベースラインより %lld%% 低下";
 "conception.reason.symptoms" = "妊娠初期症状が %lld 件";
+"notify.conception.possible" = "妊娠検査薬で確認できます";
+"notify.conception.likely" = "早めの妊娠検査をおすすめします";

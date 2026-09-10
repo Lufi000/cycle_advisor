@@ -82,6 +82,9 @@ final class ConceptionInsightManager {
         mergedTemperatures = mergedForDisplay
         recentTemperatures = mergedForDisplay.filter { $0.date >= chartCutoff }
 
+        // possible/likely 时发本地通知（镜像到配对 Apple Watch）；同 tier 同周期只发一次
+        ConceptionReminderScheduler.notifyInsightIfNeeded(insight, cycleStart: lastPeriodStart)
+
         let coverageCutoff = calendar.date(byAdding: .day, value: -3, to: Date())!
         hasWristCoverage = wrist.contains { $0.date >= coverageCutoff }
         ConceptionReminderScheduler.refresh(

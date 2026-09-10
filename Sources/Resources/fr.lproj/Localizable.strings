@@ -632,3 +632,5 @@
 "conception.reason.rhr" = "Fréquence au repos %lld bpm au-dessus de la base";
 "conception.reason.hrv" = "HRV %lld%% sous la base";
 "conception.reason.symptoms" = "%lld symptômes de début de grossesse";
+"notify.conception.possible" = "Vous pouvez faire un test de grossesse";
+"notify.conception.likely" = "Faites bientôt un test de grossesse pour confirmer";

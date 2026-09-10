@@ -632,3 +632,5 @@
 "conception.reason.rhr" = "안정 시 심박수가 기준보다 %lld bpm 상승";
 "conception.reason.hrv" = "HRV가 기준보다 %lld%% 하강";
 "conception.reason.symptoms" = "임신 초기 증상 %lld개";
+"notify.conception.possible" = "지금 임신 테스트기로 확인할 수 있어요";
+"notify.conception.likely" = "빠른 임신 테스트를 권장합니다";

@@ -633,3 +633,5 @@
 "conception.reason.rhr" = "静息心率较基线上升 %lld bpm";
 "conception.reason.hrv" = "HRV 较基线下降 %lld%%";
 "conception.reason.symptoms" = "出现 %lld 项早孕相关症状";
+"notify.conception.possible" = "现在可以用验孕棒检测了";
+"notify.conception.likely" = "建议尽快验孕确认";

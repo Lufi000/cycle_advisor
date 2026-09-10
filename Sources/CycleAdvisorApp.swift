@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct CycleAdvisorApp: App {
@@ -17,6 +18,7 @@ struct CycleAdvisorApp: App {
             UserDefaults.standard.removeObject(forKey: "AppleLanguages")
         }
         PeriodNotificationScheduler.requestAuthorization()
+        UNUserNotificationCenter.current().delegate = NotificationPresenter.shared
     }
 
     var body: some Scene {

@@ -632,3 +632,5 @@
 "conception.reason.rhr" = "Resting heart rate %lld bpm above baseline";
 "conception.reason.hrv" = "HRV %lld%% below baseline";
 "conception.reason.symptoms" = "%lld early-pregnancy symptoms";
+"notify.conception.possible" = "You can take a pregnancy test now";
+"notify.conception.likely" = "Take a pregnancy test soon to confirm";
