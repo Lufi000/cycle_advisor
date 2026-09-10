@@ -92,4 +92,55 @@ final class ConceptionReminderSchedulerTests: XCTestCase {
             cycleStart: nil
         ))
     }
+
+    // MARK: - WatchConnectivity 同步（ConceptionWatchSync）
+
+    /// possible/likely → payload 带 tier 和原因（截断 3 条）；其余状态 → none
+    func testWatchPayloadMapping() {
+        let possible = ConceptionWatchSync.payload(for: .possible(reasons: [.periodLate(days: 2)]), cycleStart: cycleStart)
+        XCTAssertEqual(possible["tier"] as? String, "possible")
+        let possibleReasons = possible["reasons"] as? [[Any]]
+        XCTAssertEqual(possibleReasons?.first?.first as? String, "period_late")
+        XCTAssertEqual(possibleReasons?.first?.last as? Int, 2)
+
+        let many: [InsightReason] = [
+            .sustainedHighTemperature(days: 17), .periodLate(days: 3),
+            .elevatedRestingHeartRate(deltaBPM: 5), .suppressedHRV(percent: 12)
+        ]
+        let likely = ConceptionWatchSync.payload(for: .likely(reasons: many), cycleStart: cycleStart)
+        XCTAssertEqual(likely["tier"] as? String, "likely")
+        XCTAssertEqual((likely["reasons"] as? [[Any]])?.count, 3)
+        XCTAssertEqual(likely["cycleStart"] as? TimeInterval, cycleStart.timeIntervalSince1970)
+
+        for insight in [PregnancyInsight.tracking(lutealDay: 9), .insufficient] {
+            let payload = ConceptionWatchSync.payload(for: insight, cycleStart: nil)
+            XCTAssertEqual(payload["tier"] as? String, "none")
+            XCTAssertEqual((payload["reasons"] as? [[Any]])?.count, 0)
+            XCTAssertEqual(payload["cycleStart"] as? TimeInterval, 0)
+        }
+    }
+
+    /// 手表侧去重：同 tier 同周期否、升级是、新周期是、none 否
+    func testWatchShouldNotifyDedupe() {
+        let possibleKey = ConceptionWatchSync.dedupeKey(tier: "possible", cycleStart: cycleStart)
+
+        XCTAssertFalse(ConceptionWatchSync.watchShouldNotify(tier: "none", lastNotified: nil, cycleStart: cycleStart))
+        XCTAssertFalse(ConceptionWatchSync.watchShouldNotify(tier: "possible", lastNotified: possibleKey, cycleStart: cycleStart))
+        XCTAssertTrue(ConceptionWatchSync.watchShouldNotify(tier: "likely", lastNotified: possibleKey, cycleStart: cycleStart))
+        XCTAssertTrue(ConceptionWatchSync.watchShouldNotify(
+            tier: "possible",
+            lastNotified: possibleKey,
+            cycleStart: Date(timeIntervalSince1970: 1_700_500_000)
+        ))
+    }
+
+    /// 原因类型 key → 本地化文案映射
+    func testWatchReasonTextMapping() {
+        XCTAssertNotNil(ConceptionWatchSync.reasonText(type: "high_temp", value: 16))
+        XCTAssertNotNil(ConceptionWatchSync.reasonText(type: "period_late", value: 2))
+        XCTAssertNotNil(ConceptionWatchSync.reasonText(type: "rhr", value: 5))
+        XCTAssertNotNil(ConceptionWatchSync.reasonText(type: "hrv", value: 12))
+        XCTAssertNotNil(ConceptionWatchSync.reasonText(type: "symptoms", value: 3))
+        XCTAssertNil(ConceptionWatchSync.reasonText(type: "unknown", value: 1))
+    }
 }

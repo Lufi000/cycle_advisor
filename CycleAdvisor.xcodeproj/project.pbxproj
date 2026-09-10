@@ -18,6 +18,7 @@
 		A1000009 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000009 /* DisclaimerView.swift */; };
 		A100000A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000A /* MockData.swift */; };
 		A100000B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		A1000050 /* ConceptionWatchSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000050 /* ConceptionWatchSync.swift */; };
 		A100000C /* CyclePhaseEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000C /* CyclePhaseEngineTests.swift */; };
 		A1000016 /* ThinkingModeTokenBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000016 /* ThinkingModeTokenBudgetTests.swift */; };
 		T5000001 /* ResponseLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T6000001 /* ResponseLanguageTests.swift */; };
@@ -103,6 +104,7 @@
 		KA000024 /* WatchAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = KB000010 /* WatchAssets.xcassets */; };
 		M7000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = VG000001 /* Localizable.strings */; };
 		KA000010 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000B /* Theme.swift */; };
+		KA000050 /* ConceptionWatchSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000050 /* ConceptionWatchSync.swift */; };
 		KA000011 /* CyclePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004 /* CyclePhase.swift */; };
 		KA000012 /* PeriodPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001 /* PeriodPrediction.swift */; };
 		KA000013 /* CyclePhaseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000003 /* CyclePhaseEngine.swift */; };
@@ -206,6 +208,7 @@
 		B1000009 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
 		B100000A /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		B100000B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		B1000050 /* ConceptionWatchSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptionWatchSync.swift; sourceTree = "<group>"; };
 		B100000C /* CyclePhaseEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePhaseEngineTests.swift; sourceTree = "<group>"; };
 		B1000016 /* ThinkingModeTokenBudgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingModeTokenBudgetTests.swift; sourceTree = "<group>"; };
 		T6000001 /* ResponseLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseLanguageTests.swift; sourceTree = "<group>"; };
@@ -448,6 +451,7 @@
 				B1000009 /* DisclaimerView.swift */,
 				B100000A /* MockData.swift */,
 				B100000B /* Theme.swift */,
+				B1000050 /* ConceptionWatchSync.swift */,
 				B1000012 /* GrainOverlay.swift */,
 				B1000015 /* TypingIndicatorView.swift */,
 				B1000041 /* DisplayName.swift */,
@@ -803,6 +807,7 @@
 				A1000009 /* DisclaimerView.swift in Sources */,
 				A100000A /* MockData.swift in Sources */,
 				A100000B /* Theme.swift in Sources */,
+				A1000050 /* ConceptionWatchSync.swift in Sources */,
 				A100000E /* GrainOverlay.swift in Sources */,
 				A100000F /* HealthKitManager.swift in Sources */,
 				A1000010 /* HomeViewModel.swift in Sources */,
@@ -898,6 +903,7 @@
 				KA000022 /* WatchWorkoutObserver.swift in Sources */,
 				KA000023 /* CelebrationView.swift in Sources */,
 				KA000010 /* Theme.swift in Sources */,
+				KA000050 /* ConceptionWatchSync.swift in Sources */,
 				KA000011 /* CyclePhase.swift in Sources */,
 				KA000012 /* PeriodPrediction.swift in Sources */,
 				KA000013 /* CyclePhaseEngine.swift in Sources */,

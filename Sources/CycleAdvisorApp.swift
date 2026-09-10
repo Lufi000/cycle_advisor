@@ -19,6 +19,7 @@ struct CycleAdvisorApp: App {
         }
         PeriodNotificationScheduler.requestAuthorization()
         UNUserNotificationCenter.current().delegate = NotificationPresenter.shared
+        ConceptionWatchSync.shared.activate()
     }
 
     var body: some Scene {

@@ -34,6 +34,7 @@ final class ConceptionInsightManager {
             mergedTemperatures = []
             hasWristCoverage = false
             ConceptionReminderScheduler.refresh(isTryingToConceive: false, hasWristCoverage: false, reminderEnabled: false)
+            ConceptionWatchSync.shared.push(insight: .insufficient, cycleStart: nil)
             return
         }
 
@@ -84,6 +85,8 @@ final class ConceptionInsightManager {
 
         // possible/likely 时发本地通知（镜像到配对 Apple Watch）；同 tier 同周期只发一次
         ConceptionReminderScheduler.notifyInsightIfNeeded(insight, cycleStart: lastPeriodStart)
+        // 同步最新状态到手表，由手表调度自己的本地通知
+        ConceptionWatchSync.shared.push(insight: insight, cycleStart: lastPeriodStart)
 
         let coverageCutoff = calendar.date(byAdding: .day, value: -3, to: Date())!
         hasWristCoverage = wrist.contains { $0.date >= coverageCutoff }

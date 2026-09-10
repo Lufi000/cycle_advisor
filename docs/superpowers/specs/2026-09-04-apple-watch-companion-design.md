@@ -21,7 +21,7 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 - 不做运动打卡/记录系统（记录归 Apple 体能训练）
 - 不做 `HKWorkoutSession`（手表端不发起运动）
 - 不做手表端 AI 聊天、文献引用、设置页
-- 不做 WatchConnectivity 数据同步（理由见 §4.1）
+- 不做 WatchConnectivity 数据同步（理由见 §4.1；2026-09-10 起验孕提示状态除外，见 §4.1 例外说明）
 
 ## 2. 功能设计
 
@@ -98,6 +98,8 @@ CycleAdvisor 是经期健康建议 iOS 应用（SwiftUI，7 语言，HealthKit �
 - **Watch 端直接读本地 `HKHealthStore`**：经期记录（→ `fetchLastPeriodStart` / cycleLength 同款逻辑）、workout 记录，全部本地可得
 - iPhone 与 Watch 之间零自建同步通道
 - 限制：Watch 端首次使用需单独弹 HealthKit 授权（手表上弹授权 sheet 会引导到手机完成，系统行为）；若用户在手机上关了 iCloud 健康同步则手表数据可能滞后——接受此限制，界面按"无数据"兜底展示
+
+**例外（2026-09-10 起）**：验孕提示状态（possible/likely）经 WatchConnectivity 由 iPhone 单向推送到 Watch（`ConceptionWatchSync`，payload 仅 tier + 原因 + 周期起点时间戳，手表不回传任何数据）。理由：提示依赖 iPhone 侧的备孕开关、手动 BBT 与验孕反馈状态，手表本地无法独立判定；用户明确不要通知镜像，要求手表原生通知。周期/运动数据仍坚持只读本地 HealthKit，此例外仅限验孕提示。
 
 ### 4.2 工程结构
 

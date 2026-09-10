@@ -10,6 +10,7 @@ struct CycleAdvisorWatchApp: App {
 
     init() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        ConceptionWatchSync.shared.activate()
     }
 
     var body: some Scene {
