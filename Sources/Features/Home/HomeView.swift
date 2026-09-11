@@ -231,7 +231,7 @@ struct HomeView: View {
             )
 
             Text(displayedPhase.description)
-                .font(Theme.itim(size: 18))
+                .font(Theme.itim(size: 15))
                 .lineSpacing(Theme.lineSpacing)
                 .foregroundStyle(homeMutedText)
                 .fixedSize(horizontal: false, vertical: true)
