@@ -4,6 +4,8 @@ struct CycleRingView: View {
     let context: CycleContext
     /// 非 nil 时进入「全彩浏览」模式：所有阶段显示相位色，highlightedPhase 满饱和，其余降透明度
     var highlightedPhase: CyclePhase? = nil
+    /// 预测经期窗口半径（天）：在环顶（下次经期预测点）前后各这么多天画虚线弧
+    var predictedWindowDays: Int = 3
 
     private let lineWidth: CGFloat = 20
     private let dotSize: CGFloat = 24
@@ -59,9 +61,29 @@ struct CycleRingView: View {
                     .rotationEffect(.degrees(-90))
             }
 
+            // 预测经期窗口：虚线弧跨环顶（下次经期预测点 = day total+1）
+            if highlightedPhase == nil, context.phase != .menstrual {
+                predictedWindowArc(total: total)
+            }
+
             // 当前位置指示点
             currentPositionDot(size: size, durations: durations, total: total)
         }
+    }
+
+    /// 环顶前后各 predictedWindowDays 天的虚线弧，表达「可能来潮窗口」（对齐 Apple Health 的 possible period days）
+    private func predictedWindowArc(total: Double) -> some View {
+        let n = Double(predictedWindowDays)
+        let tailStart = (total - n) / total   // 本周期末尾 n 天
+        let headEnd = n / total               // 下周期开头 n 天
+        let style = StrokeStyle(lineWidth: lineWidth * 0.55, lineCap: .round, dash: [2, 5])
+        let color = CyclePhase.menstrual.color.opacity(0.55)
+
+        return ZStack {
+            Circle().trim(from: tailStart, to: 1).stroke(color, style: style)
+            Circle().trim(from: 0, to: headEnd).stroke(color, style: style)
+        }
+        .rotationEffect(.degrees(-90))
     }
 
     private func segmentAngles(for phase: CyclePhase, durations: PhaseDurations, total: Double) -> (CGFloat, CGFloat) {

@@ -86,27 +86,12 @@ final class HealthKitManager {
         let samples = await fetchCategorySamples(type: type, limit: 180, ascending: false)
         guard samples.count >= 2 else { return 28 }
 
-        let calendar = Calendar.current
-        var periodStarts: [Date] = []
-        var streakStart = samples[0].startDate
-        var prevDay = calendar.startOfDay(for: streakStart)
-
-        for sample in samples.dropFirst() {
-            let day = calendar.startOfDay(for: sample.startDate)
-            let gap = calendar.dateComponents([.day], from: day, to: prevDay).day ?? 99
-            if gap > 2 {
-                periodStarts.append(calendar.startOfDay(for: streakStart))
-                streakStart = sample.startDate
-            }
-            prevDay = day
-        }
-        periodStarts.append(calendar.startOfDay(for: streakStart))
-
-        let sorted = periodStarts.sorted()
+        // 复用 detectPeriodStarts（正序、段首为经期第 1 天），与 fetchHistoricalCycleLengths 口径一致
+        let sorted = Self.detectPeriodStarts(from: samples).sorted()
         guard sorted.count >= 2 else { return 28 }
 
         let gaps: [Int] = zip(sorted, sorted.dropFirst()).compactMap { a, b in
-            let d = calendar.dateComponents([.day], from: a, to: b).day ?? 0
+            let d = Calendar.current.dateComponents([.day], from: a, to: b).day ?? 0
             return (21...45).contains(d) ? d : nil
         }
         guard !gaps.isEmpty else { return 28 }

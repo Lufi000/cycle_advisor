@@ -209,12 +209,14 @@ struct HomeView: View {
                             .minimumScaleFactor(0.76)
                     }
                 }
-            }
-
-            if inspectedPhase == nil, let prediction = viewModel.periodPrediction {
-                Text(prediction.text)
-                    .font(Theme.itim(size: 14))
-                    .foregroundStyle(homeMutedText)
+                // 预测文案放卡片右上角，避免插在标题与环图之间把环图往下顶
+                if inspectedPhase == nil, let prediction = viewModel.periodPrediction {
+                    Spacer(minLength: 8)
+                    Text(prediction.text)
+                        .font(Theme.itim(size: 14))
+                        .foregroundStyle(homeMutedText)
+                        .multilineTextAlignment(.trailing)
+                }
             }
 
             CycleTrackingTimelineView(
